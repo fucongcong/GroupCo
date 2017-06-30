@@ -4,3 +4,4 @@ composer.lock
 index.php
 .htaccess
 /demo
+.DS_Store
