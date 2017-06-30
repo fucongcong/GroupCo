@@ -1,0 +1,21 @@
+language: php
+php:
+    - 5.5
+    - 5.6
+    - 7.0
+install:
+    - composer install
+services:
+  - redis-server
+before_script:
+    - phpenv config-add config.ini
+    # - wget http://download.redis.io/releases/redis-3.0.5.tar.gz
+    # - tar xzf redis-3.0.5.tar.gz
+    # - cd redis-3.0.5
+    # - make
+    # - sudo sed -i 's/daemonize no/daemonize yes/g' redis.conf
+    # - src/redis-server &
+    # - cd ..
+script:
+    - sudo find -L ./core -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
+    - phpunit --bootstrap test/test.php core/Group

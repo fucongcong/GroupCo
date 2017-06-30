@@ -1,0 +1,59 @@
+{% extends 'Web/Views/layout.html.twig' %}
+
+{% block title %}注册{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ assets("css/register.css") }}" rel="stylesheet">
+ {% endblock %}
+
+{% block body %}
+<div class="join-box">
+    <div class="cm-join-content clearfix">
+        <div class="cm-join">
+            <div class="title">
+                <span>登录</span>
+                <a href="/register">没有账号？去注册</a>
+            </div>
+            <form id="form" data-url="/login">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="手机">
+                    <span class="form-success"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                </div>
+                <button type="button" class="btn cm-btn cm-join-submit btn-default js-register">登录</button>
+            </form>
+        </div>
+        <div class="box-right">
+            <dl>
+                <dt>邀好友注册得积分得现金提成</dt>
+                <dd class="mb3">积分可换定制衣，销售提成可提现</dd>
+            </dl>
+            <dl>
+                <dt>全场免运费</dt>
+                <dd class="mb3">在中国均采用顺丰快递，安全便捷</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+
+    $('.js-register').on('click', function(){
+        var url = $('#form').data('url');
+        $.post(url, $('#form').serialize(), function(res){
+            alert(res.msg);
+            if (res.code == 200) {
+                window.location.href = "/";
+            }
+        })
+    })
+
+</script>
+
+{% endblock %}

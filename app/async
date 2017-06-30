@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+use Group\Async\Async;
+use Group\Async\AsyncApp;
+
+define('ASYNC', TRUE);
+define('__ROOT__', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . "../");
+
+$loader = require __DIR__.'/../vendor/autoload.php';
+$loader->setUseIncludePath(true);
+
+$app = new AsyncApp();
+$app -> initSelf();
+$provider = new Group\Async\Cache\FileCacheServiceProvider($app::getInstance());
+$provider -> register();
+
+$async = new Async($argv);
+$async -> run();

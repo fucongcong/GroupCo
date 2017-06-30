@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class=""> <!--<![endif]-->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="keywords" content="{% block keywords %}{% endblock %}" />
+  <meta name="description" content="{% block description %}{% endblock %}" />
+ {#  <meta content="{{ csrf_token('site') }}" name="csrf-token" /> #}
+
+  <link href="{{ assets("css/bootstrap.min.css") }}" rel="stylesheet">
+  <link href="{{ assets("css/web.css") }}" rel="stylesheet">
+  {% block stylesheets %}{% endblock %}
+
+  {% block head_scripts %}{% endblock %}
+
+</head>
+<body>
+  {% block header %}{% include 'Web/Views/Public/head.html.twig' %}{% endblock %}
+
+  {% block body %}{% endblock %}
+
+  {% block footer %}{% include 'Web/Views/Public/bottom.html.twig' %}{% endblock %}
+
+   <script src="{{ assets("js/jquery.js") }}"></script>
+  {% block script %}{% endblock %}
+{# cmd  seajs: #}
+{#
+    <script>
+     var app = {};
+      app.jspath="/asset/lib/sea-modules";
+    </script>
+    <script src="{{ asset("asset/lib/sea-modules/seajs/seajs/2.2.1/sea.js") }}"></script>
+    <script src="{{ asset("asset/lib/seajs-config.js") }}"></script>
+    <script>
+    seajs.use("/asset/js/index")
+    </script>
+
+  #}
+
+{# amd  requirejs: #}
+  {# <script data-main="/asset/js/index" src="/asset/js/require.js"></script>#}
+
+</body>
+</html>
