@@ -23,7 +23,7 @@ class TCP extends Base
 
     public function call(callable $callback)
     {
-        $client = new  \swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
+        $client = new \swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
 
         $client->on("connect", function ($cli) {
             $cli->send($this->data);
@@ -33,7 +33,7 @@ class TCP extends Base
         });
 
         $client->on('error', function ($cli) use ($callback) {
-            $cli->close();
+            // $cli->close();
             $this->isClosed = true;
             call_user_func_array($callback, array('response' => false, 'error' => parent::CONNECT_ERROR, 'calltime' => $this->calltime));
         });

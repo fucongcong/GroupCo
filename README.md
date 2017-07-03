@@ -11,3 +11,7 @@
 #### 强大的Twig、Doctrine支持视图、数据层
 
 联系我Email: cc@xitongxue.com,coco.fu@clothesmake.com
+
+
+#### 异常处理问题
+#### 爆内存问题

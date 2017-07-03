@@ -10,8 +10,16 @@ class DefaultController extends Controller
 {
     //一个action 与route对应
     public function indexAction(Request $request)
-    {	//dump($this->getContainer()->getContext('userId', 0));
-        $userId = $this->getContainer()->getContext('userId');
+    {	
+        //异常处理
+        // try {
+        //     yield $this->testException();
+        //     //yield throwException(new \Exception("Error Processing Request", 1));
+        // } catch (\Exception $e) {
+        //     echo  $e->getMessage();
+        // }
+        //throw new \Exception("Error Processing Request", 1);
+        $userId = $this->getContainer()->getContext('userId', 0);
         $user = [];
         if ($userId > 0) $user = (yield $this->getUserService()->call("User\User::getUser", ['id' => $userId]));
 
@@ -19,6 +27,11 @@ class DefaultController extends Controller
         yield $this->render('Web/Views/Default/index.html.twig', [
             'user' => $user
             ]);
+    }
+
+    public function testException()
+    {
+        throw new \Exception("Error Processing Request", 1); 
     }
 
     public function getUserService()

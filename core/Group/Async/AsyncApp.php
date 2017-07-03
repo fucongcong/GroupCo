@@ -8,7 +8,7 @@ use Group\Handlers\ExceptionsHandler;
 use Group\Events\HttpEvent;
 use Group\Events\KernalEvent;
 use Group\Cache\BootstrapClass;
-use Group\Container\Container;
+use Group\Async\Container\Container;
 
 class AsyncApp
 {

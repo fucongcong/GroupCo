@@ -57,7 +57,7 @@ class UserController extends Controller
 
     	//get请求
     	if ($request->getMethod() == "GET") {
-    		if ($this->isLogin()) {
+    		if ($this->isLogin($request)) {
 	    		yield $this->redirect('/');
 	    	}
     		yield $this->render('Web/Views/User/register.html.twig');
@@ -91,7 +91,7 @@ class UserController extends Controller
     			'password' => $password
     		];
     		$user = (yield $this->getUserService()->call("User\User::getUserByMobile", ['mobile' => $mobile]));
-    		if ($user && $user['password'] == $password) {
+    		if (isset($user['password']) && $user['password'] == $password) {
 
     			$response = new JsonResponse([
 		                'msg' => '登录成功',
@@ -114,7 +114,7 @@ class UserController extends Controller
 
     	//get请求
     	if ($request->getMethod() == "GET") {
-    		if ($this->isLogin()) {
+    		if ($this->isLogin($request)) {
 	    		yield $this->redirect('/');
 	    	}
     		yield $this->render('Web/Views/User/login.html.twig');

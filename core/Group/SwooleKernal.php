@@ -6,6 +6,7 @@ use Group\App\App;
 use swoole_http_server;
 use Group\Coroutine\Scheduler;
 use Group\Container\Container;
+use Exception;
 
 class SwooleKernal
 {   
@@ -96,9 +97,22 @@ class SwooleKernal
         }
         $taskId = ++$this->maxTaskId;
         $container = new Container();
-        $task = new \Group\Coroutine\Task($taskId, $container, $this->app->terminate($request, $response, $this->path));
-        $task->run();
-        unset($container);
+        try {
+            $task = new \Group\Coroutine\Task($taskId, $container, $this->app->terminate($request, $response, $this->path));
+            $task->run();
+         } catch (Exception $e) {
+            $exception = new \Group\Handlers\ExceptionsHandler($container);
+            $exception->handleException($e);
+            $swooleHttpResponse = $response;
+            $response = $container->getResponse();
+            $swooleHttpResponse->status($response->getStatusCode());
+            $swooleHttpResponse->end($response->getContent());
+         }
+
+         unset($container);
+         unset($task);
+         unset($request);
+         unset($response);
         //$this->fix_gpc_magic($request);
         // $this->scheduler->newTask($this->app->terminate($request, $response));
         // $this->scheduler->run();

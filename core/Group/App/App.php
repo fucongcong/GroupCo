@@ -12,7 +12,7 @@ use Group\Cache\BootstrapClass;
 use Group\Container\Container;
 use Group\Events\Event;
 use \Symfony\Component\HttpFoundation\ParameterBag;
-
+use Group\Events\ExceptionEvent;
 class App
 {
     /**
@@ -110,8 +110,8 @@ class App
 
         $container->singleton('eventDispatcher')->dispatch(KernalEvent::INIT, new Event($container));
 
-        $handler = new ExceptionsHandler($container);
-        $handler->bootstrap();
+        // $handler = new ExceptionsHandler($container);
+        // $handler->bootstrap();
 
         $request = new \Request($request->get, $request->post, [], $request->cookie
             , $request->files, $request->server);

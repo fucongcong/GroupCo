@@ -86,4 +86,9 @@ function getContainer() {
     });
 }
 
-
+function throwException($e) {
+    return new SysCall(function(Task $task) use ($e){
+        $task->setException($e);
+        $task->run();
+    });
+}

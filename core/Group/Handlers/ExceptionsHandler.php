@@ -46,11 +46,11 @@ class ExceptionsHandler
     {
         error_reporting(-1);
 
-        set_error_handler([$this, 'handleError']);
+        //set_error_handler([$this, 'handleError']);
 
-        set_exception_handler([$this, 'handleException']);
+        //set_exception_handler([$this, 'handleException']);
 
-        register_shutdown_function([$this, 'handleShutdown']);
+        //register_shutdown_function([$this, 'handleShutdown']);
 
         ini_set('display_errors', 'Off');
     }
@@ -67,7 +67,7 @@ class ExceptionsHandler
      *
      */
     public function handleError($level, $message, $file = '', $line = 0, $context = [])
-    {
+    {echo $message;dump(2332);
         if (error_reporting() & $level) {
             $error = [
                 'message' => $message,
@@ -78,7 +78,7 @@ class ExceptionsHandler
 
             switch ($level) {
                 case E_USER_ERROR:
-                    $this->record($error);
+                    //$this->record($error);
                     if ($this->container->runningInConsole()) {
                         $this->renderForConsole($e);
                     } else {
@@ -105,12 +105,8 @@ class ExceptionsHandler
             'type'    => $e->getCode(),
         ];
 
-        $this->record($error);
-        if ($this->container->runningInConsole()) {
-            $this->renderForConsole($error);
-        } else {
-            $this->renderHttpResponse($error);
-        }
+        //$this->record($error);
+        $this->renderHttpResponse($error);
     }
 
     protected function renderForConsole($e)
@@ -128,8 +124,7 @@ class ExceptionsHandler
     {
         //dev下面需要render信息
         if ($this->container->getEnvironment() == 'prod') {
-            $controller = new \Controller($this->app);
-            $e = $controller->twigInit()->render(\Config::get('view::error_page'));
+            $e = $this->container->singleton('twig')->render(\Config::get('view::error_page'));
         }else {
             if (!is_array($e)) {
                 $trace        = debug_backtrace();
@@ -153,31 +148,28 @@ class ExceptionsHandler
      */
     public function handleShutdown()
     {
-        if ($e = error_get_last()) {
+        if ($e = error_get_last()) {dump(1);
             if ($this->isFatal($e['type'])) {
-                $this->record($e);
+                //$this->record($e);
                 $e['trace'] = '';
-                if ($this->container->runningInConsole()) {
-                    $this->renderForConsole($e);
-                } else {
-                    $this->renderHttpResponse($e);
-                }
+                $this->renderHttpResponse($e);
+                exit();
             }
                 
         }
     }
 
-    protected function record($e, $type = 'error')
-    {   
-        if (!isset($this->levels[$e['type']])) {
-            $level = 'Task Exception';
-        } else {
-            $level = $this->levels[$e['type']];
-        }
+    // protected function record($e, $type = 'error')
+    // {   
+    //     if (!isset($this->levels[$e['type']])) {
+    //         $level = 'Task Exception';
+    //     } else {
+    //         $level = $this->levels[$e['type']];
+    //     }
 
-        //要异步 否则报错
-        //\Log::$type('[' . $level . '] ' . $e['message'] . '[' . $e['file'] . ' : ' . $e['line'] . ']', []);
-    }
+    //     //要异步 否则报错
+    //     //\Log::$type('[' . $level . '] ' . $e['message'] . '[' . $e['file'] . ' : ' . $e['line'] . ']', []);
+    // }
 
     /**
      * Determine if the error type is fatal.

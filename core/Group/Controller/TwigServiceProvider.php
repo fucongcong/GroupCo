@@ -3,7 +3,7 @@
 namespace Group\Controller;
 
 use ServiceProvider;
-use Group\Twig\WebExtension;
+use Group\Controller\WebExtension;
 
 class TwigServiceProvider extends ServiceProvider
 {
