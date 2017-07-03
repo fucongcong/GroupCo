@@ -25,6 +25,8 @@ class GroupController extends Controller
     {  
         //串行
         // $start = microtime(true);
+        //设置2秒超时
+        //$this->getUserService()->setTimeout(2);
         // $users = (yield $this->getUserService()->call("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
         // dump($users);
 

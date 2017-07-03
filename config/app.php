@@ -1,10 +1,10 @@
 <?php
 return [
     // prod|dev
-    'environment' => 'dev',
+    'environment' => 'prod',
 
     //只有在dev环境下才生效。tip: swoole http server下无法正常debug
-    'debug' => true,
+    'debug' => false,
 
     //zh|en|fr...
     'locale' => 'zh',
