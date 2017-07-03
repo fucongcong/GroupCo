@@ -66,34 +66,34 @@ class ExceptionsHandler
      * @return void
      *
      */
-    public function handleError($level, $message, $file = '', $line = 0, $context = [])
-    {echo $message;dump(2332);
-        if (error_reporting() & $level) {
-            $error = [
-                'message' => $message,
-                'file'    => $file,
-                'line'    => $line,
-                'type'    => $level,
-            ];
+    // public function handleError($level, $message, $file = '', $line = 0, $context = [])
+    // {
+    //     if (error_reporting() & $level) {
+    //         $error = [
+    //             'message' => $message,
+    //             'file'    => $file,
+    //             'line'    => $line,
+    //             'type'    => $level,
+    //         ];
 
-            switch ($level) {
-                case E_USER_ERROR:
-                    //$this->record($error);
-                    if ($this->container->runningInConsole()) {
-                        $this->renderForConsole($e);
-                    } else {
-                        $this->renderHttpResponse($e);
-                    }
-                    break;
-                default:
-                    $this->record($error, 'warning');
-                    break;
-            }
-            return true;
-        }
+    //         switch ($level) {
+    //             case E_USER_ERROR:
+    //                 //$this->record($error);
+    //                 if ($this->container->runningInConsole()) {
+    //                     $this->renderForConsole($e);
+    //                 } else {
+    //                     $this->renderHttpResponse($e);
+    //                 }
+    //                 break;
+    //             default:
+    //                 $this->record($error, 'warning');
+    //                 break;
+    //         }
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     public function handleException($e)
     {
@@ -106,13 +106,13 @@ class ExceptionsHandler
         ];
 
         //$this->record($error);
-        $this->renderHttpResponse($error);
+        return $this->renderHttpResponse($error);
     }
 
-    protected function renderForConsole($e)
-    {
-        $this->renderHttpResponse($e);
-    }
+    // protected function renderForConsole($e)
+    // {
+    //     $this->renderHttpResponse($e);
+    // }
 
     /**
      * Render an exception as an HTTP response and send it.
@@ -138,7 +138,24 @@ class ExceptionsHandler
             }
         }
 
-        $this->container->singleton('eventDispatcher')->dispatch(KernalEvent::EXCEPTION, new ExceptionEvent($e, $this->container));
+        return $this->trace($e);
+
+        //$this->container->singleton('eventDispatcher')->dispatch(KernalEvent::EXCEPTION, new ExceptionEvent($e, $this->container));
+    }
+
+    protected function trace($error)
+    {
+        if (!is_array($error)) return $error;
+
+        $error['trace'] = str_replace("#", "<br/>", $error['trace']);
+        $str = "<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><title></title></head><body><style>html, body {height: 100%;}body {margin: 0;padding: 0;width: 100%; display: table;font-weight: 100;font-family: 'Lato';}
+.container {margin-top: 100px; vertical-align: middle;width: 1170px;margin-right: auto;margin-left: auto;}.content {text-align: left;display: inline-block;
+}.title {font-size: 16px;}h3{color:#a94442;}p {color:#3c763d;}</style><div class=\"container\"><div class=\"content\" style=\"color:#8a6d3b\">
+<h2>啊哦！出错了:</h2> </div> <br><div class=\"content\"><h3>错误文件名:</h3><p>{$error['file']}</p></div><br><div class=\"content\">
+<h3>line:{$error['line']}</h3></div><br><div class=\"content\"><h3>错误信息:</h3> <p>{$error['message']}</p></div> <br><div class=\"content\"><h3>Trace:</h3><p>{$error['trace']}</p></div><br><div class=\"content\">
+<p style=\"color:#31708f\">power by group framework @author:fucongcong;email:cc@xitongxue.com. </p></div></div></body></html>";
+
+        return $str;
     }
 
     /**
@@ -146,18 +163,18 @@ class ExceptionsHandler
      *
      * @return void
      */
-    public function handleShutdown()
-    {
-        if ($e = error_get_last()) {dump(1);
-            if ($this->isFatal($e['type'])) {
-                //$this->record($e);
-                $e['trace'] = '';
-                $this->renderHttpResponse($e);
-                exit();
-            }
+    // public function handleShutdown()
+    // {
+    //     if ($e = error_get_last()) {dump(1);
+    //         if ($this->isFatal($e['type'])) {
+    //             //$this->record($e);
+    //             $e['trace'] = '';
+    //             $this->renderHttpResponse($e);
+    //             exit();
+    //         }
                 
-        }
-    }
+    //     }
+    // }
 
     // protected function record($e, $type = 'error')
     // {   
@@ -177,9 +194,9 @@ class ExceptionsHandler
      * @param  int  $type
      * @return bool
      */
-    protected function isFatal($type)
-    {
-        return in_array($type, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]);
-    }
+    // protected function isFatal($type)
+    // {
+    //     return in_array($type, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]);
+    // }
 
 }

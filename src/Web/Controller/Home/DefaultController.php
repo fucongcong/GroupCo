@@ -18,15 +18,13 @@ class DefaultController extends Controller
         // } catch (\Exception $e) {
         //     echo  $e->getMessage();
         // }
-        //throw new \Exception("Error Processing Request", 1);
-        $userId = $this->getContainer()->getContext('userId', 0);
-        $user = [];
-        if ($userId > 0) $user = (yield $this->getUserService()->call("User\User::getUser", ['id' => $userId]));
+
+        // $userId = $this->getContainer()->getContext('userId', 0);
+        // $user = [];
+        // if ($userId > 0) $user = (yield $this->getUserService()->call("User\User::getUser", ['id' => $userId]));
 
         //渲染模版 模版的启始路径可在config的view.php配置
-        yield $this->render('Web/Views/Default/index.html.twig', [
-            'user' => $user
-            ]);
+        yield $this->render('Web/Views/Default/index.html.twig');
     }
 
     public function testException()

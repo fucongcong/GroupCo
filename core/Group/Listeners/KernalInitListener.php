@@ -26,11 +26,6 @@ class KernalInitListener extends \Listener
                 'priority'  => 0,
             ],
             [
-                'eventName' => KernalEvent::EXCEPTION,
-                'listener'  => 'Group\Listeners\ExceptionListener',
-                'priority'  => 0,
-            ],
-            [
                 'eventName' => KernalEvent::NOTFOUND,
                 'listener'  => 'Group\Listeners\NotFoundListener',
                 'priority'  => 0,

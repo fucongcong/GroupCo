@@ -108,10 +108,7 @@ class App
 
         $this->registerOnRequestServices($container);
 
-        $container->singleton('eventDispatcher')->dispatch(KernalEvent::INIT, new Event($container));
-
-        // $handler = new ExceptionsHandler($container);
-        // $handler->bootstrap();
+        yield $container->singleton('eventDispatcher')->dispatch(KernalEvent::INIT, new Event($container));
 
         $request = new \Request($request->get, $request->post, [], $request->cookie
             , $request->files, $request->server);
@@ -123,8 +120,8 @@ class App
         }
 
         $container->setSwooleResponse($response);
-        $container->setRequest($request);
-
+        yield $container->setRequest($request);
+        
         $container->router = new Router($container);
         yield $container->router->match();
 
@@ -225,7 +222,7 @@ class App
         $response = $container->getResponse();
         $request = $container->getRequest();
 
-        $container->singleton('eventDispatcher')->dispatch(KernalEvent::RESPONSE, new HttpEvent($request, $response, $swooleHttpResponse));
+        yield $container->singleton('eventDispatcher')->dispatch(KernalEvent::RESPONSE, new HttpEvent($request, $response, $swooleHttpResponse));
 
         unset($container);
     }

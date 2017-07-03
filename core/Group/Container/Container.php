@@ -228,7 +228,7 @@ class Container implements ContainerContract
     public function setRequest(\Request $request)
     {   
         $this->request = $request;
-        $this->singleton('eventDispatcher')->dispatch(KernalEvent::REQUEST, new HttpEvent($request, null, $this->swooleResponse, $this));
+        yield $this->singleton('eventDispatcher')->dispatch(KernalEvent::REQUEST, new HttpEvent($request, null, $this->swooleResponse, $this));
     }
 
     /**

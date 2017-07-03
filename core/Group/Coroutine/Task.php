@@ -115,11 +115,15 @@ class Task
                 //\Log::info($this->taskId.__METHOD__ . " values  pop and send", [__CLASS__]);
 
             } catch (\Exception $e) {
-                // $exception = new ExceptionsHandler($this->container);
-                // $exception->handleException($e);
-
                 if ($this->coStack->isEmpty()) {
-                    throw $e;
+                    $swooleHttpResponse = $this->container->getSwooleResponse();
+                    $exception = new \Group\Handlers\ExceptionsHandler($this->container);
+                    $error = $exception->handleException($e);
+                    $response = new \Response($error, 500);
+                    $swooleHttpResponse->status($response->getStatusCode());
+                    $swooleHttpResponse->end($response->getContent());
+                    return;
+                    //throw $e; 
                 }
 
                 $this->coroutine = $this->coStack->pop();

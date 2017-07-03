@@ -11,7 +11,7 @@
           <ul class="nav navbar-nav navbar-right">
 
             {% if app.userId|default(0) %}
-              <li><a href="">{{ user.mobile|default('') }}</a></li>
+              <li><a href="">{{ app.user.mobile|default('') }}</a></li>
               <li><a href="/logout">退出</a></li>
             {% else %}
               <li><a href="/register">注册</a></li>
