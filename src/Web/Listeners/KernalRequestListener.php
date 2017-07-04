@@ -22,7 +22,7 @@ class KernalRequestListener extends Listener
         $userId = $this->getUserId($request);
         if ($userId) {
             $container->setContext('userId', $userId);
-            $user = (yield service('user_service')->call("User\User::getUser", ['id' => $userId]));
+            $user = (yield service('user')->call("User\User::getUser", ['id' => $userId]));
         	$container->singleton('twig')->addGlobal('app', ['userId' => $userId, 'user' => $user]);
         } else {
             $container->setContext('userId', 0);

@@ -1,16 +1,17 @@
 #!/usr/bin/env php
 <?php
 
-use Group\Console\Console;
-use Group\App\App;
+use Group\Sync\Console\Console;
+use Group\Sync\SyncApp;
+
+define('ASYNC', FALSE);
+define('__ROOT__', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . "../");
 
 $loader = require __DIR__.'/../vendor/autoload.php';
 
-define('__ROOT__', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . "../");
-
 $loader->setUseIncludePath(true);
 
-$app = new App();
+$app = new SyncApp();
 $app -> initSelf();
 $app -> registerServices();
 $app -> singleton('container') -> setAppPath(__ROOT__);

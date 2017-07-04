@@ -97,7 +97,7 @@ class Config implements ConfigContract
         $config = $this->config;
 
         if (!isset($config[$key])) {
-            $app = require("config/".$key.".php");
+            $app = require_once("config/".$key.".php");
             $this->config = array_merge($this->config, [$key => $app]);
         }
 

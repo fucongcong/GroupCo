@@ -65,7 +65,7 @@ class GroupController extends Controller
 
     public function getUserService()
     {
-        return service("user_service");
+        return service("user");
     }
 
     public function testException()

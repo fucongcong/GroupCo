@@ -39,11 +39,11 @@ Class Router implements RouterContract
      * @param Container container
      * @param Request request
      */
-    public function __construct(Container $container)
+    public function __construct(Container $container, $routing)
     {
         $this->container = $container;
         $request = $this->container->getRequest();
-        $this->setRoute($this->methods, $request->getPathInfo(), $request->getMethod());
+        $this->setRoute($this->methods, $request->getPathInfo(), $request->getMethod(), $routing);
     }
 
     /**
@@ -188,13 +188,13 @@ Class Router implements RouterContract
      * @param  methods
      * @param  uri
      */
-    public function setRoute($methods, $uri, $method)
+    public function setRoute($methods, $uri, $method, $routing)
     {   
         $this->route = $this->container->singleton('route');
         $this->route->setMethods($methods);
         $this->route->setCurrentMethod($method);
         $this->route->setUri($uri);
-        $this->route->setRouting($this->getRoutingConfig());
+        $this->route->setRouting($routing);
     }
 
     private function getMethodsCache()
@@ -240,30 +240,5 @@ Class Router implements RouterContract
         $config = ArrayToolkit::index($config, 'pattern');
 
         return $config;
-    }
-
-    private function getRoutingConfig()
-    {   
-        $file = 'route/routing.php';
-
-        if ($this->container->getEnvironment() == "prod") {
-            if(\FileCache::isExist($file)) {
-                return \FileCache::get($file);
-            }
-        }
-
-        $sources = \Config::get('routing::source');
-
-        $routings = [];
-        foreach ($sources as $source) {
-            $routing = include "src/{$source}/routing.php";
-            if ($routing) {
-                $routings = array_merge($routings, $routing);
-            }
-        }   
-    
-        \FileCache::set($file, $routings);
-    
-        return $routings;
     }
 }

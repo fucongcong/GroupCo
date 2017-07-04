@@ -135,7 +135,7 @@ class UserController extends Controller
 
     protected function getUserService()
     {
-        return service("user_service");
+        return service("user");
     }
 }
 

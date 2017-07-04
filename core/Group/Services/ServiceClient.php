@@ -23,7 +23,7 @@ class ServiceClient
     public function __construct($service)
     {
         $this->service = $service;
-        $servers = Config::get("async::server");
+        $servers = Config::get("service::server");
         if (!isset($servers[$service])) throw new \Exception("Not Found the {$service}", 1);
         $this->serv = $servers[$service]['serv'];
         $this->port = $servers[$service]['port'];
@@ -41,7 +41,7 @@ class ServiceClient
             $this->timeout = $timeout;
         }
 
-        $data = \Group\Async\DataPack::pack($cmd, $data);
+        $data = \Group\Sync\DataPack::pack($cmd, $data);
         $data .= $this->package_eof;
         $res = (yield new \Group\Async\Client\TCP($this->serv, $this->port, $data, $this->timeout));
         if ($res && $res['response']) {

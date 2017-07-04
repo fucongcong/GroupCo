@@ -2,7 +2,7 @@
 
 namespace src\Web\Command;
 
-use Group\Console\Command as Command;
+use Group\Sync\Console\Command as Command;
 
 class LogClearCommand extends Command
 {	

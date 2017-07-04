@@ -13,6 +13,7 @@ use Group\Container\Container;
 use Group\Events\Event;
 use \Symfony\Component\HttpFoundation\ParameterBag;
 use Group\Events\ExceptionEvent;
+
 class App
 {
     /**
@@ -20,6 +21,8 @@ class App
      *
      */
     protected $instances;
+
+    protected $routing;
 
     private static $instance;
 
@@ -31,15 +34,12 @@ class App
      */
     protected $aliases = [
         'App'               => 'Group\App\App',
-        'Cache'             => 'Group\Cache\Cache',
         'Config'            => 'Group\Config\Config',
         'Container'         => 'Group\Container\Container',
         'Controller'        => 'Group\Controller\Controller',
-        'Dao'               => 'Group\Dao\Dao',
         'Event'             => 'Group\Events\Event',
         'EventDispatcher'   => 'Group\EventDispatcher\EventDispatcher',
         'Filesystem'        => 'Group\Common\Filesystem',
-        'FileCache'         => 'Group\Cache\FileCache',
         'StaticCache'       => 'Group\Cache\StaticCache',
         'Route'             => 'Group\Routing\Route',
         'Request'           => 'Group\Http\Request',
@@ -50,7 +50,6 @@ class App
         'Service'           => 'Group\Services\Service',
         'ServiceProvider'   => 'Group\Services\ServiceProvider',
         'Test'              => 'Group\Test\Test',
-        'Log'               => 'Group\Log\Log',
         'Listener'          => 'Group\Listeners\Listener',
         'Queue'             => 'Group\Queue\Queue',
     ];
@@ -60,14 +59,11 @@ class App
      *
      */
     protected $singles = [
-        'dao' => 'Group\Dao\Dao',
     ];
 
     protected $onWorkStartServices = [
         'Group\Services\ServiceRegister',
-        'Group\Cache\FileCacheServiceProvider',
         'Group\Cache\StaticCacheServiceProvider',
-        //'Group\Cache\CacheServiceProvider',
     ];
 
     protected $onRequestServices = [
@@ -94,6 +90,7 @@ class App
         $this->initSelf();
         $this->setServiceProviders();
         $this->registerOnWorkStartServices();
+        $this->initRoutingConfig();
     }
 
     /**
@@ -121,7 +118,7 @@ class App
         $container->setSwooleResponse($response);
         yield $container->setRequest($request);
         
-        $container->router = new Router($container);
+        $container->router = new Router($container, $this->routing);
         yield $container->router->match();
 
         yield $this->handleSwooleHttp($response);
@@ -235,6 +232,22 @@ class App
     {
         if(isset($this->instances[$name]))
             unset($this->instances[$name]);
+    }
+
+    private function initRoutingConfig()
+    {   
+        $file = 'route/routing.php';
+        $sources = Config::get('routing::source');
+
+        $routings = [];
+        foreach ($sources as $source) {
+            $routing = include_once "src/{$source}/routing.php";
+            if ($routing) {
+                $routings = array_merge($routings, $routing);
+            }
+        }   
+    
+        $this->routing = $routings;
     }
 
     /**

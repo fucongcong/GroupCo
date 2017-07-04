@@ -10,6 +10,22 @@
 
 #### 强大的Twig、Doctrine支持视图、数据层
 
+##### 环境依赖
+- hiredis 
+- redis
+- mysql
+- php5.6
+- swoole >=1.9.14 (在编译swoole时加入--enable-async-redis，开启异步redis客户端)
+
+##### 安装
+- 克隆项目
+- 执行 => composer install
+- 修改配置nginx，见doc/nginx.md,配置hosts
+- 配置config中的async,database等配置
+- 启动server => php server.php
+- 启动async服务 => app/service user
+- 访问配置的servername
+
 ##### 串行调用
 
 ```php
@@ -17,8 +33,8 @@
 	//串行
     $start = microtime(true);
     //设置2秒超时
-    service("user_service")->setTimeout(2);
-    $users = (yield service("user_service")->call("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
+    service("user")->setTimeout(2);
+    $users = (yield service("user")->call("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
     dump($users);
 
 ```
@@ -29,9 +45,9 @@
 
     //并行
     $start = microtime(true);
-    $callId1 = service("user_service")->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
-    $callId2 = service("user_service")->addCall("User\User::getUser", ['id' => 1]);
-    $res = (yield service("user_service")->multiCall());
+    $callId1 = service("user")->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
+    $callId2 = service("user")->addCall("User\User::getUser", ['id' => 1]);
+    $res = (yield service("user")->multiCall());
     dump($res[$callId1]);
     dump($res[$callId2]);
     dump(microtime(true) - $start);

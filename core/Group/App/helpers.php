@@ -1,6 +1,6 @@
 <?php
 if (ASYNC) {
-    include(dirname(__FILE__)."/../Async/helpers.php");
+	include("func.php");
 } else {
-    include("func.php");
+    include(dirname(__FILE__)."/../Sync/helpers.php");
 }
