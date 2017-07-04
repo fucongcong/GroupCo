@@ -10,76 +10,56 @@
 
 #### 强大的Twig、Doctrine支持视图、数据层
 
-联系我Email: cc@xitongxue.com,coco.fu@clothesmake.com
+##### 串行调用
 
-##### 示例代码
 ```php
-<?php
 
-namespace src\Web\Controller\Demo;
+	//串行
+    $start = microtime(true);
+    //设置2秒超时
+    service("user_service")->setTimeout(2);
+    $users = (yield service("user_service")->call("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
+    dump($users);
 
-use Controller;
-use Request;
+```
 
-class DemoController extends Controller
-{
-    public function addAction()
-    {
-        yield new \Response('1');
-    }
+##### 并行调用
 
-    public function testAction(Request $request, $id)
-    {  
-        //串行
-        $start = microtime(true);
-        //设置2秒超时
-        $this->getUserService()->setTimeout(2);
-        $users = (yield $this->getUserService()->call("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
-        dump($users);
+```php
 
-        $users = (yield $this->getUserService()->call("User\User::getUser", ['id' => 1]));
-        dump($users);
-        dump(microtime(true) - $start);
+    //并行
+    $start = microtime(true);
+    $callId1 = service("user_service")->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
+    $callId2 = service("user_service")->addCall("User\User::getUser", ['id' => 1]);
+    $res = (yield service("user_service")->multiCall());
+    dump($res[$callId1]);
+    dump($res[$callId2]);
+    dump(microtime(true) - $start);
+    
+```
 
-        //并行
-        $start = microtime(true);
-        $callId1 = $this->getUserService()->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
-        $callId2 = $this->getUserService()->addCall("User\User::getUser", ['id' => 1]);
-        $res = (yield $this->getUserService()->multiCall());
-        dump($res[$callId1]);
-        dump($res[$callId2]);
-        dump(microtime(true) - $start);
+##### 异步redis
 
-        //异步redis
-        yield \Group\Cache\AsyncRedis::set('foo', 'bar');
-        dump(yield \Group\Cache\AsyncRedis::get('foo'));
-        $user = json_encode(['foo' => 'bar']);
-        yield \Group\Cache\AsyncRedis::hSet('user', 1, $user);
-        dump(yield \Group\Cache\AsyncRedis::hGet('user', 1));
+```php
 
-        //异常处理
-        try {
-            yield $this->testException();
-            //yield throwException(new \Exception("Error Processing Request", 1));
-        } catch (\Exception $e) {
-            echo  $e->getMessage();
-        }
+    //异步redis
+    yield \Group\Cache\AsyncRedis::set('foo', 'bar');
+    dump(yield \Group\Cache\AsyncRedis::get('foo'));
+    $user = json_encode(['foo' => 'bar']);
+    yield \Group\Cache\AsyncRedis::hSet('user', 1, $user);
+    dump(yield \Group\Cache\AsyncRedis::hGet('user', 1));
+    
+```
 
-        yield $this->render('Web/Views/Group/index.html.twig', [
-            'user' => $users
-            ]);
-    }
+##### 异常处理
 
-    public function getUserService()
-    {
-        return service("user_service");
-    }
+```php
 
-    public function testException()
-    {
+    try {
         throw new \Exception("Error Processing Request", 1); 
+        //yield throwException(new \Exception("Error Processing Request", 1));
+    } catch (\Exception $e) {
+        echo  $e->getMessage();
     }
-}
-
 
 ```
