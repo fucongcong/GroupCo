@@ -43,6 +43,21 @@ class GroupController extends Controller
         // dump($res[$callId2]);
         // dump(microtime(true) - $start);
 
+        // //异步redis
+        // yield \Group\Cache\AsyncRedis::set('foo', 'bar');
+        // dump(yield \Group\Cache\AsyncRedis::get('foo'));
+        // $user = json_encode(['foo' => 'bar']);
+        // yield \Group\Cache\AsyncRedis::hSet('user', 1, $user);
+        // dump(yield \Group\Cache\AsyncRedis::hGet('user', 1));
+
+        //异常处理
+        // try {
+        //     yield $this->testException();
+        //     //yield throwException(new \Exception("Error Processing Request", 1));
+        // } catch (\Exception $e) {
+        //     echo  $e->getMessage();
+        // }
+
         yield $this->render('Web/Views/Group/index.html.twig', [
             'user' => $users
             ]);
@@ -53,4 +68,8 @@ class GroupController extends Controller
         return service("user_service");
     }
 
+    public function testException()
+    {
+        throw new \Exception("Error Processing Request", 1); 
+    }
 }

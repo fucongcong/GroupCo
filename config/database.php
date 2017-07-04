@@ -106,8 +106,7 @@ return
             'port'     => 6379,
             'prefix'   => 'group_',
             'auth'     => '',
-            //normal 正常| persistence 持久化
-            'connect' => 'persistence',
+            'connect'  => 'persistence'
         ],
 
     ],

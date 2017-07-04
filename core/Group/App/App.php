@@ -67,8 +67,7 @@ class App
         'Group\Services\ServiceRegister',
         'Group\Cache\FileCacheServiceProvider',
         'Group\Cache\StaticCacheServiceProvider',
-        'Group\Redis\RedisServiceProvider',
-        'Group\Cache\CacheServiceProvider',
+        //'Group\Cache\CacheServiceProvider',
     ];
 
     protected $onRequestServices = [
