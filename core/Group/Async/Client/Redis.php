@@ -3,6 +3,7 @@
 namespace Group\Async\Client;
 
 use swoole_redis;
+use Config;
 
 class Redis extends Base
 {
@@ -18,16 +19,30 @@ class Redis extends Base
 
     protected $parameters;
 
-    public function __construct($ip, $port, $method, $parameters, $timeout)
+    public function __construct($ip, $port, $timeout)
     {   
-        $this->method = $method;
-        $this->parameters = $parameters;
         parent::__construct($ip, $port, '', $timeout);
     }
 
-    public function call(callable $callback)
+    public function setMethod($method)
     {
-        $client = new swoole_redis;
+        $this->method = $method;
+    }
+
+    public function setParameters($parameters)
+    {
+        $this->parameters = $parameters;
+    }
+
+    public function call(callable $callback)
+    {   
+        $config = Config::get("database::redis");
+        if (isset($config['default']['auth'])) {
+            $options['password'] = $config['default']['auth'];
+        }
+        $options['timeout'] = $this->timeout;
+
+        $client = new swoole_redis($options);
         $client->connect($this->ip, $this->port, function (swoole_redis $client, $res) use ($callback) {
             $this->calltime = microtime(true);
             if ($res === false) {

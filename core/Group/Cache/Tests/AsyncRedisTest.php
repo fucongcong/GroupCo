@@ -3,7 +3,7 @@
 namespace Group\Cache\Tests;
 
 use Test;
-use Group\Cache\AsyncRedis;
+use AsyncRedis;
 
 class AsyncRedisTest extends Test
 {

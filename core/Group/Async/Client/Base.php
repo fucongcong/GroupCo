@@ -4,7 +4,7 @@ namespace Group\Async\Client;
 
 use Config;
 
-class Base 
+abstract class Base 
 {	
 	public function __construct($ip, $port, $data, $timeout)
     {
@@ -14,8 +14,5 @@ class Base
         $this->timeout = $timeout;
     }
 
-    public function call(callable $callback)
-    {
-
-    }
+    public function call(callable $callback) {}
 }

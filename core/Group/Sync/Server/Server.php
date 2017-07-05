@@ -53,7 +53,7 @@ class Server
 
     public function onWorkerStart(swoole_server $serv, $workerId)
     {
-        opcache_reset();
+        if (function_exists('opcache_reset')) opcache_reset();
         $loader = require __ROOT__.'/vendor/autoload.php';
         $loader->setUseIncludePath(true);
         $app = new \Group\Sync\SyncApp();

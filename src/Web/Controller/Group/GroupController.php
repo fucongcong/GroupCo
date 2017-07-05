@@ -44,11 +44,11 @@ class GroupController extends Controller
         // dump(microtime(true) - $start);
 
         // //异步redis
-        // yield \Group\Cache\AsyncRedis::set('foo', 'bar');
-        // dump(yield \Group\Cache\AsyncRedis::get('foo'));
+        // yield \AsyncRedis::set('foo', 'bar');
+        // dump(yield \AsyncRedis::get('foo'));
         // $user = json_encode(['foo' => 'bar']);
-        // yield \Group\Cache\AsyncRedis::hSet('user', 1, $user);
-        // dump(yield \Group\Cache\AsyncRedis::hGet('user', 1));
+        // yield \AsyncRedis::hSet('user', 1, $user);
+        // dump(yield \AsyncRedis::hGet('user', 1));
 
         //异常处理
         // try {

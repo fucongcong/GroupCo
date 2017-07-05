@@ -50,6 +50,8 @@ class App
         'Test'              => 'Group\Test\Test',
         'Listener'          => 'Group\Listeners\Listener',
         'Queue'             => 'Group\Queue\Queue',
+        'AsyncMysql'        => 'Group\Dao\AsyncMysql',
+        'AsyncRedis'        => 'Group\Cache\AsyncRedis',
     ];
 
     /**

@@ -53,15 +53,35 @@
 ##### 异步redis
 
 ```php
+    
+    use AsyncRedis;
 
     //异步redis
-    yield \Group\Cache\AsyncRedis::set('foo', 'bar');
-    dump(yield \Group\Cache\AsyncRedis::get('foo'));
+    yield AsyncRedis::set('foo', 'bar');
+    dump(yield AsyncRedis::get('foo'));
     $user = json_encode(['foo' => 'bar']);
-    yield \Group\Cache\AsyncRedis::hSet('user', 1, $user);
+    yield AsyncRedis::hSet('user', 1, $user);
     dump(yield \Group\Cache\AsyncRedis::hGet('user', 1));
     
 ```
+
+##### 异步mysql
+
+```php
+    
+    use AsyncMysql;
+    
+    //异步mysql
+    $res = (yield AsyncMysql::query("INSERT INTO `user` (`id`, `mobile`, `password`) VALUES (NULL, '18768122222', '11111')"));
+    //失败返回false   
+    if ($res) {
+        $result = $res->getResult();
+        $affectedRows = $res->getAffectedRows();
+        $id = $res->getInsertId();
+    }
+    
+```
+
 
 ##### 异常处理
 

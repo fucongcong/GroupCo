@@ -33,8 +33,12 @@ class AsyncRedis
             self::$port = $config['default']['port'];
         }
 
-        $res = (yield new Redis(self::$host, self::$port, $method, $parameters, self::$timeout));
+        $redis = new Redis(self::$host, self::$port, self::$timeout);
+        $redis->setMethod($method);
+        $redis->setParameters($parameters);
 
+        $res = (yield $redis);
+        
         if ($res && $res['response']) {
             yield $res['response'];
         }
