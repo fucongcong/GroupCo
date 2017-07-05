@@ -29,5 +29,7 @@ class AsyncRedisTest extends Test
         yield AsyncRedis::hSet('foo', 1, 'group');
         $res = (yield AsyncRedis::hGet('foo', 1));
         $this->assertEquals('group', $res);
+
+        yield AsyncRedis::hDel('foo', 1);
     }
 }
