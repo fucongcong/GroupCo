@@ -14,11 +14,11 @@ return [
             //server配置，请根据实际情况调整参数,守护进程参数请不要设为true
             'config' => [
                 //worker进程数量         
-                'worker_num' => 10,
+                'worker_num' => 20,
                 //最大请求数，超过后讲重启worker进程
                 'max_request' => 50000,
                 //task进程数量
-                'task_worker_num' => 20,
+                'task_worker_num' => 50,
                 //task进程最大处理请求上限，超过后讲重启task进程
                 'task_max_request' => 50000,
                 //打开EOF检测

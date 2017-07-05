@@ -4,12 +4,11 @@
  */
 use Group\App\App;
 
+define('ASYNC', TRUE);
+define('__ROOT__', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . "../");
+
 $loader = require __DIR__.'/../vendor/autoload.php';
 $loader->setUseIncludePath(true);
 
-define('__ROOT__', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . "../");
-
 $app = new App();
-$app -> initSelf();
-$app -> registerServices();
-$app -> singleton('container') -> setAppPath(__ROOT__);
+$app -> init();

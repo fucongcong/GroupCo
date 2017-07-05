@@ -69,15 +69,12 @@ class Task
         while (true) {
             try {
                 if ($this->exception) {
-
                     $this->coroutine->throw($this->exception);
                     $this->exception = null;
                     continue;
                 }
 
                 $value = $this->coroutine->current();
-
-                //\Log::info($this->taskId.__METHOD__ . " value === " . print_r($value, true), [__CLASS__]);
 
                 //如果是coroutine，入栈
                 if ($value instanceof \Generator) {
@@ -117,13 +114,17 @@ class Task
             } catch (\Exception $e) {
                 if ($this->coStack->isEmpty()) {
                     $swooleHttpResponse = $this->container->getSwooleResponse();
-                    $exception = new \Group\Handlers\ExceptionsHandler($this->container);
-                    $error = $exception->handleException($e);
-                    $response = new \Response($error, 500);
-                    $swooleHttpResponse->status($response->getStatusCode());
-                    $swooleHttpResponse->end($response->getContent());
-                    return;
-                    //throw $e; 
+                    if ($swooleHttpResponse) {
+                        $exception = new \Group\Handlers\ExceptionsHandler($this->container);
+                        $error = $exception->handleException($e);
+                        $response = new \Response($error, 500);
+                        $swooleHttpResponse->status($response->getStatusCode());
+                        $swooleHttpResponse->end($response->getContent());
+                        return;
+                    } else {
+                        //此时上层已经无法catch了
+                        throw $e; 
+                    }
                 }
 
                 $this->coroutine = $this->coStack->pop();
