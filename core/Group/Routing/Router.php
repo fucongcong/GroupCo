@@ -173,13 +173,7 @@ Class Router implements RouterContract
 
     protected function checkMethods()
     {
-        if ($this->container->getEnvironment() == "prod") {
-            return $this->getMethodsCache();
-        }
-
-        $config = $this->createMethodsCache();
-
-        return $config;
+        return $this->createMethodsConfig();
     }
 
     /**
@@ -197,26 +191,12 @@ Class Router implements RouterContract
         $this->route->setRouting($routing);
     }
 
-    private function getMethodsCache()
-    {
-        $file = 'route/routing_'.$this->route->getCurrentMethod().'.php';
-
-        if(\FileCache::isExist($file)) {
-            return \FileCache::get($file);
-        }
-
-        $config = $this->createMethodsCache();
-        \FileCache::set($file, $config);
-
-        return $config;
-    }
-
     /**
      * create routing cache
      *
      * @return  array
      */
-    private function createMethodsCache()
+    private function createMethodsConfig()
     {   
         $routing = $this->route->getRouting();
 

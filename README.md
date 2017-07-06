@@ -8,21 +8,22 @@
 #### * 单元测试覆盖
 
 ##### 环境依赖
-- hiredis 
+- hiredis
 - redis
 - mysql
 - php5.6
-- swoole >=1.9.14 (在编译swoole时加入--enable-async-redis，开启异步redis客户端)
+- swoole >=1.9.15 (在编译swoole时加入--enable-async-redis，开启异步redis客户端)
 
 ##### 安装
 - 克隆项目
 - 执行 => composer install
 - 修改配置nginx，见doc/nginx.md,配置hosts
 - 配置config中的service,database等配置文件
+- 新建一个runtime目录，用于存放日志等cache文件
 - 执行脚本 => app/console sql:migrate 
 - 启动http server => php server.php
 - 启动async服务 => app/service user
-- 访问配置的servername，groupco.com
+- 访问配置的servername => groupco.com，开始异步协程之旅
 
 ##### 基础服务
 - AsyncMysql
@@ -54,7 +55,7 @@
     $start = microtime(true);
     //设置2秒超时
     service("user")->setTimeout(2);
-    
+
     $callId1 = service("user")->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
     $callId2 = service("user")->addCall("User\User::getUser", ['id' => 1]);
     $res = (yield service("user")->multiCall());

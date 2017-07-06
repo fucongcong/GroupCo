@@ -22,6 +22,7 @@ return [
     ],
 
     'onRequestServices' => [
+        //如果做api服务,可以不加载twig
         'Group\Controller\TwigServiceProvider',
     ],
 
