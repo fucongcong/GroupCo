@@ -52,9 +52,13 @@
 ```php
 
     $start = microtime(true);
+    //设置2秒超时
+    service("user")->setTimeout(2);
+    
     $callId1 = service("user")->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
     $callId2 = service("user")->addCall("User\User::getUser", ['id' => 1]);
     $res = (yield service("user")->multiCall());
+
     dump($res[$callId1]);
     dump($res[$callId2]);
     dump(microtime(true) - $start);
@@ -67,11 +71,14 @@
     
     use AsyncRedis;
 
+    //设置超时时间
+    AsyncRedis::setTimeout(2);
+
     yield AsyncRedis::set('foo', 'bar');
     dump(yield AsyncRedis::get('foo'));
     $user = json_encode(['foo' => 'bar']);
     yield AsyncRedis::hSet('user', 1, $user);
-    dump(yield \Group\Cache\AsyncRedis::hGet('user', 1));
+    dump(yield AsyncRedis::hGet('user', 1));
     
 ```
 
@@ -81,6 +88,9 @@
     
     use AsyncMysql;
     
+    //设置超时时间
+    AsyncMysql::setTimeout(2);
+
     $res = (yield AsyncMysql::query("INSERT INTO `user` (`id`, `mobile`, `password`) VALUES (NULL, '18768122222', '11111')"));
     //失败返回false   
     if ($res) {
