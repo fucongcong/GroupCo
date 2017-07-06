@@ -1,25 +1,12 @@
 <?php
 
-namespace Group\Sync\Log;
+namespace Group\Async;
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Monolog\Handler\FirePHPHandler;
+use Config;
 
-class Log
+class AsyncLog
 {   
-    protected static $levels = array(
-        100 => 'DEBUG',
-        200 => 'INFO',
-        250 => 'NOTICE',
-        300 => 'WARNING',
-        400 => 'ERROR',
-        500 => 'CRITICAL',
-        550 => 'ALERT',
-        600 => 'EMERGENCY',
-    );
-
-    public static $cacheDir = "runtime/logs/service";
+    public static $logDir = "runtime/logs";
 
     public static function debug($message, array $context  = [], $model = 'web.app')
     {
@@ -61,22 +48,17 @@ class Log
         return self::writeLog(__FUNCTION__, $message, $context, $model);
     }
 
-    public static function clear()
-    {
-
-    }
-
     public static function writeLog($level, $message, $context, $model)
-    {
-        $logger = new Logger($model);
-        $env = app('container')->getEnvironment();
-        $path = app('container')->getAppPath();
-        $cacheDir = static::$cacheDir;
+    {   
+        $env = Config::get("app::environment");
+        $logDir = static::$logDir;
+        if (!empty($context)) {
+            $context = json_encode($context);
+        } else {
+            $context = "";
+        }
 
-        $logger->pushHandler(new StreamHandler($path.$cacheDir.'/'.$env.'.log', self::$levels[$level]));
-        $logger->pushHandler(new FirePHPHandler());
-
-        return $logger->$level($message, $context);
-
+        $record = "[".date('Y-n-d H:i:s')."] {$model}.{$level}: {$message} [{$context}]\n";
+        yield AsyncFile::write(__ROOT__.$logDir."/".date('Ymd')."/{$env}.log", $record, FILE_APPEND);
     }
 }

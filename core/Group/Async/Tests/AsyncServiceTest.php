@@ -1,10 +1,10 @@
 <?php
 
-namespace Group\Cache\Tests;
+namespace Group\Async\Tests;
 
 use Test;
 
-class ServiceClientTest extends Test
+class AsyncServiceTest extends Test
 {
     public function unitservice()
     {   

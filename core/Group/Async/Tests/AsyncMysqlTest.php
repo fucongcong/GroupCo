@@ -1,6 +1,6 @@
 <?php
 
-namespace Group\Dao\Tests;
+namespace Group\Async\Tests;
 
 use Test;
 use AsyncMysql;

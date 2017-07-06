@@ -1,6 +1,6 @@
 <?php
 
-namespace Group\Dao;
+namespace Group\Async;
 
 use Config;
 use \Group\Async\Client\Mysql;

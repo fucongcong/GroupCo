@@ -22,8 +22,7 @@ return [
     ],
 
     'onRequestServices' => [
-        //'Group\Redis\RedisServiceProvider',
-        //'Group\Queue\QueueServiceProvider',
+        'Group\Controller\TwigServiceProvider',
     ],
 
     //需要实例化的单例

@@ -2,14 +2,14 @@
 
 namespace Group\Services;
 
-use Group\Services\ServiceClient;
+use AsyncService;
 
 class Service
 {
     public function createService($serviceName)
     {
         return app()->singleton(strtolower($serviceName), function() use ($serviceName) {
-            return new ServiceClient($serviceName);
+            return new AsyncService($serviceName);
         });
     }
 }

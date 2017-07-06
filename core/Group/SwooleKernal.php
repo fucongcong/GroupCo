@@ -11,19 +11,12 @@ class SwooleKernal
 {   
     protected $http;
 
-    protected $path;
-
-    protected $loader;
-
     protected $scheduler;
 
     protected $app;
 
-    public function init($path, $loader)
+    public function init()
     {   
-        $this->path = $path;
-        $this->loader = $loader;
-
         $host = \Group\Config\Config::get('app::swoole_host') ? : "127.0.0.1";
         $port = \Group\Config\Config::get('app::swoole_port') ? : 9777;
         $setting = \Group\Config\Config::get('app::swoole_setting');
@@ -96,7 +89,7 @@ class SwooleKernal
         }
         $taskId = ++$this->maxTaskId;
         $container = new Container();
-        $task = new \Group\Coroutine\Task($taskId, $container, $this->app->terminate($request, $response, $this->path));
+        $task = new \Group\Coroutine\Task($taskId, $container, $this->app->terminate($request, $response));
         $task->run();
 
         unset($container);

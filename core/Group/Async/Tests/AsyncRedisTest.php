@@ -1,6 +1,6 @@
 <?php
 
-namespace Group\Cache\Tests;
+namespace Group\Async\Tests;
 
 use Test;
 use AsyncRedis;

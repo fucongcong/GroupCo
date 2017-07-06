@@ -50,8 +50,11 @@ class App
         'Test'              => 'Group\Test\Test',
         'Listener'          => 'Group\Listeners\Listener',
         'Queue'             => 'Group\Queue\Queue',
-        'AsyncMysql'        => 'Group\Dao\AsyncMysql',
-        'AsyncRedis'        => 'Group\Cache\AsyncRedis',
+        'AsyncMysql'        => 'Group\Async\AsyncMysql',
+        'AsyncRedis'        => 'Group\Async\AsyncRedis',
+        'AsyncFile'         => 'Group\Async\AsyncFile',
+        'AsyncLog'          => 'Group\Async\AsyncLog',
+        'AsyncService'      => 'Group\Async\AsyncService',
     ];
 
     /**
@@ -67,7 +70,6 @@ class App
     ];
 
     protected $onRequestServices = [
-        'Group\Controller\TwigServiceProvider',
         'Group\Routing\RouteServiceProvider',
         'Group\EventDispatcher\EventDispatcherServiceProvider',
     ];
@@ -97,10 +99,10 @@ class App
      * terminate app
      *
      */
-    public function terminate($request, $response, $path)
+    public function terminate($request, $response)
     {   
         $container = (yield getContainer());
-        $container->setAppPath($path);
+        $container->setAppPath(__ROOT__);
 
         $this->registerOnRequestServices($container);
 

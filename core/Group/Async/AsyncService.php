@@ -1,10 +1,10 @@
 <?php
 
-namespace Group\Services;
+namespace Group\Async;
 
 use Config;
 
-class ServiceClient
+class AsyncService
 {   
     protected $service;
 

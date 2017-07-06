@@ -33,7 +33,7 @@ return [
                 //1平均分配，2按FD取摸固定分配，3抢占式分配，默认为取模
                 'dispatch_mode' => 3,
                 //日志
-                'log_file' => 'runtime/async/user_service.log',
+                'log_file' => 'runtime/service/user.log',
                 //默认设置为CPU核数,可不配置
                 //'reactor_num' => 2,
                 //超过此连接数后，将拒绝后续的tcp连接

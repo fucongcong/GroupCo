@@ -1,6 +1,6 @@
 <?php
 
-namespace Group\Cache;
+namespace Group\Async;
 
 use Config;
 use \Group\Async\Client\Redis;
