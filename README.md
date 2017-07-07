@@ -3,7 +3,7 @@
 #### * 异步协程调度，应对高并发
 #### * SOA服务化调用，支持并行、串行调用。服务端采用AsyncTask进行异步处理后合并数据并返回。
 #### * 支持异步日志,异步文件读写,异步Mysql,异步Redis
-#### * 支持Mysql连接池,Redis连接池(待更新)
+#### * 支持Mysql连接池,Redis连接池
 #### * Twig、Doctrine支持视图、服务数据层
 #### * 单元测试覆盖
 
@@ -68,12 +68,16 @@
     
 ```
 
-##### 异步redis
+##### 异步redis(默认使用连接池)
 
 ```php
     
     use AsyncRedis;
 
+    //关闭连接池
+    \AsyncRedis::enablePool(false);
+    //开启连接池
+    \AsyncRedis::enablePool(true);
     //设置超时时间
     AsyncRedis::setTimeout(2);
 

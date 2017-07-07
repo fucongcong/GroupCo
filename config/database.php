@@ -109,6 +109,12 @@ return
 
     'redis' => [
 
+        //redis连接池数量
+        'maxPool' => 50,
+
+        //redis连接超时时间
+        'timeout' => 5,
+    
         'default' => [
             'host'     => '127.0.0.1',
             'port'     => 6379,

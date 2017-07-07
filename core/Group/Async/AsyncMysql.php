@@ -8,10 +8,6 @@ use \Group\Async\Client\Mysql;
 
 class AsyncMysql
 {   
-    protected static $host;
-
-    protected static $port;
-
     protected static $timeout = 1;
 
     public static function setTimeout($timeout)
@@ -23,16 +19,14 @@ class AsyncMysql
     {   
         if ($userPool) {
             $pool = app('mysqlPool');
-            $proxy = new MysqlProxy($pool);
-            $proxy->query($sql);
-            $res = (yield $proxy);
+            $mysql = new MysqlProxy($pool);
         } else {
             $mysql = new Mysql();
-            $mysql->setTimeout(self::$timeout);
-            $mysql->query($sql);
-            $res = (yield $mysql);
+            $mysql->setTimeout(self::$timeout); 
         }
 
+        $mysql->query($sql);
+        $res = (yield $mysql);
         if ($res && $res['response']) {
             yield $res['response'];
         }

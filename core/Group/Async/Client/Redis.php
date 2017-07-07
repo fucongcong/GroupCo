@@ -19,9 +19,23 @@ class Redis extends Base
 
     protected $parameters;
 
-    public function __construct($ip, $port, $timeout)
+    protected $options;
+
+    public function __construct()
     {   
-        parent::__construct($ip, $port, '', $timeout);
+        $config = Config::get("database::redis");
+        $this->ip = $config['default']['host'];
+        $this->port = $config['default']['port'];
+        if (isset($config['default']['auth'])) {
+            $this->options['password'] = $config['default']['auth'];
+        }
+        $this->options['timeout'] = $this->timeout;
+    }
+
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+        $this->options['timeout'] = $this->timeout;
     }
 
     public function setMethod($method)
@@ -36,13 +50,7 @@ class Redis extends Base
 
     public function call(callable $callback)
     {   
-        $config = Config::get("database::redis");
-        if (isset($config['default']['auth'])) {
-            $options['password'] = $config['default']['auth'];
-        }
-        $options['timeout'] = $this->timeout;
-
-        $client = new swoole_redis($options);
+        $client = new swoole_redis($this->options);
         $client->connect($this->ip, $this->port, function (swoole_redis $client, $res) use ($callback) {
             $this->calltime = microtime(true);
             if ($res === false) {

@@ -18,8 +18,6 @@ class AsyncMysqlTest extends Test
             $res = (yield AsyncMysql::query("DELETE FROM `user` WHERE id = {$id}"));
         }
 
-        app('mysqlPool')->close();
-
         $res = (yield AsyncMysql::query("INSERT INTO `user` (`id`, `mobile`, `password`) VALUES (NULL, '187681343332', '11111')", false));
         
         if ($res) {
@@ -28,5 +26,7 @@ class AsyncMysqlTest extends Test
             $id = $res->getInsertId();
             $res = (yield AsyncMysql::query("DELETE FROM `user` WHERE id = {$id}", false));
         }
+
+        app('mysqlPool')->close();
     }
 }

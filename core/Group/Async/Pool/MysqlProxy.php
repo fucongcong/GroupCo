@@ -2,8 +2,6 @@
 
 namespace Group\ASync\Pool;
 
-use swoole_mysql;
-use Config;
 use Group\Async\Client\Base;
 
 class MysqlProxy extends Base

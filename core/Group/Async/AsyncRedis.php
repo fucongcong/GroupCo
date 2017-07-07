@@ -4,18 +4,22 @@ namespace Group\Async;
 
 use Config;
 use \Group\Async\Client\Redis;
+use \Group\Async\Pool\RedisProxy;
 
 class AsyncRedis
 {   
-    protected static $host;
-
-    protected static $port;
-
     protected static $timeout = 1;
+
+    protected static $usePool = true;
 
     public static function setTimeout($timeout)
     {
         self::$timeout = $timeout;
+    }
+
+    public static function enablePool($status)
+    {
+        self::$usePool = boolval($status);
     }
 
     /**
@@ -27,18 +31,17 @@ class AsyncRedis
      */
     public static function __callStatic($method, $parameters)
     {   
-        if (!self::$host) {
-            $config = Config::get("database::redis");
-            self::$host = $config['default']['host'];
-            self::$port = $config['default']['port'];
+        if (self::$usePool) {
+            $pool = app('redisPool');
+            $redis = new RedisProxy($pool);
+        } else {
+            $redis = new Redis();
+            $redis->setTimeout(self::$timeout);
         }
 
-        $redis = new Redis(self::$host, self::$port, self::$timeout);
         $redis->setMethod($method);
         $redis->setParameters($parameters);
-
         $res = (yield $redis);
-        
         if ($res && $res['response']) {
             yield $res['response'];
         }

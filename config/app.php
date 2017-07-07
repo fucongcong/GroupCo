@@ -19,6 +19,7 @@ return [
 
     'onWorkStartServices' => [
         'Group\ASync\Pool\MysqlPoolServiceProvider',
+        'Group\ASync\Pool\RedisPoolServiceProvider',
     ],
 
     'onRequestServices' => [
