@@ -18,7 +18,7 @@ return [
     ],
 
     'onWorkStartServices' => [
-        //'Group\Queue\QueueServiceProvider',
+        'Group\ASync\Pool\MysqlPoolServiceProvider',
     ],
 
     'onRequestServices' => [

@@ -133,7 +133,7 @@ class Task
         }
     }
 
-    public function callback($response, $error, $calltime)
+    public function callback($response, $error = null, $calltime = 0)
     {
         $this->coroutine = $this->coStack->pop();
         $callbackData = array('response' => $response, 'error' => $error, 'calltime' => $calltime);

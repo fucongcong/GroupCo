@@ -71,6 +71,4 @@ class MysqlPool
 		$this->poolQueue->enqueue($resource);
 		$this->ableCount++;
 	}
-
-
 }

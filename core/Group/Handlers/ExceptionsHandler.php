@@ -183,7 +183,7 @@ class ExceptionsHandler
     //     } else {
     //         $level = $this->levels[$e['type']];
     //     }
-
+    //     //dump('[' . $level . '] ' . $e['message'] . '[' . $e['file'] . ' : ' . $e['line'] . ']', []);
     //     //要异步 否则报错
     //     //\Log::$type('[' . $level . '] ' . $e['message'] . '[' . $e['file'] . ' : ' . $e['line'] . ']', []);
     // }

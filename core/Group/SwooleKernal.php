@@ -26,6 +26,7 @@ class SwooleKernal
 
         $this->http->on('Start', [$this, 'onStart']);
         $this->http->on('WorkerStart', [$this, 'onWorkerStart']);
+        $this->http->on('WorkerStop', [$this, 'onWorkerStop']);
         $this->http->on('Request', [$this, 'onRequest']);
         $this->http->on('shutdown', [$this, 'onShutdown']);
 
@@ -64,6 +65,11 @@ class SwooleKernal
         echo "HTTP Worker Start...".PHP_EOL;
     }
 
+    public function onWorkerStop($serv, $workerId)
+    {
+        
+    }
+
     public function onRequest($request, $response)
     {
         $request->get = isset($request->get) ? $request->get : [];
@@ -74,7 +80,7 @@ class SwooleKernal
         $request->server['REQUEST_URI'] = isset($request->server['request_uri']) ? $request->server['request_uri'] : '';
         preg_match_all("/^(.+\.php)(\/.*)$/", $request->server['REQUEST_URI'], $matches);
 
-        $request->server['REQUEST_URI'] = isset($matches[2]) ? $matches[2][0] : '';
+        $request->server['REQUEST_URI'] = isset($matches[2][0]) ? $matches[2][0] : '';
         foreach ($request->server as $key => $value) {
             $request->server[strtoupper($key)] = $value;
         }

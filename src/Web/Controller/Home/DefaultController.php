@@ -15,6 +15,15 @@ class DefaultController extends Controller
         // $user = [];
         // if ($userId > 0) $user = (yield $this->getUserService()->call("User\User::getUser", ['id' => $userId]));
 
+        $res = (yield \AsyncMysql::query("INSERT INTO `user` (`id`, `mobile`, `password`) VALUES (NULL, '157681228982', '11111')"));
+        
+        if ($res) {
+            $result = $res->getResult();
+            $affectedRows = $res->getAffectedRows();
+            $id = $res->getInsertId();
+
+            $res = (yield \AsyncMysql::query("DELETE FROM `user` WHERE id = {$id}"));
+        }
         //渲染模版 模版的启始路径可在config的view.php配置
         yield $this->render('Web/Views/Default/index.html.twig');
     }

@@ -96,6 +96,14 @@ return
         // ],
     ],
 
+    //mysql连接池数量
+    'maxPool' => 50,
+
+    //mysql连接超时时间
+    'timeout' => 5,
+
+
+
     //redis null
     'cache' => 'redis',
 
