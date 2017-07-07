@@ -115,7 +115,7 @@ class UserController extends Controller
     	//get请求
     	if ($request->getMethod() == "GET") {
     		if ($this->isLogin($request)) {
-	    		yield $this->redirect('/');
+	    		yield $this->redirect('/demo');
 	    	}
     		yield $this->render('Web/Views/User/login.html.twig');
     	}
@@ -123,7 +123,7 @@ class UserController extends Controller
 
     public function logoutAction(Request $request)
     {
-        $response = $this->redirect('/');
+        $response = $this->redirect('/demo');
         yield $this->clearJwt($request, $response);
     }
 

@@ -17,13 +17,15 @@
 ##### 安装
 - 克隆项目
 - 执行 => composer install
+- 新建一个runtime目录，用于存放日志等cache文件
+- 启动http server => php server.php5.6
+- 访问 http://localhost:9777/，开始异步协程之旅
+- demo 查看，请继续一下步骤，将用nginx做一次反向代理资源文件
 - 修改配置nginx，见doc/nginx.md,配置hosts
 - 配置config中的service,database等配置文件
-- 新建一个runtime目录，用于存放日志等cache文件
 - 执行脚本 => app/console sql:migrate 
-- 启动http server => php server.php
 - 启动async服务 => app/service user
-- 访问配置的servername => groupco.com，开始异步协程之旅
+- 访问配置的servername => groupco.com/demo
 
 ##### 基础服务
 - AsyncMysql

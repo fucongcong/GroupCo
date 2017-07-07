@@ -7,6 +7,11 @@ return array(
     	'controller' => 'Web:Home:Default:index',
     ],
 
+    'demo'=>[
+        'pattern' => '/demo',
+        'controller' => 'Web:Home:Default:demo',
+    ],
+
     'register'=>[
         'pattern' => '/register',
         'controller' => 'Web:User:User:register',

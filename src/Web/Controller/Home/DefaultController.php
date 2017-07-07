@@ -11,19 +11,11 @@ class DefaultController extends Controller
     //一个action 与route对应
     public function indexAction(Request $request)
     {	
-        // $userId = $this->getContainer()->getContext('userId', 0);
-        // $user = [];
-        // if ($userId > 0) $user = (yield $this->getUserService()->call("User\User::getUser", ['id' => $userId]));
+        yield "hello world!";
+    }
 
-        $res = (yield \AsyncMysql::query("INSERT INTO `user` (`id`, `mobile`, `password`) VALUES (NULL, '157681228982', '11111')"));
-        
-        if ($res) {
-            $result = $res->getResult();
-            $affectedRows = $res->getAffectedRows();
-            $id = $res->getInsertId();
-
-            $res = (yield \AsyncMysql::query("DELETE FROM `user` WHERE id = {$id}"));
-        }
+    public function demoAction(Request $request)
+    {   
         //渲染模版 模版的启始路径可在config的view.php配置
         yield $this->render('Web/Views/Default/index.html.twig');
     }

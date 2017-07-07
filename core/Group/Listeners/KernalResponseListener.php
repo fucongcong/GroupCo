@@ -21,7 +21,7 @@ class KernalResponseListener extends \Listener
             || $response instanceof \RedirectResponse 
             || $response instanceof \JsonResponse) {
             $swooleHttpResponse->status($response->getStatusCode());
-if ($response->getStatusCode()!= 200) dump($response->getStatusCode());
+
             foreach ($response->headers->allPreserveCase() as $name => $values) {
                 foreach ($values as $value) {
                     $swooleHttpResponse->header($name, $value);
