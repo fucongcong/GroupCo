@@ -90,15 +90,15 @@ class MysqlPool
 				$resource = false;
 				continue;
 			}
-
-			//mysql连接超时了
-			if ($resource->connected === false) {
-				$this->remove($resource);
-				continue;
-			}
 		}
 
 		if (!$resource) {
+			return;
+		}
+
+		//mysql连接超时了
+		if ($resource->connected === false) {
+			$this->remove($resource);
 			return;
 		}
 
