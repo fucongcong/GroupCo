@@ -3,11 +3,12 @@
 namespace Group\ASync\Pool;
 
 use swoole_mysql;
+use Group\ASync\Pool\Pool;
 use Group\ASync\Pool\Result;
 use splQueue;
 use Config;
 
-class MysqlPool
+class MysqlPool extends Pool
 {	
 	//splQueue
 	protected $poolQueue;
@@ -27,8 +28,6 @@ class MysqlPool
 	protected $ableCount = 0;
 
     protected $timeout = 5;
-
-    protected $calltime;
 
 	public function __construct()
 	{
@@ -67,20 +66,6 @@ class MysqlPool
         }
 	}
 
-	public function request($methd, $sql, callable $callback)
-	{	
-		//入队列
-		$this->taskQueue->push(['methd' => $methd, 'sql' => $sql, 'callback' => $callback]);
-
-		if (!$this->poolQueue->isEmpty()) {
-			$this->doTask();
-		}
-
-		if (count($this->resources) < $this->maxPool && $this->ableCount < $this->maxPool) {
-			$this->createResources();
-		}
-	}
-
 	public function doTask()
 	{
 		$resource = false;
@@ -105,7 +90,7 @@ class MysqlPool
 		$task = $this->taskQueue->dequeue();
 		$methd = $task['methd'];
 		$callback = $task['callback'];
-		$resource->$methd($task['sql'], function(swoole_mysql $mysql, $res) use ($callback) {
+		$resource->$methd($task['parameters'], function(swoole_mysql $mysql, $res) use ($callback) {
 			if ($res === false) {
                 call_user_func_array($callback, array('response' => false, 'error' => $mysql->error));
                 $this->release($mysql);
@@ -116,37 +101,6 @@ class MysqlPool
             //释放资源
             $this->release($mysql);
 		});
-	}
-
-	public function remove($resource)
-	{
-		unset($this->resources[spl_object_hash($resource)]);
-		$this->ableCount--;
-	}
-
-	/**
-	 * put一个资源
-	 */	
-	public function put($resource)
-	{
-		$this->resources[spl_object_hash($resource)] = $resource;
-		$this->poolQueue->enqueue($resource);
-
-		if (!$this->taskQueue->isEmpty()) {
-			$this->doTask();
-		}
-	}
-
-	/**
-	 * 释放资源入队列
-	 */	
-	public function release($resource)
-	{
-		$this->poolQueue->enqueue($resource);
-
-		if (!$this->taskQueue->isEmpty()) {
-			$this->doTask();
-		}
 	}
 
 	/**
@@ -160,10 +114,5 @@ class MysqlPool
         		$conn->close();
         	}
         }
-    }
-
-    public function __destruct()
-    {
-        $this->close();
     }
 }

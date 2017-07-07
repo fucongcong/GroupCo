@@ -5,8 +5,9 @@ namespace Group\ASync\Pool;
 use swoole_redis;
 use splQueue;
 use Config;
+use Group\ASync\Pool\Pool;
 
-class RedisPool
+class RedisPool extends Pool
 {	
 	//splQueue
 	protected $poolQueue;
@@ -28,8 +29,6 @@ class RedisPool
 	protected $ableCount = 0;
 
     protected $timeout = 5;
-
-    protected $calltime;
 
 	public function __construct()
 	{
@@ -66,20 +65,6 @@ class RedisPool
         }
 	}
 
-	public function request($methd, $parameters, callable $callback)
-	{	
-		//入队列
-		$this->taskQueue->push(['methd' => $methd, 'parameters' => $parameters, 'callback' => $callback]);
-
-		if (!$this->poolQueue->isEmpty()) {
-			$this->doTask();
-		}
-
-		if (count($this->resources) < $this->maxPool && $this->ableCount < $this->maxPool) {
-			$this->createResources();
-		}
-	}
-
 	public function doTask()
 	{
 		$resource = false;
@@ -111,37 +96,6 @@ class RedisPool
         call_user_func_array([$resource, $method], $parameters);
 	}
 
-	public function remove($resource)
-	{
-		unset($this->resources[spl_object_hash($resource)]);
-		$this->ableCount--;
-	}
-
-	/**
-	 * put一个资源
-	 */	
-	public function put($resource)
-	{
-		$this->resources[spl_object_hash($resource)] = $resource;
-		$this->poolQueue->enqueue($resource);
-
-		if (!$this->taskQueue->isEmpty()) {
-			$this->doTask();
-		}
-	}
-
-	/**
-	 * 释放资源入队列
-	 */	
-	public function release($resource)
-	{
-		$this->poolQueue->enqueue($resource);
-
-		if (!$this->taskQueue->isEmpty()) {
-			$this->doTask();
-		}
-	}
-
 	/**
      * 关闭连接池
      */
@@ -151,10 +105,5 @@ class RedisPool
         {
         	$conn->close();
         }
-    }
-
-    public function __destruct()
-    {
-        $this->close();
     }
 }

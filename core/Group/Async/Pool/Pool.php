@@ -36,7 +36,14 @@ abstract class Pool
 	}
 
 	//初始化连接数
-	public function createResources() {}
+	abstract public function createResources();
+
+	/**
+     * 关闭连接池
+     */
+    abstract public function close();
+
+    abstract public function doTask();
 
 	public function request($methd, $parameters, callable $callback)
 	{	
@@ -51,8 +58,6 @@ abstract class Pool
 			$this->createResources();
 		}
 	}
-
-	public function doTask() {}
 
 	public function remove($resource)
 	{
@@ -84,11 +89,6 @@ abstract class Pool
 			$this->doTask();
 		}
 	}
-
-	/**
-     * 关闭连接池
-     */
-    public function close() {}
 
     public function __destruct()
     {
