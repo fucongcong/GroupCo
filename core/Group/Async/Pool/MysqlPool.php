@@ -90,6 +90,12 @@ class MysqlPool
 				$resource = false;
 				continue;
 			}
+
+			//mysql连接超时了
+			if ($resource->connected === false) {
+				$this->remove($resource);
+				continue;
+			}
 		}
 
 		if (!$resource) {
@@ -115,6 +121,7 @@ class MysqlPool
 	public function remove($resource)
 	{
 		unset($this->resources[spl_object_hash($resource)]);
+		$this->ableCount--;
 	}
 
 	/**
@@ -149,7 +156,9 @@ class MysqlPool
     {
         foreach ($this->resources as $conn)
         {
-            $conn->close();
+        	if ($conn->connected) {
+        		$conn->close();
+        	}
         }
     }
 

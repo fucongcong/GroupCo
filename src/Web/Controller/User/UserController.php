@@ -58,7 +58,7 @@ class UserController extends Controller
     	//get请求
     	if ($request->getMethod() == "GET") {
     		if ($this->isLogin($request)) {
-	    		yield $this->redirect('/');
+	    		yield $this->redirect('/demo');
 	    	}
     		yield $this->render('Web/Views/User/register.html.twig');
     	}
