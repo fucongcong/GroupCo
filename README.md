@@ -1,5 +1,10 @@
 # Group-Co	
 
+####为什么写这个框架？
+- 利用协程特性以同步方式来编写异步代码，增强可读性。
+- 将swoole的异步特性与传统框架的MVC相结合。
+- 可以用作api也可以用作http server。
+
 #### * 异步协程调度，应对高并发
 #### * SOA服务化调用，支持并行、串行调用。服务端采用AsyncTask进行异步处理后合并数据并返回。
 #### * 支持异步日志,异步文件读写,异步Mysql,异步Redis
@@ -26,6 +31,10 @@
 - 执行脚本 => app/console sql:migrate 
 - 启动async服务 => app/service user
 - 访问配置的servername => groupco.com/demo
+
+##### 要注意的点
+- 1.因为是异步的，无法设置swoole的max_request参数。
+- 2.内存释放的问题，局部静态变量，全局变量的释放。
 
 ##### 基础服务
 - AsyncMysql
