@@ -19,9 +19,9 @@ class Task
     protected $sendValue = null;
 
     /**
-     * [__construct 构造函数，生成器+taskId, taskId由 scheduler管理]
-     * @param Generator $coroutine [description]
-     * @param [type]    $task      [description]
+     * @param int $taskId
+     * @param obj $container
+     * @param obj Generator $coroutine
      */
     public function __construct($taskId, $container, \Generator $coroutine)
     {
@@ -42,8 +42,8 @@ class Task
     }
 
     /**
-     * [getTaskId 获取task id]
-     * @return [type] [description]
+     * 获取task id
+     * @return int 
      */
     public function getTaskId()
     {
@@ -51,8 +51,8 @@ class Task
     }
 
     /**
-     * [setException  设置异常处理]
-     * @param [type] $exception [description]
+     * setException  设置异常处理
+     * @param $exception
      */
     public function setException($exception)
     {
@@ -60,9 +60,7 @@ class Task
     }
 
     /**
-     * [run 协程调度]
-     * @param  Generator $coroutine [description]
-     * @return [type]         [description]
+     * 协程调度
      */
     public function run()
     {

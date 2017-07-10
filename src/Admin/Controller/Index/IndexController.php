@@ -8,7 +8,7 @@ class IndexController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('Admin/Views/Index/index.html.twig');
+        yield $this->render('Admin/Views/Index/index.html.twig');
     }
 
 }

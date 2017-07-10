@@ -11,6 +11,6 @@ class DefaultController extends Controller
     public function indexAction()
     {   
         //渲染模版 模版的启始路径可在config的view.php配置
-        return $this->render('Admin/Views/index.html.twig');
+        yield $this->render('Admin/Views/index.html.twig');
     }
 }
