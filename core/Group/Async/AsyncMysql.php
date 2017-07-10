@@ -21,8 +21,13 @@ class AsyncMysql
             $pool = app('mysqlPool');
             $mysql = new MysqlProxy($pool);
         } else {
-            $mysql = new Mysql();
-            $mysql->setTimeout(self::$timeout); 
+            $container = (yield getContainer());
+            $timeout = self::$timeout;
+            $mysql = $container->singleton('mysql', function() use ($timeout) {
+                $mysql = new Mysql();
+                $mysql->setTimeout($timeout);
+                return $mysql;
+            });
         }
 
         $mysql->query($sql);

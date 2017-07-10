@@ -19,6 +19,11 @@ class MysqlProxy extends Base
         $this->pool = $pool;
     }
 
+    public function getConnection()
+    {
+        
+    }
+
     public function query($sql)
     {
         $this->sql = $sql;

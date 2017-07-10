@@ -18,4 +18,4 @@ before_script:
     # - cd ..
 script:
     - sudo find -L ./core -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
-    - phpunit --bootstrap test/test.php core/Group
+    - phpunit --bootstrap app/test.php core/Group

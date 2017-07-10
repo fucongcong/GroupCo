@@ -67,7 +67,7 @@ class Container implements ContainerContract
             $this->instances[$name] = call_user_func($callable);
         }
 
-        return $this->instances[$name];
+        return isset($this->instances[$name]) ? $this->instances[$name] : null;
     }
 
 	/**

@@ -16,6 +16,8 @@ class Mysql extends Base
 
     protected $sql;
 
+    protected $mysql;
+
     public function __construct()
     {   
         $config = Config::get('database::pdo');
@@ -28,6 +30,31 @@ class Mysql extends Base
             'charset' => $config['default']['charset'],
             'timeout' => $this->timeout,
         ];
+
+        $this->mysql = new swoole_mysql;
+        $this->mysql->connected = false;
+    }
+
+    public function connection()
+    {
+        $mysql = new swoole_mysql;
+        $mysql->connect($this->config, function(swoole_mysql $mysql, $res) use ($callback) {
+            if ($res === false) {
+                call_user_func_array($callback, array('response' => false, 'error' => "connect to mysql server failed", 'calltime' => 0));
+                return;
+            }
+
+            $mysql->query($mysql->escape($this->sql), function(swoole_mysql $mysql, $res) use ($callback) {
+                $this->calltime = microtime(true) - $this->calltime;
+                if ($res === false) {
+                    call_user_func_array($callback, array('response' => false, 'error' => $mysql->error, 'calltime' => $this->calltime));
+                    return;
+                }
+                $result = new Result($res, $mysql->affected_rows, $mysql->insert_id);
+                call_user_func_array($callback, array('response' => $result, 'error' => null, 'calltime' => $this->calltime));
+                $mysql->close();
+            });
+        });
     }
 
     public function setTimeout($timeout)
@@ -42,25 +69,40 @@ class Mysql extends Base
     }
 
     public function call(callable $callback)
-    {
-        $mysql = new swoole_mysql;
-        $mysql->connect($this->config, function(swoole_mysql $mysql, $res) use ($callback) {
-            $this->calltime = microtime(true);
-            if ($res === false) {
-                call_user_func_array($callback, array('response' => false, 'error' => "connect to mysql server failed", 'calltime' => 0));
-                return;
-            }
+    {   
+        $this->calltime = microtime(true);
 
-            $mysql->query($this->sql, function(swoole_mysql $mysql, $res) use ($callback) {
-                $this->calltime = microtime(true) - $this->calltime;
+        if ($this->mysql->connected === true) {
+            $this->execute($callback);
+        } else {
+            $this->mysql->connect($this->config, function(swoole_mysql $mysql, $res) use ($callback) {
                 if ($res === false) {
-                    call_user_func_array($callback, array('response' => false, 'error' => $mysql->error, 'calltime' => $this->calltime));
+                    call_user_func_array($callback, array('response' => false, 'error' => "connect to mysql server failed", 'calltime' => 0));
                     return;
                 }
-                $result = new Result($res, $mysql->affected_rows, $mysql->insert_id);
-                call_user_func_array($callback, array('response' => $result, 'error' => null, 'calltime' => $this->calltime));
-                $mysql->close();
+
+                $this->execute($callback);
             });
+        }
+    }
+
+    public function execute($callback)
+    {
+        $this->mysql->query($this->sql, function(swoole_mysql $mysql, $res) use ($callback) {
+            $this->calltime = microtime(true) - $this->calltime;
+            if ($res === false) {
+                call_user_func_array($callback, array('response' => false, 'error' => $mysql->error, 'calltime' => $this->calltime));
+                return;
+            }
+            $result = new Result($res, $mysql->affected_rows, $mysql->insert_id);
+            call_user_func_array($callback, array('response' => $result, 'error' => null, 'calltime' => $this->calltime));
         });
+    }
+
+    public function close()
+    {
+        if ($this->mysql->connected === true) {
+            $this->mysql->close();
+        }
     }
 }

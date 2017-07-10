@@ -35,8 +35,14 @@ class AsyncRedis
             $pool = app('redisPool');
             $redis = new RedisProxy($pool);
         } else {
-            $redis = new Redis();
-            $redis->setTimeout(self::$timeout);
+            $container = (yield getContainer());
+            $timeout = self::$timeout;
+            $redis = $container->singleton('redis', function() use ($timeout) {
+                $redis = new Redis();
+                $redis->setTimeout($timeout);
+                return $redis;
+            });
+            
         }
 
         $redis->setMethod($method);
