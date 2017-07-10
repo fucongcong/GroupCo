@@ -36,7 +36,10 @@
 - Container
 - Event
 - Route
+- Request
+- Response
 - StaticCache
+- Sync
 
 ##### 串行调用
 

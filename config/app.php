@@ -49,7 +49,6 @@ return [
         'log_file' => 'runtime/error.log',
         'worker_num' => 2,    //worker process num
         'backlog' => 256,   //listen backlog
-        'max_request' => 20000,
         'heartbeat_idle_time' => 30,
         'heartbeat_check_interval' => 10,
         'dispatch_mode' => 3, 
