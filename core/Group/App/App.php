@@ -11,7 +11,7 @@ use Group\Events\KernalEvent;
 use Group\Cache\BootstrapClass;
 use Group\Container\Container;
 use Group\Events\Event;
-use \Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Group\Events\ExceptionEvent;
 
 class App

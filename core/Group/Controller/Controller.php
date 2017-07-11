@@ -6,7 +6,7 @@ use Group\Contracts\Controller\Controller as ControllerContract;
 use Group\Exceptions\NotFoundException;
 use Config;
 use Cookie;
-use \Firebase\JWT\JWT;
+use Firebase\JWT\JWT;
 
 class Controller implements ControllerContract
 {

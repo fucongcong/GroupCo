@@ -2,9 +2,9 @@
 
 use Group\App\App;
 use Group\Container\Container;
-use \Group\Coroutine\SysCall;
-use \Group\Coroutine\Task;
-use \Group\Coroutine\Scheduler;
+use Group\Coroutine\SysCall;
+use Group\Coroutine\Task;
+use Group\Coroutine\Scheduler;
 
 if (!function_exists('app')) {
     /**
