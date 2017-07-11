@@ -222,7 +222,7 @@ class App
 
         yield $container->singleton('eventDispatcher')->dispatch(KernalEvent::RESPONSE, new HttpEvent($request, $response, $swooleHttpResponse));
 
-        $this->release($container);
+        yield $this->release($container);
         unset($container);
     }
 
@@ -237,11 +237,11 @@ class App
             unset($this->instances[$name]);
     }
 
-    private function release($container)
-    {   
+    public function release($container)
+    {
         $resources = ['redis', 'mysql'];
         foreach ($resources as $resource) {
-            if (!is_null($container->singleton($resource))) {dump(1);
+            if (!is_null($container->singleton($resource))) {
                 $container->singleton($resource)->close();
             }
         }

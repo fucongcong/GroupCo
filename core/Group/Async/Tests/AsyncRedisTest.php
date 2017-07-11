@@ -41,7 +41,6 @@ class AsyncRedisTest extends Test
 
         yield AsyncRedis::hDel('foo', 1);
 
-        app('redisPool')->close();
-        exit;
+        yield $this->releaseRedis();
     }
 }

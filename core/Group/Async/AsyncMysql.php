@@ -10,6 +10,8 @@ class AsyncMysql
 {   
     protected static $timeout = 1;
 
+    protected static $userPool = true;
+
     public static function setTimeout($timeout)
     {
         self::$timeout = $timeout;
@@ -17,7 +19,7 @@ class AsyncMysql
 
     public static function query($sql, $userPool = true)
     {   
-        if ($userPool) {
+        if ($userPool && self::$userPool) {
             $pool = app('mysqlPool');
             $mysql = new MysqlProxy($pool);
         } else {
@@ -37,5 +39,26 @@ class AsyncMysql
         }
 
         yield false;
+    }
+
+    public static function begin()
+    {   
+        self::$userPool = false;
+        $res = (yield self::query('begin', false));
+        yield $res;
+    }
+
+    public static function commit()
+    {
+        $res = (yield self::query('commit', false));
+        self::$userPool = true;
+        yield $res;
+    }
+
+    public static function rollback()
+    {
+        $res = (yield self::query('rollback', false));
+        self::$userPool = true;
+        yield $res;
     }
 }

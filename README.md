@@ -9,6 +9,7 @@
 #### * SOA服务化调用，支持并行、串行调用。服务端采用AsyncTask进行异步处理后合并数据并返回。
 #### * 支持异步日志,异步文件读写,异步Mysql,异步Redis
 #### * 支持Mysql连接池,Redis连接池
+#### * Mysql事务处理
 #### * Twig、Doctrine支持视图、服务数据层
 #### * 单元测试覆盖
 
@@ -121,7 +122,66 @@
         $id = $res->getInsertId();
     }
 
+    //
+    try {
+        yield AsyncMysql::begin();
+
+        yield $this->doTrans();
+
+        yield AsyncMysql::commit();
+    } catch (\Exception $e) {
+        yield AsyncMysql::rollback();
+    }
+
+    public function doTrans()
+    {
+        $res = (yield AsyncMysql::query("INSERT INTO `user` (`id`, `mobile`, `password`) VALUES (NULL, '187681343332', '11111')"));
+        if ($res) {
+            $result = $res->getResult();
+            $affectedRows = $res->getAffectedRows();
+            $id = $res->getInsertId();
+            $res = (yield AsyncMysql::query("SELECT * FROM `user` WHERE id = {$id}"));
+            $res = (yield AsyncMysql::query("SELECT * FROM `user`"));
+            $res = (yield AsyncMysql::query("DELETE FROM `user` WHERE id = {$id}", false));
+        }
+    }
     
+```
+
+##### 异步mysql事务处理
+
+```php
+    
+    use AsyncMysql;
+    
+    public function test()
+    {
+        try {
+            yield AsyncMysql::begin();
+
+            $res = (yield $this->doTrans());
+            if ($res === false) {
+                throw new \Exception("need roll back");
+            }
+
+            yield AsyncMysql::commit();
+        } catch (\Exception $e) {
+            yield AsyncMysql::rollback();
+        }
+    }
+
+    public function doTrans()
+    {
+        $res = (yield AsyncMysql::query("INSERT INTO `user` (`id`, `mobile`, `password`) VALUES (NULL, '187681343332', '11111')"));
+        if ($res) {
+            $result = $res->getResult();
+            $affectedRows = $res->getAffectedRows();
+            $id = $res->getInsertId();
+            $res = (yield AsyncMysql::query("SELECT * FROM `user` WHERE id = {$id}"));
+            $res = (yield AsyncMysql::query("SELECT * FROM `user`"));
+            $res = (yield AsyncMysql::query("DELETE FROM `user` WHERE id = {$id}", false));
+        }
+    }
 ```
 
 ##### 异步Log

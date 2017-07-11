@@ -36,4 +36,22 @@ abstract class Test extends PHPUnit_Framework_TestCase
             yield $this->$methodName();
         }
     }
+
+    public function releaseRedis()
+    {
+        app('redisPool')->close();
+        $container = (yield getContainer());
+        if (!is_null($container->singleton('redis'))) {
+            $container->singleton('redis')->close();
+        }
+    }
+
+    public function releaseMysql()
+    {
+        app('mysqlPool')->close();
+        $container = (yield getContainer());
+        if (!is_null($container->singleton('mysql'))) {
+            $container->singleton('mysql')->close();
+        }
+    }
 }

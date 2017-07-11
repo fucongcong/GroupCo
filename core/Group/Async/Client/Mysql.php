@@ -88,6 +88,40 @@ class Mysql extends Base
 
     public function execute($callback)
     {
+        if ($this->sql == "begin") {
+            $this->mysql->begin(function(swoole_mysql $mysql, $res) use ($callback) {
+                if ($res === false) {
+                    call_user_func_array($callback, array('response' => false, 'error' => $mysql->error));
+                    return;
+                }
+                call_user_func_array($callback, array('response' => true, 'error' => null));
+            });
+            return;
+        }
+
+        if ($this->sql == "commit") {
+            $this->mysql->commit(function(swoole_mysql $mysql, $res) use ($callback) {
+                if ($res === false) {
+                    call_user_func_array($callback, array('response' => false, 'error' => $mysql->error));
+                    return;
+                }
+                call_user_func_array($callback, array('response' => true, 'error' => null));
+            });
+            return;
+        }
+
+        if ($this->sql == "rollback") {
+            $this->mysql->rollback(function(swoole_mysql $mysql, $res) use ($callback) {
+                dump($res);
+                if ($res === false) {
+                    call_user_func_array($callback, array('response' => false, 'error' => $mysql->error));
+                    return;
+                }
+                call_user_func_array($callback, array('response' => true, 'error' => null));
+            });
+            return;
+        }
+
         $this->mysql->query($this->sql, function(swoole_mysql $mysql, $res) use ($callback) {
             $this->calltime = microtime(true) - $this->calltime;
             if ($res === false) {
