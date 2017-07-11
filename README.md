@@ -157,6 +157,8 @@
             $res = (yield AsyncMysql::query("SELECT * FROM `user`"));
             $res = (yield AsyncMysql::query("DELETE FROM `user` WHERE id = {$id}", false));
         }
+
+        yield true;
     }
 ```
 
