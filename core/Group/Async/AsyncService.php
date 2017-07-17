@@ -2,12 +2,8 @@
 
 namespace Group\Async;
 
-use Config;
-
 class AsyncService
 {   
-    protected $service;
-
     protected $serv;
 
     protected $port;
@@ -20,14 +16,11 @@ class AsyncService
 
     protected $callId = 0;
 
-    public function __construct($service)
-    {
-        $this->service = $service;
-        $servers = Config::get("service::server");
-        if (!isset($servers[$service])) throw new \Exception("Not Found the {$service}", 1);
-        $this->serv = $servers[$service]['serv'];
-        $this->port = $servers[$service]['port'];
-        $this->package_eof = $servers[$service]['config']['package_eof'];
+    public function __construct($serv, $port, $package_eof = "\r\n")
+    {   
+        $this->serv = $serv;
+        $this->port = $port;
+        $this->package_eof = $package_eof;
     }
 
     public function setTimeout($timeout)
@@ -44,9 +37,9 @@ class AsyncService
         $data = \Group\Sync\DataPack::pack($cmd, $data);
         $data .= $this->package_eof;
         $res = (yield new \Group\Async\Client\TCP($this->serv, $this->port, $data, $this->timeout));
+
         if ($res && $res['response']) {
-            $res['response'] = explode($this->package_eof, $res['response']);
-            $res['response'] = json_decode($res['response'][0], true);
+            $res['response'] = json_decode($res['response'], true);
 
             // if (app()->singleton('debugbar')->hasCollector('service')) {
             //     $array = [

@@ -17,4 +17,14 @@ return array(
         'pattern' => '/node/remove',
         'controller' => 'Admin:Index:Index:removeNode',
     ],
+
+    'node_close'=>[
+        'pattern' => '/node/close',
+        'controller' => 'Admin:Index:Index:closeNode',
+    ],
+
+    'node_delete'=>[
+        'pattern' => '/node/delete',
+        'controller' => 'Admin:Index:Index:deleteNode',
+    ],
 );

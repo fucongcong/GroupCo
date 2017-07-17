@@ -1,7 +1,63 @@
 {% extends 'Admin/Views/layout.html.twig' %}
 
-{% block title %}title{% endblock %}
-
 {% block body %}
-hello world
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <tr>
+              <th>ID</th>
+              <th>节点</th>
+              <th>公开的服务</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+            {% for key,node in nodes|default(null) %}
+            <tr>
+              <td>{{ key + 1 }}</td>
+              <td>{{ node.ip }}:{{ node.port }}</td>
+              <td>{{ node.services }}</td>
+              <td>{% if node.status == 'active' %} <span class="label label-success">正常</span>
+              	  {% elseif node.status == 'unactive' %} <span class="label label-danger">异常</span>
+                  {% elseif node.status == 'close' %} <span class="label label-warning">关闭</span>
+              	  {% endif %}
+              </td>
+              <td>
+                <div class="btn-group" role="group">
+                  {#{% if node.status == 'sleep' %}
+                  <button type="button" class="btn btn-info btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="wakeup"><span class="glyphicon glyphicon-play"></span> 激活</button>
+                  {% elseif node.status != "unactive" %}
+                  <button type="button" class="btn btn-warning btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="sleep"><span class="glyphicon glyphicon-pause"></span> 挂起</button>
+                  {% endif %}#}
+                  <button type="button" class="btn btn-warning btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="close"><span class="glyphicon glyphicon-off"></span> 关闭</button>
+
+                  <button type="button" class="btn btn-danger btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="delete"><span class="glyphicon glyphicon-trash"></span> 删除</button>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+          </div>
+      </div>
+    </div>
+
+{% endblock %}
+
+
+{% block script %}
+
+<script type="text/javascript">
+
+    $('.js-action').on('click', function(){
+        var status = $(this).data('status');
+        var ip = $(this).data('ip');
+        var port = $(this).data('port');
+        $.post('/node/'+status, {ip:ip, port:port}, function(res){
+            window.location.reload();
+        })
+    })
+
+</script>
+
 {% endblock %}

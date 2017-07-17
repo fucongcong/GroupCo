@@ -2,11 +2,12 @@
 
 namespace Group\Sync\Server;
 
-use swoole_server;
 use Group\Common\ArrayToolkit;
+use Group\Exceptions\NotFoundException;
+use Group\Common\ClassMap;
 use swoole_table;
 use swoole_process;
-use Group\Exceptions\NotFoundException;
+use swoole_server;
 use Log;
 
 class Server 
@@ -77,7 +78,6 @@ class Server
     {
         if (function_exists('opcache_reset')) opcache_reset();
         $loader = require __ROOT__.'/vendor/autoload.php';
-        $loader->setUseIncludePath(true);
         $app = new \Group\Sync\SyncApp();
         $app->initSelf();
         $app->registerServices();
@@ -126,7 +126,15 @@ class Server
                 }
 
                 list($cmd, $one) = \Group\Sync\DataPack::unpack($one);
-                $serv->task(['cmd' => $cmd, 'data' => $one, 'fd' => $fd]);
+                switch ($cmd) {
+                    case 'close':
+                        $this->sendData($serv, $fd, 1);
+                        $serv->shutdown();
+                        break;
+                    default:
+                        $serv->task(['cmd' => $cmd, 'data' => $one, 'fd' => $fd]);
+                        break;
+                }
             }
         } catch (\Exception $e) {
             $this->record([
@@ -251,7 +259,8 @@ class Server
         }
     }
 
-    private function sendData(swoole_server $serv, $fd, $data){
+    private function sendData(swoole_server $serv, $fd, $data)
+    {
         $fdinfo = $serv->connection_info($fd);
         if($fdinfo){
             //如果这个时候客户端还连接者的话说明需要返回返回的信息,
@@ -260,7 +269,7 @@ class Server
             if (is_array($data)){
                 $data = json_encode($data);
             }
-            $serv->send($fd, $data . $serv->setting['package_eof']);
+            $serv->send($fd, $data);
         }
     }
 
@@ -335,7 +344,8 @@ class Server
                         }
                     }
                     echo "重启完成".PHP_EOL;
-                    swoole_process::daemon();
+                    swoole_process::daemon(true);
+                    $this->registerNode();
                     break;
                 case 'stop':
                     $pid = file_get_contents($this->pidPath);
@@ -374,10 +384,26 @@ class Server
      */
     public function registerNode()
     {   
+        if  (!isset($this->config['node_center'])) return;
+        
+        $map = new ClassMap();
+        $services = array_unique($map->doSearch());
+
+        if (isset($this->config['public'])) {
+            $publics = explode(",", $this->config['public']);
+            foreach ($publics as $key => $public) {
+                if (!in_array($public, $services)) {
+                    unset($publics[$key]);
+                }
+            }
+            $services = $publics;
+        }
+        $services = implode(',', $services);
+
         $data = [
             'ip' => $this->config['ip'],
             'port' => $this->config['port'],
-            'services' => $this->config['public'],
+            'services' => $services,
         ];
 
         //若服务中心挂了，可以一直wait
@@ -395,6 +421,8 @@ class Server
      */
     public function removeNode()
     {   
+        if  (!isset($this->config['node_center'])) return;
+
         $data = [
             'ip' => $this->config['ip'],
             'port' => $this->config['port'],

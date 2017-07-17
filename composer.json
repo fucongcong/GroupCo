@@ -9,7 +9,8 @@
             "core/Group/App/helpers.php"
         ],
         "psr-4": {
-            "Group\\": "core/Group/"
+            "Group\\": "core/Group/",
+            "src\\": "src/"
         }
     },
     "authors": [

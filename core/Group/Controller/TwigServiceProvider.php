@@ -15,11 +15,13 @@ class TwigServiceProvider extends ServiceProvider
     public function register()
     {   
         $this->app->singleton('twig', function(){
-            $loader = new \Twig_Loader_Filesystem(\Config::get('view::path'));
+            $path = \Config::get('view::path');
+            $loader = new \Twig_Loader_Filesystem(__ROOT__.$path);
 
             if (\Config::get('view::cache')) {
+                $cache_dir = \Config::get('view::cache_dir');
                 $env = array(
-                    'cache' => \Config::get('view::cache_dir')
+                    'cache' => __ROOT__.$cache_dir
                 );
             }
 

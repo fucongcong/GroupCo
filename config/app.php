@@ -46,6 +46,7 @@ return [
 
     'swoole_setting' => [
         //日志
+        'daemonize' => true,
         'log_file' => 'runtime/error.log',
         'worker_num' => 2,    //worker process num
         'backlog' => 256,   //listen backlog
@@ -56,6 +57,6 @@ return [
 
     //在启动时可以添加用户自定义的工作进程,必须是swoole_process
     'swoole_process' => [
-        'src\Admin\Process\HeartbeatProcess',
+        //'src\Admin\Process\HeartbeatProcess',
     ],
 ];

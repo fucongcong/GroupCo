@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="keywords" content="{% block keywords %}{% endblock %}" />
+  <meta name="description" content="{% block description %}{% endblock %}" />
+
+  <link href="{{ assets("css/bootstrap.min.css") }}" rel="stylesheet">
+  <link href="{{ assets("css/web.css") }}" rel="stylesheet">
+  {% block stylesheets %}{% endblock %}
+
+  {% block head_scripts %}{% endblock %}
+
+</head>
+<body>
+  {% block header %}
+    <!--head-->
+    <nav class="navbar-inverse" role="navigation">
+          <div class="container-fluid">
+
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/">服务中心</a>
+            </div>
+
+          
+          </div>
+    </nav> 
+    <!--head-->
+
+  {% endblock %}
+
+  {% block body %}{% endblock %}
+
+  {#{% block footer %}{% include 'Web/Views/Public/bottom.html.twig' %}{% endblock %}#}
+
+   <script src="{{ assets("js/jquery.js") }}"></script>
+  {% block script %}{% endblock %}
+</body>
+</html>
