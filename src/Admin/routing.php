@@ -27,4 +27,9 @@ return array(
         'pattern' => '/node/delete',
         'controller' => 'Admin:Index:Index:deleteNode',
     ],
+
+    'node_reload'=>[
+        'pattern' => '/node/reload',
+        'controller' => 'Admin:Index:Index:reloadNode',
+    ],
 );

@@ -9,6 +9,7 @@
             <tr>
               <th>ID</th>
               <th>节点</th>
+              <th>服务名</th>
               <th>公开的服务</th>
               <th>状态</th>
               <th>操作</th>
@@ -17,6 +18,7 @@
             <tr>
               <td>{{ key + 1 }}</td>
               <td>{{ node.ip }}:{{ node.port }}</td>
+              <td>{{ node.serverName }}</td>
               <td>{{ node.services }}</td>
               <td>{% if node.status == 'active' %} <span class="label label-success">正常</span>
               	  {% elseif node.status == 'unactive' %} <span class="label label-danger">异常</span>
@@ -30,7 +32,11 @@
                   {% elseif node.status != "unactive" %}
                   <button type="button" class="btn btn-warning btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="sleep"><span class="glyphicon glyphicon-pause"></span> 挂起</button>
                   {% endif %}#}
+                  {% if node.status == 'active' %}
+                  <button type="button" class="btn btn-info btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="reload"><span class="glyphicon glyphicon-refresh"></span> 重启</button>
+                  
                   <button type="button" class="btn btn-warning btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="close"><span class="glyphicon glyphicon-off"></span> 关闭</button>
+                  {% endif %}
 
                   <button type="button" class="btn btn-danger btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="delete"><span class="glyphicon glyphicon-trash"></span> 删除</button>
                 </div>

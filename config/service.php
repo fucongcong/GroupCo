@@ -40,7 +40,7 @@ return [
                 //其他配置详见swoole官方配置参数列表
             ],
             //服务中心地址
-            //'node_center' => 'http://groupco.com',
+            'node_center' => 'http://groupco.com',
             //公开哪些服务，如果不填默认公开所有服务
             'public' => 'User',
         ],
@@ -63,7 +63,7 @@ return [
                 'dispatch_mode' => 3,
                 'log_file' => 'runtime/service/user.log',
             ],
-            //'node_center' => 'http://groupco.com',
+            'node_center' => 'http://groupco.com',
             'public' => 'Order',
         ],
     ],

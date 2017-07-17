@@ -131,6 +131,10 @@ class Server
                         $this->sendData($serv, $fd, 1);
                         $serv->shutdown();
                         break;
+                    case 'reload':
+                        $this->sendData($serv, $fd, 1);
+                        $serv->reload();
+                        break;
                     default:
                         $serv->task(['cmd' => $cmd, 'data' => $one, 'fd' => $fd]);
                         break;
@@ -403,6 +407,7 @@ class Server
         $data = [
             'ip' => $this->config['ip'],
             'port' => $this->config['port'],
+            'serverName' => $this->servName,
             'services' => $services,
         ];
 
