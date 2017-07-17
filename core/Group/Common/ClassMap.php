@@ -8,7 +8,7 @@ Class ClassMap
 {
     protected $dir;
 
-    public function __construct($dir = ['src/Services'])
+    public function __construct($dir = ['src/Service'])
     {
         $this ->dir = $dir;
     }
@@ -34,7 +34,7 @@ Class ClassMap
                 $file = explode(".", $file);
                 $fileName = $file[0];
 
-                if ($fileName && isset($file[1]) && $file[1] =="php" && substr($fileName, -4) == "Impl") {
+                if ($fileName && isset($file[1]) && $file[1] =="php" && substr($fileName, -11) == "ServiceImpl") {
 
                     $model = explode("/", $fileDir);
                     $model = $model[2];
@@ -46,8 +46,10 @@ Class ClassMap
                         throw new NotFoundException("Class ".$class." not found !");
                     }
 
-                    $name = substr($fileName, 0, -4);
-                    $data[] = [$class, $model."_".$name];
+                    $name = substr($fileName, 0, -11);
+                    //$data[] = [$class, $model."_".$name];
+                    //$data[] = $model."\\".$name;
+                    $data[] = $model;
 
                 }else if ($fileName) {
                     $data = $this->searchClass($fileDir."/".$fileName, $data);

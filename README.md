@@ -33,6 +33,12 @@
 - 启动async服务 => app/service user
 - 访问配置的servername => groupco.com/demo
 
+##### 使用
+- 热重启httpserver => php server.php -s reload
+- 关闭httpserver => php server.php -s stop
+- 热重启某个服务 => app/service user reload
+- 关闭某个服务 => app/service user stop
+
 ##### 要注意的点
 - 1.因为是异步的，无法设置swoole的max_request参数。
 - 2.内存释放的问题，局部静态变量，全局变量的释放。

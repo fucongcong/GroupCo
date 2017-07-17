@@ -6,6 +6,8 @@ use Group\App\App;
 use swoole_http_server;
 use Group\Coroutine\Scheduler;
 use Group\Container\Container;
+use Group\Config\Config;
+use swoole_process;
 
 class SwooleKernal
 {   
@@ -15,11 +17,16 @@ class SwooleKernal
 
     protected $app;
 
+    protected $pidPath;
+
     public function init()
     {   
-        $host = \Group\Config\Config::get('app::swoole_host') ? : "127.0.0.1";
-        $port = \Group\Config\Config::get('app::swoole_port') ? : 9777;
-        $setting = \Group\Config\Config::get('app::swoole_setting');
+        $this->pidPath = __ROOT__."runtime/pid";
+        $this->checkStatus();
+
+        $host = Config::get('app::swoole_host') ? : "127.0.0.1";
+        $port = Config::get('app::swoole_port') ? : 9777;
+        $setting = Config::get('app::swoole_setting');
 
         $this->http = new swoole_http_server($host, $port);
         $this->http->set($setting);
@@ -30,6 +37,8 @@ class SwooleKernal
         $this->http->on('Request', [$this, 'onRequest']);
         $this->http->on('shutdown', [$this, 'onShutdown']);
 
+        $this->addProcesses();
+        
         $this->start();
     }
 
@@ -40,6 +49,10 @@ class SwooleKernal
         }
 
         echo "HTTP Server Start...".PHP_EOL;
+
+        $pid = $serv->master_pid;
+        $this->mkDir($this->pidPath);
+        file_put_contents($this->pidPath, $pid);
     }
 
     public function onShutdown($serv)
@@ -110,6 +123,69 @@ class SwooleKernal
     public function start()
     {   
         $this->http->start();
+    }
+
+    public function addProcesses()
+    {
+        $processes = Config::get('app::swoole_process') ? : [];
+        foreach ($processes as $process) {
+            $p = new $process($this->http);
+            $this->http->addProcess($p->register());
+        }
+    }
+
+    private function mkDir($dir)
+    {
+        $parts = explode('/', $dir);
+        $file = array_pop($parts);
+        $dir = '';
+        foreach ($parts as $part) {
+            if (!is_dir($dir .= "$part/")) {
+                 mkdir($dir);
+            }
+        }
+    }
+
+    private function checkStatus()
+    {   
+        $args = getopt('s:');
+        if(isset($args['s'])) {
+
+            if (!file_exists($this->pidPath)) {
+                echo "pid不存在".PHP_EOL;
+                exit;
+            }
+
+            switch ($args['s']) {
+                case 'reload':
+                    $pid = file_get_contents($this->pidPath);
+                    echo "当前进程".$pid.PHP_EOL;
+                    echo "热重启中".PHP_EOL;
+                    if ($pid) {
+                        if (swoole_process::kill($pid, 0)) {
+                            swoole_process::kill($pid, SIGUSR1);
+                        }
+                    }
+                    echo "重启完成".PHP_EOL;
+                    swoole_process::daemon(true);
+                    break;
+                case 'stop':
+                    $pid = file_get_contents($this->pidPath);
+                    echo "当前进程".$pid.PHP_EOL;
+                    echo "正在关闭".PHP_EOL;
+                    if ($pid) {
+                        if (swoole_process::kill($pid, 0)) {
+                            swoole_process::kill($pid, SIGTERM);
+                        }
+                    }
+                    echo "关闭完成".PHP_EOL;
+                    @unlink($this->pidPath);
+                    break;
+                default:
+                    break;
+            }
+            exit;
+        }
     }
 
     public function fix_gpc_magic($request)

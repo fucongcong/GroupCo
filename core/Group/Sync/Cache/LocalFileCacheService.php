@@ -16,7 +16,7 @@ class LocalFileCacheService
     public function get($cacheName, $cacheDir = false)
     {
         $cacheDir = $cacheDir == false ? self::$cacheDir : $cacheDir;
-        $dir = $cacheDir."/".$cacheName;
+        $dir = __ROOT__.$cacheDir."/".$cacheName;
 
         if ($this->isExist($cacheName, $cacheDir)) return include $dir;
         return null;
@@ -32,7 +32,7 @@ class LocalFileCacheService
     public function set($cacheName, $data, $cacheDir = false)
     {
         $cacheDir = $cacheDir == false ? self::$cacheDir : $cacheDir;
-        $dir = $cacheDir."/".$cacheName;
+        $dir = __ROOT__.$cacheDir."/".$cacheName;
 
         if (is_array($data)) {
             $data = var_export($data, true);
@@ -62,7 +62,7 @@ return ".$data.";";
     public function isExist($cacheName, $cacheDir = false)
     {
         $cacheDir = $cacheDir == false ? self::$cacheDir : $cacheDir;
-        $dir = $cacheDir."/".$cacheName;
+        $dir = __ROOT__.$cacheDir."/".$cacheName;
 
         return file_exists($dir);
 

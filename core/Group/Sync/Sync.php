@@ -46,6 +46,7 @@ class Sync
     protected function checkArgv()
     {
         $argv = $this->argv;
+
         if (!isset($argv[1])) return;
 
         $config = \Config::get("service::server");
@@ -55,7 +56,7 @@ class Sync
         $log = explode("/", $log);
         \FileCache::set(array_pop($log), '', implode("/", $log)."/");
         
-        $server = new Server($config[$argv[1]], $argv[1]);
+        $server = new Server($config[$argv[1]], $argv[1], $this->argv);
         die;
     }
 }
