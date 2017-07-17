@@ -54,4 +54,8 @@ return [
         'dispatch_mode' => 3, 
     ],
 
+    //在启动时可以添加用户自定义的工作进程,必须是swoole_process
+    'swoole_process' => [
+        'src\Admin\Process\HeartbeatProcess',
+    ],
 ];

@@ -6,6 +6,7 @@ use Group\App\App;
 use swoole_http_server;
 use Group\Coroutine\Scheduler;
 use Group\Container\Container;
+use Group\Config\Config;
 
 class SwooleKernal
 {   
@@ -17,9 +18,9 @@ class SwooleKernal
 
     public function init()
     {   
-        $host = \Group\Config\Config::get('app::swoole_host') ? : "127.0.0.1";
-        $port = \Group\Config\Config::get('app::swoole_port') ? : 9777;
-        $setting = \Group\Config\Config::get('app::swoole_setting');
+        $host = Config::get('app::swoole_host') ? : "127.0.0.1";
+        $port = Config::get('app::swoole_port') ? : 9777;
+        $setting = Config::get('app::swoole_setting');
 
         $this->http = new swoole_http_server($host, $port);
         $this->http->set($setting);
@@ -30,6 +31,8 @@ class SwooleKernal
         $this->http->on('Request', [$this, 'onRequest']);
         $this->http->on('shutdown', [$this, 'onShutdown']);
 
+        $this->addProcesses();
+        
         $this->start();
     }
 
@@ -110,6 +113,15 @@ class SwooleKernal
     public function start()
     {   
         $this->http->start();
+    }
+
+    public function addProcesses()
+    {
+        $processes = Config::get('app::swoole_process') ? : [];
+        foreach ($processes as $process) {
+            $p = new $process($this->http);
+            $this->http->addProcess($p->register());
+        }
     }
 
     public function fix_gpc_magic($request)

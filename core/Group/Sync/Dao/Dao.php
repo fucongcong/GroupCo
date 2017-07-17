@@ -167,9 +167,9 @@ class Dao
 
     private function logger($connection)
     {   
-        if (app('container')->isDebug() && !app('container') ->runningInConsole()) {
-            $connection->getConfiguration()->setSQLLogger(app('debugStack'));
-        }
+        // if (app('container')->isDebug() && !app('container') ->runningInConsole()) {
+        //     $connection->getConfiguration()->setSQLLogger(app('debugStack'));
+        // }
 
         if ($connection->ping() === false) {
            $connection->close();

@@ -5,6 +5,7 @@ namespace Group\Sync\Server;
 use swoole_server;
 use Group\Common\ArrayToolkit;
 use swoole_table;
+use swoole_process;
 use Group\Exceptions\NotFoundException;
 use Log;
 
@@ -24,12 +25,23 @@ class Server
 
     protected $inside_task_count;
 
-	public function __construct($config =[], $servName)
-	{  
+    protected $pidPath;
+
+    protected $argv;
+
+	public function __construct($config =[], $servName, $argv = [])
+	{   
+        $this->argv = $argv;
+        $this->config = $config;
+        $this->servName = $servName;
+        $this->pidPath = __ROOT__."runtime/service/{$servName}/pid";
+        $this->checkStatus();
+        
         $this->serv = new swoole_server($config['serv'], $config['port']);
         $this->serv->set($config['config']);
 
         $this->serv->on('Start', [$this, 'onStart']);
+        $this->serv->on('Shutdown', [$this, 'onShutdown']);
         $this->serv->on('WorkerStart', [$this, 'onWorkerStart']);
         $this->serv->on('WorkerStop', [$this, 'onWorkerStop']);
         $this->serv->on('WorkerError', [$this, 'onWorkerError']);
@@ -37,9 +49,6 @@ class Server
         $this->serv->on('Task', [$this, 'onTask']);
         $this->serv->on('Finish', [$this, 'onFinish']);
 
-        $this->config = $config;
-        $this->servName = $servName;
-        
         $this->serv->start();
 	}
 
@@ -49,6 +58,19 @@ class Server
             swoole_set_process_name("php {$this->servName}: master");
         }
         echo $this->servName." Start...", PHP_EOL;
+
+        $pid = $serv->master_pid;
+        $this->mkDir($this->pidPath);
+        file_put_contents($this->pidPath, $pid);
+
+        $this->registerNode();
+    }
+
+    public function onShutdown(swoole_server $serv)
+    {
+        echo $this->servName." Shutdown...", PHP_EOL;
+
+        $this->removeNode();
     }
 
     public function onWorkerStart(swoole_server $serv, $workerId)
@@ -98,6 +120,11 @@ class Server
         try {
             $config = $this->config;
             foreach($data as $one){
+                if ($one == 'ping') {
+                    $this->sendData($serv, $fd, 1);
+                    return;
+                }
+
                 list($cmd, $one) = \Group\Sync\DataPack::unpack($one);
                 $serv->task(['cmd' => $cmd, 'data' => $one, 'fd' => $fd]);
             }
@@ -286,5 +313,114 @@ class Server
             $level = $levels[$e['type']];
         }
         Log::$type('[' . $level . '] ' . $e['message'] . '[' . $e['file'] . ' : ' . $e['line'] . ']', []);
+    }
+
+    private function checkStatus()
+    {   
+        if(isset($this->argv[2])) {
+
+            if (!file_exists($this->pidPath)) {
+                echo "pid不存在".PHP_EOL;
+                exit;
+            }
+
+            switch ($this->argv[2]) {
+                case 'reload':
+                    $pid = file_get_contents($this->pidPath);
+                    echo "当前进程".$pid.PHP_EOL;
+                    echo "热重启中".PHP_EOL;
+                    if ($pid) {
+                        if (swoole_process::kill($pid, 0)) {
+                            swoole_process::kill($pid, SIGUSR1);
+                        }
+                    }
+                    echo "重启完成".PHP_EOL;
+                    swoole_process::daemon();
+                    break;
+                case 'stop':
+                    $pid = file_get_contents($this->pidPath);
+                    echo "当前进程".$pid.PHP_EOL;
+                    echo "正在关闭".PHP_EOL;
+                    if ($pid) {
+                        if (swoole_process::kill($pid, 0)) {
+                            swoole_process::kill($pid, SIGTERM);
+                        }
+                    }
+                    echo "关闭完成".PHP_EOL;
+                    @unlink($this->pidPath);
+                    $this->removeNode();
+                    break;
+                default:
+                    break;
+            }
+            exit;
+        }
+    }
+
+    private function mkDir($dir)
+    {
+        $parts = explode('/', $dir);
+        $file = array_pop($parts);
+        $dir = '';
+        foreach ($parts as $part) {
+            if (!is_dir($dir .= "$part/")) {
+                 mkdir($dir);
+            }
+        }
+    }
+
+    /**
+     * 向服务治理中心注册当前节点
+     */
+    public function registerNode()
+    {   
+        $data = [
+            'ip' => $this->config['ip'],
+            'port' => $this->config['port'],
+            'services' => $this->config['public'],
+        ];
+
+        //若服务中心挂了，可以一直wait
+        while (true) {
+           $res = $this->post($this->config['node_center']."/node/add", $data);
+            if ($res == 1) {
+                break;
+            }
+            sleep(2);
+        }
+    }
+
+    /**
+     * 向服务治理中心移除当前节点
+     */
+    public function removeNode()
+    {   
+        $data = [
+            'ip' => $this->config['ip'],
+            'port' => $this->config['port'],
+        ];
+
+        //若服务中心挂了，可以一直wait
+        while (true) {
+           $res = $this->post($this->config['node_center']."/node/remove", $data);
+            if ($res == 1) {
+                break;
+            }
+            sleep(2);
+        }
+    }
+
+    public function post($url, $post_data)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5); 
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        return $output;
     }
 }

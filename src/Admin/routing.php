@@ -7,4 +7,14 @@ return array(
         'pattern' => '/admin',
         'controller' => 'Admin:Home:Default:index',
     ],
+
+    'node_add'=>[
+        'pattern' => '/node/add',
+        'controller' => 'Admin:Index:Index:addNode',
+    ],
+
+    'node_remove'=>[
+        'pattern' => '/node/remove',
+        'controller' => 'Admin:Index:Index:removeNode',
+    ],
 );
