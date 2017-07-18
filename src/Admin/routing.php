@@ -32,4 +32,14 @@ return array(
         'pattern' => '/node/reload',
         'controller' => 'Admin:Index:Index:reloadNode',
     ],
+
+    'node_online'=>[
+        'pattern' => '/node/online',
+        'controller' => 'Admin:Index:Index:onlineNode',
+    ],
+
+    'node_offline'=>[
+        'pattern' => '/node/offline',
+        'controller' => 'Admin:Index:Index:offlineNode',
+    ],
 );

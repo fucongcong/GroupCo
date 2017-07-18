@@ -50,6 +50,11 @@ class Sync
         if (!isset($argv[1])) return;
 
         $config = \Config::get("service::server");
+        $node_center = \Config::get("service::node_center");
+        if ($node_center && $node_center != "") {
+            $config[$argv[1]]['node_center'] = $node_center;
+        }
+        
         if (!isset($config[$argv[1]])) return;
 
         $log = isset($config[$argv[1]]['config']['log_file']) ? $config[$argv[1]]['config']['log_file'] : 'runtime/service/default.log';

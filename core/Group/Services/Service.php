@@ -14,8 +14,8 @@ class Service
             if (!isset($servers[$serviceName])) throw new \Exception("Not Found the {$serviceName}", 1);
             $serv = $servers[$serviceName]['serv'];
             $port = $servers[$serviceName]['port'];
-            $package_eof = $servers[$serviceName]['config']['package_eof'];
-            return new AsyncService($serv, $port, $package_eof);
+
+            return new AsyncService($serv, $port);
         });
     }
 }

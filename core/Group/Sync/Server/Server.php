@@ -30,9 +30,18 @@ class Server
 
     protected $argv;
 
+    protected $setting = [
+        //打开EOF检测
+        'open_eof_check' => true, 
+        //设置EOF 防止粘包
+        'package_eof' => "\r\n", 
+        'open_eof_split' => true, //底层拆分eof的包
+        ];
+
 	public function __construct($config =[], $servName, $argv = [])
 	{   
         $this->argv = $argv;
+        $config['config'] = array_merge($this->setting, $config['config']);
         $this->config = $config;
         $this->servName = $servName;
         $this->pidPath = __ROOT__."runtime/service/{$servName}/pid";
