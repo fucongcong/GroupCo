@@ -26,7 +26,6 @@ class IndexController extends Controller
     		$res = (yield AsyncMysql::query("UPDATE `nodes`  SET `status` = 'active', `services` = '{$services}', `serverName` = '{$serverName}' WHERE ip = '{$ip}' and port = '{$port}'"));
     	} else {
     		$res = (yield AsyncMysql::query("INSERT INTO `nodes` (`ip`, `port`, `status`, `services`, `serverName`) VALUES ('{$ip}', '{$port}', 'active', '{$services}', '{$serverName}')"));
-            var_dump("INSERT INTO `nodes` (`ip`, `port`, `status`, `services`, `serverName`) VALUES ('{$ip}', '{$port}', 'active', '{$services}', '{$serverName}')");
     	}
 
         if ($res && $res->getResult()) {
