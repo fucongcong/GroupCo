@@ -28,5 +28,5 @@ before_script:
     - php --ri swoole
     - app/service user
 script:
-    - sudo find -L ./core -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
     - phpunit --bootstrap app/test.php core/Group
+    - sudo find -L ./core -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l

@@ -1,5 +1,6 @@
 # Group-Co	
 
+[![Build Status](https://travis-ci.org/fucongcong/Group-Co.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co)
 [![Code Climate](https://codeclimate.com/github/fucongcong/Group-Co/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
 
 #### 为什么写这个框架？
