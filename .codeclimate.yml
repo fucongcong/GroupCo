@@ -18,6 +18,8 @@ engines:
         enabled: false
       CleanCode/ElseExpression:
         enabled: false
+      Naming/ShortVariable:
+        enabled: false
 ratings:
   paths:
   - "**.php"

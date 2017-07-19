@@ -8,11 +8,11 @@ class SecurityToolkit
      * 转换为安全的纯文本
      *
      * @param string  $text
-     * @param boolean $parse_br    是否转换换行符
-     * @param int     $quote_style ENT_NOQUOTES:(默认)不过滤单引号和双引号 ENT_QUOTES:过滤单引号和双引号 ENT_COMPAT:过滤双引号,而不过滤单引号
+     * @param boolean $parseBr    是否转换换行符
+     * @param int     $quoteStyle ENT_NOQUOTES:(默认)不过滤单引号和双引号 ENT_QUOTES:过滤单引号和双引号 ENT_COMPAT:过滤双引号,而不过滤单引号
      * @return string|null string:被转换的字符串 null:参数错误
      */
-    public static function text($text, $parse_br = false, $quote_style = ENT_NOQUOTES) {
+    public static function text($text, $parseBr = false, $quoteStyle = ENT_NOQUOTES) {
         if (is_numeric($text))
             $text = (string)$text;
 
@@ -20,9 +20,9 @@ class SecurityToolkit
             return null;
 
         $text = str_replace('\\','\\\\',$text);
-        $text = htmlspecialchars($text, $quote_style, 'UTF-8');
+        $text = htmlspecialchars($text, $quoteStyle, 'UTF-8');
 
-        if (!$parse_br) {
+        if (!$parseBr) {
             $text = str_replace(array("\r", "\n", "\t"), ' ', $text);
         } else {
             $text = nl2br($text);

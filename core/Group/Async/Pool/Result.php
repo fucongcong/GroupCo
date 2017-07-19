@@ -6,15 +6,15 @@ class Result
 {
     protected $res;
     
-    protected $affected_rows;
+    protected $affectedRows;
 
-    protected $insert_id;
+    protected $insertId;
 
-    public function __construct($res, $affected_rows, $insert_id)
+    public function __construct($res, $affectedRows, $insertId)
     {
         $this->res = $res;
-        $this->affected_rows = $affected_rows;
-        $this->insert_id = $insert_id;
+        $this->affectedRows = $affectedRows;
+        $this->insertId = $insertId;
     }
 
     public function getResult()
@@ -24,12 +24,12 @@ class Result
 
     public function getAffectedRows()
     {
-        return $this->affected_rows;
+        return $this->affectedRows;
     }
 
     public function getInsertId()
     {
-        return $this->insert_id;
+        return $this->insertId;
     }
 }
 

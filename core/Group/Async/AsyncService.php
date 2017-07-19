@@ -10,7 +10,7 @@ class AsyncService
 
     protected $port;
 
-    protected $package_eof;
+    protected $packageEof;
 
     protected $timeout = 1;
 
@@ -18,11 +18,11 @@ class AsyncService
 
     protected $callId = 0;
 
-    public function __construct($serv, $port, $package_eof = "\r\n")
+    public function __construct($serv, $port, $packageEof = "\r\n")
     {   
         $this->serv = $serv;
         $this->port = $port;
-        $this->package_eof = $package_eof;
+        $this->packageEof = $packageEof;
     }
 
     public function setTimeout($timeout)
@@ -50,7 +50,7 @@ class AsyncService
         }
 
         $data = \Group\Sync\DataPack::pack($cmd, $data);
-        $data .= $this->package_eof;
+        $data .= $this->packageEof;
         $res = (yield new \Group\Async\Client\TCP($this->serv, $this->port, $data, $this->timeout));
 
         if ($res && $res['response']) {

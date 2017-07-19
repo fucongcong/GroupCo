@@ -18,13 +18,13 @@ class Server
 
     protected $config;
 
-    protected $task_res;
+    protected $taskRes;
 
-    protected $task_count;
+    protected $taskCount;
 
-    protected $inside_task_res;
+    protected $insideTaskRes;
 
-    protected $inside_task_count;
+    protected $insideTaskCount;
 
     protected $pidPath;
 
@@ -207,11 +207,11 @@ class Server
                 //是不是内部的task任务
                 if (isset($data['data']['jobId'])) {
                     $jobId = $data['data']['jobId'];
-                    $this->inside_task_res[$forFd][$jobId] = [];
-                    $this->inside_task_count[$forFd][$jobId] = $data['data']['count'];
+                    $this->insideTaskRes[$forFd][$jobId] = [];
+                    $this->insideTaskCount[$forFd][$jobId] = $data['data']['count'];
                 } else {
-                    $this->task_res[$forFd] = [];
-                    $this->task_count[$forFd] = $data['data']['count'];
+                    $this->taskRes[$forFd] = [];
+                    $this->taskCount[$forFd] = $data['data']['count'];
                 }
 
                 foreach ($data['data']['tasks'] as $callId => $task) {
@@ -226,35 +226,35 @@ class Server
             if (count($callIds) > 1) {
                 $jobId = $callIds[0];
                 $callId = $callIds[1];
-                if (isset($this->inside_task_res[$forFd][$jobId])) {
-                    $this->inside_task_res[$forFd][$jobId][$callId] = $data['data'];
+                if (isset($this->insideTaskRes[$forFd][$jobId])) {
+                    $this->insideTaskRes[$forFd][$jobId][$callId] = $data['data'];
                     //内部的数据组合完毕的话 丢给上级
-                    if ($this->inside_task_count[$forFd][$jobId] == count($this->inside_task_res[$forFd][$jobId])) {
+                    if ($this->insideTaskCount[$forFd][$jobId] == count($this->insideTaskRes[$forFd][$jobId])) {
                         //不存在父级的话 直接send
-                        if (!isset($this->task_res[$forFd])) {
-                            $this->sendData($serv, $forFd, $this->inside_task_res[$forFd][$jobId]);
+                        if (!isset($this->taskRes[$forFd])) {
+                            $this->sendData($serv, $forFd, $this->insideTaskRes[$forFd][$jobId]);
                         } else {
                             //拼到父级里面去
-                            $this->task_res[$forFd][$jobId] = $this->inside_task_res[$forFd][$jobId];
-                            if ($this->task_count[$forFd] == count($this->task_res[$forFd])) {
-                                $this->sendData($serv, $forFd, $this->task_res[$forFd]);
-                                unset($this->task_res[$forFd]);
-                                unset($this->task_count[$forFd]);
+                            $this->taskRes[$forFd][$jobId] = $this->insideTaskRes[$forFd][$jobId];
+                            if ($this->taskCount[$forFd] == count($this->taskRes[$forFd])) {
+                                $this->sendData($serv, $forFd, $this->taskRes[$forFd]);
+                                unset($this->taskRes[$forFd]);
+                                unset($this->taskCount[$forFd]);
                             }
                         }
-                        unset($this->inside_task_res[$forFd][$jobId]);
-                        unset($this->inside_task_count[$forFd][$jobId]);
+                        unset($this->insideTaskRes[$forFd][$jobId]);
+                        unset($this->insideTaskCount[$forFd][$jobId]);
                     }
                     return;
                 }
             }
 
-            if (isset($this->task_res[$forFd])) {
-                $this->task_res[$forFd][$data['callId']] = $data['data'];
-                if ($this->task_count[$forFd] == count($this->task_res[$forFd])) {
-                    $this->sendData($serv, $forFd, $this->task_res[$forFd]);
-                    unset($this->task_res[$forFd]);
-                    unset($this->task_count[$forFd]);
+            if (isset($this->taskRes[$forFd])) {
+                $this->taskRes[$forFd][$data['callId']] = $data['data'];
+                if ($this->taskCount[$forFd] == count($this->taskRes[$forFd])) {
+                    $this->sendData($serv, $forFd, $this->taskRes[$forFd]);
+                    unset($this->taskRes[$forFd]);
+                    unset($this->taskCount[$forFd]);
                 }
                 return;
             }
@@ -452,14 +452,14 @@ class Server
         }
     }
 
-    public function post($url, $post_data)
+    public function post($url, $postData)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5); 
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
         $output = curl_exec($ch);
         curl_close($ch);
 

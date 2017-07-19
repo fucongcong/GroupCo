@@ -19,7 +19,7 @@ interface Router
      * @param  array routing
      * @return  array|bool false
      */
-    public function pregUrl($matches, $route_key, $routing);
+    public function pregUrl($matches, $routeKey, $routing);
 
     /**
      * do the controller
