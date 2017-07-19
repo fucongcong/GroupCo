@@ -50,7 +50,6 @@ class App
         'ServiceProvider'   => 'Group\Services\ServiceProvider',
         'Test'              => 'Group\Test\Test',
         'Listener'          => 'Group\Listeners\Listener',
-        'Queue'             => 'Group\Queue\Queue',
         'AsyncMysql'        => 'Group\Async\AsyncMysql',
         'AsyncRedis'        => 'Group\Async\AsyncRedis',
         'AsyncFile'         => 'Group\Async\AsyncFile',
