@@ -14,9 +14,9 @@ return
 
             "dbname" => "Demo",
 
-            "user" => "cm",
+            "user" => "root",
 
-            "password" => "123",
+            "password" => "",
 
             "charset" => "utf8",
         ],

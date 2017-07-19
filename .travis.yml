@@ -6,8 +6,9 @@ install:
     - composer install
 services:
     - redis-server
-env:
-    - DB=mysql
+    - mysql
+before_install:
+    - mysql -e 'CREATE DATABASE Demo;'
 before_script:
     - wget https://github.com/redis/hiredis/archive/v0.13.3.zip
     - unzip v0.13.3.zip
