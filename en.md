@@ -8,8 +8,8 @@
 - Use [Swoole](https://github.com/swoole/swoole-src).
 - For Api or Http Server.
 
-#### * async,coroutine
-#### * soa。parallel、serial call。The server uses AsyncTask for asynchronous processing, merges data and returns it。
+#### * Async,Coroutine
+#### * SOA
 #### * AsyncLog,AsyncFile,AsyncMysql,AsyncRedis
 #### * MysqlPool,RedisPool
 #### * Mysql Transaction
