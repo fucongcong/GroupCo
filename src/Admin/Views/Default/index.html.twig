@@ -9,30 +9,69 @@
             <tr>
               <th>ID</th>
               <th>节点</th>
+              <th>服务名</th>
               <th>公开的服务</th>
-              <th>状态</th>
+              <th>节点状态</th>
+              <th>服务状态</th>
               <th>操作</th>
             </tr>
-            {% for key,node in nodes|default(null) %}
+            {% if node_center %}
+              <tr>
+                <td>0</td>
+                <td>{{ node_center.ip }}:{{ node_center.port }}</td>
+                <td>{{ node_center.serverName }}</td>
+                <td>{{ node_center.services }}</td>
+                <td>{% if node_center.status == 'active' %} <span class="label label-success">正常</span>
+                    {% elseif node_center.status == 'unactive' %} <span class="label label-danger">异常</span>
+                    {% elseif node_center.status == 'close' %} <span class="label label-warning">关闭</span>
+                    {% endif %}
+                </td>
+                <td> <span class="label label-primary"> 核心服务</span> </td>
+                <td>
+                  <div class="btn-group" role="group">
+
+                    {% if node_center.status == 'active' %}
+                      <button type="button" class="btn btn-info btn-sm js-action" data-ip="{{ node_center.ip }}" data-port="{{ node_center.port }}" data-status="reload"><span class="glyphicon glyphicon-refresh"></span> 重启节点</button>
+                    
+                      <button type="button" class="btn btn-warning btn-sm js-action" data-ip="{{ node_center.ip }}" data-port="{{ node_center.port }}" data-status="close"><span class="glyphicon glyphicon-off"></span> 关闭节点</button>
+                    {% endif %}
+
+                      <button type="button" class="btn btn-danger btn-sm js-action" data-ip="{{ node_center.ip }}" data-port="{{ node_center.port }}" data-status="delete"><span class="glyphicon glyphicon-trash"></span> 删除节点</button>
+                  </div>
+                </td>
+              </tr>
+            {% endif %}
+            {% for node in nodes|default(null) %}
             <tr>
-              <td>{{ key + 1 }}</td>
+              <td>{{ loop.index }}</td>
               <td>{{ node.ip }}:{{ node.port }}</td>
+              <td>{{ node.serverName }}</td>
               <td>{{ node.services }}</td>
               <td>{% if node.status == 'active' %} <span class="label label-success">正常</span>
               	  {% elseif node.status == 'unactive' %} <span class="label label-danger">异常</span>
                   {% elseif node.status == 'close' %} <span class="label label-warning">关闭</span>
               	  {% endif %}
               </td>
+              <td>{% if node.serviceStatus == 'online' %} <span class="label label-success">已上线</span>
+                  {% else %} <span class="label label-danger">已下线</span>
+                  {% endif %}
+              </td>
               <td>
                 <div class="btn-group" role="group">
-                  {#{% if node.status == 'sleep' %}
-                  <button type="button" class="btn btn-info btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="wakeup"><span class="glyphicon glyphicon-play"></span> 激活</button>
-                  {% elseif node.status != "unactive" %}
-                  <button type="button" class="btn btn-warning btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="sleep"><span class="glyphicon glyphicon-pause"></span> 挂起</button>
-                  {% endif %}#}
-                  <button type="button" class="btn btn-warning btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="close"><span class="glyphicon glyphicon-off"></span> 关闭</button>
 
-                  <button type="button" class="btn btn-danger btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="delete"><span class="glyphicon glyphicon-trash"></span> 删除</button>
+                  {% if node.status == 'active' and node.serviceStatus == 'offline' %}
+                    <button type="button" class="btn btn-success btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="online"><span class="glyphicon glyphicon-arrow-up"></span> 服务上线</button>
+                  {% elseif node.status == 'active' and node.serviceStatus == 'online' %}
+                    <button type="button" class="btn btn-primary btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="offline"><span class="glyphicon glyphicon-arrow-down"></span> 服务下线</button>
+                  {% endif %}
+
+                  {% if node.status == 'active' %}
+                    <button type="button" class="btn btn-info btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="reload"><span class="glyphicon glyphicon-refresh"></span> 重启节点</button>
+                  
+                    <button type="button" class="btn btn-warning btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="close"><span class="glyphicon glyphicon-off"></span> 关闭节点</button>
+                  {% endif %}
+
+                    <button type="button" class="btn btn-danger btn-sm js-action" data-ip="{{ node.ip }}" data-port="{{ node.port }}" data-status="delete"><span class="glyphicon glyphicon-trash"></span> 删除节点</button>
                 </div>
               </td>
             </tr>

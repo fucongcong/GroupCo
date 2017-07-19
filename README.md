@@ -30,8 +30,11 @@
 - 修改配置nginx，见doc/nginx.md,配置hosts
 - 配置config中的service,database等配置文件
 - 执行脚本 => app/console sql:migrate 
-- 启动async服务 => app/service user
-- 访问配置的servername => groupco.com/demo
+- 启动node_center服务 => app/service node_center
+- 启动user服务 => app/service user
+- 还可以启动其他服务，自行配置
+- 查看节点信息 => groupco.com/admin，上线User服务
+- 访问配置的servername => groupco.com/demo 即可
 
 ##### 使用
 - 热重启httpserver => php server.php -s reload

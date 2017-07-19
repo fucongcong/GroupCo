@@ -86,8 +86,11 @@ class GroupController extends Controller
 
         // yield AsyncLog::emergency('hello world');
 
+        $service = (yield service_center('User'));
+        $user = (yield $service->call('User::getUser', ['id' => 1]));
+        
         yield $this->render('Web/Views/Group/index.html.twig', [
-            'user' => $users
+            'user' => $user
             ]);
     }
 

@@ -46,6 +46,7 @@ class App
         'JsonResponse'      => 'Group\Http\JsonResponse',
         'RedirectResponse'  => 'Group\Http\RedirectResponse',
         'Service'           => 'Group\Services\Service',
+        'ServiceCenter'     => 'Group\Services\ServiceCenter',
         'ServiceProvider'   => 'Group\Services\ServiceProvider',
         'Test'              => 'Group\Test\Test',
         'Listener'          => 'Group\Listeners\Listener',
@@ -70,6 +71,7 @@ class App
     ];
 
     protected $onRequestServices = [
+        'Group\Services\ServiceCenterProvider',
         'Group\Routing\RouteServiceProvider',
         'Group\EventDispatcher\EventDispatcherServiceProvider',
     ];
