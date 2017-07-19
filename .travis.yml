@@ -1,4 +1,5 @@
 language: php
+sudo: required
 php:
     - 5.6
 install:
@@ -8,8 +9,8 @@ services:
 env:
     - DB=mysql
 before_script:
-    - apt-get update
-    - apt-get install python-hiredis
+    - sudo apt-get update
+    - sudo apt-get install python-hiredis
     - wget https://github.com/swoole/swoole-src/archive/v1.9.15.zip
     - unzip swoole-src-1.9.15.zip
     - cd swoole-src-1.9.15
