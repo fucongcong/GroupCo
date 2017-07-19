@@ -10,7 +10,7 @@ class AsyncMysqlTest extends Test
     public function unitquery()
     {   
         $res = (yield AsyncMysql::query("INSERT INTO `user` (`id`, `mobile`, `password`) VALUES (NULL, '187681343332', '11111')"));
-        
+
         if ($res) {
             $result = $res->getResult();
             $affectedRows = $res->getAffectedRows();
