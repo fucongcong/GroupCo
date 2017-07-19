@@ -9,27 +9,11 @@ use Group\Events\KernalEvent;
 class ExceptionsHandler
 {
     /**
-     * App
+     * container
      *
-     * @var App
+     * @var container
      */
     protected $container;
-
-    private $levels = array(
-        E_WARNING => 'Warning',
-        E_NOTICE => 'Notice',
-        E_USER_ERROR => 'User Error',
-        E_USER_WARNING => 'User Warning',
-        E_USER_NOTICE => 'User Notice',
-        E_STRICT => 'Runtime Notice',
-        E_RECOVERABLE_ERROR => 'Catchable Fatal Error',
-        E_DEPRECATED => 'Deprecated',
-        E_USER_DEPRECATED => 'User Deprecated',
-        E_ERROR => 'Error',
-        E_CORE_ERROR => 'Core Error',
-        E_COMPILE_ERROR => 'Compile Error',
-        E_PARSE => 'Parse',
-    );
 
     public function __construct($container)
     {
@@ -46,54 +30,8 @@ class ExceptionsHandler
     {
         error_reporting(-1);
 
-        //set_error_handler([$this, 'handleError']);
-
-        //set_exception_handler([$this, 'handleException']);
-
-        //register_shutdown_function([$this, 'handleShutdown']);
-
         ini_set('display_errors', 'Off');
     }
-
-    /**
-     * Convert a PHP error to an ErrorException.
-     *
-     * @param  int  $level
-     * @param  string  $message
-     * @param  string  $file
-     * @param  int  $line
-     * @param  array  $context
-     * @return void
-     *
-     */
-    // public function handleError($level, $message, $file = '', $line = 0, $context = [])
-    // {
-    //     if (error_reporting() & $level) {
-    //         $error = [
-    //             'message' => $message,
-    //             'file'    => $file,
-    //             'line'    => $line,
-    //             'type'    => $level,
-    //         ];
-
-    //         switch ($level) {
-    //             case E_USER_ERROR:
-    //                 //$this->record($error);
-    //                 if ($this->container->runningInConsole()) {
-    //                     $this->renderForConsole($e);
-    //                 } else {
-    //                     $this->renderHttpResponse($e);
-    //                 }
-    //                 break;
-    //             default:
-    //                 $this->record($error, 'warning');
-    //                 break;
-    //         }
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
 
     public function handleException($e)
     {
@@ -105,14 +43,8 @@ class ExceptionsHandler
             'type'    => $e->getCode(),
         ];
 
-        //$this->record($error);
         return $this->renderHttpResponse($error);
     }
-
-    // protected function renderForConsole($e)
-    // {
-    //     $this->renderHttpResponse($e);
-    // }
 
     /**
      * Render an exception as an HTTP response and send it.
@@ -139,8 +71,6 @@ class ExceptionsHandler
         }
 
         return $this->trace($e);
-
-        //$this->container->singleton('eventDispatcher')->dispatch(KernalEvent::EXCEPTION, new ExceptionEvent($e, $this->container));
     }
 
     protected function trace($error)
@@ -157,46 +87,4 @@ class ExceptionsHandler
 
         return $str;
     }
-
-    /**
-     * Handle the PHP shutdown event.
-     *
-     * @return void
-     */
-    // public function handleShutdown()
-    // {
-    //     if ($e = error_get_last()) {dump(1);
-    //         if ($this->isFatal($e['type'])) {
-    //             //$this->record($e);
-    //             $e['trace'] = '';
-    //             $this->renderHttpResponse($e);
-    //             exit();
-    //         }
-                
-    //     }
-    // }
-
-    // protected function record($e, $type = 'error')
-    // {   
-    //     if (!isset($this->levels[$e['type']])) {
-    //         $level = 'Task Exception';
-    //     } else {
-    //         $level = $this->levels[$e['type']];
-    //     }
-    //     //dump('[' . $level . '] ' . $e['message'] . '[' . $e['file'] . ' : ' . $e['line'] . ']', []);
-    //     //要异步 否则报错
-    //     //\Log::$type('[' . $level . '] ' . $e['message'] . '[' . $e['file'] . ' : ' . $e['line'] . ']', []);
-    // }
-
-    /**
-     * Determine if the error type is fatal.
-     *
-     * @param  int  $type
-     * @return bool
-     */
-    // protected function isFatal($type)
-    // {
-    //     return in_array($type, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]);
-    // }
-
 }

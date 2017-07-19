@@ -19,7 +19,7 @@ class StaticCacheService
             self::$store[0][$key] = $value;
         } else {
             self::$store[1][$key] = $value;
-        }   
+        }
     }
 
     /**
@@ -31,8 +31,12 @@ class StaticCacheService
      */
     public function get($key, $default = null)
     {
-        if (isset(self::$store[0][$key])) return self::$store[0][$key];
-        if (isset(self::$store[1][$key])) return self::$store[1][$key];
+        if (isset(self::$store[0][$key])) {
+            return self::$store[0][$key];
+        }
+        if (isset(self::$store[1][$key])) {
+            return self::$store[1][$key];
+        }
         return $default;
     }
 

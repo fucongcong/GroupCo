@@ -12,6 +12,12 @@ engines:
     checks:
       CleanCode/StaticAccess:
         enabled: false
+      Generic ControlStructures InlineControlStructure NotAllowed:
+        enabled: false
+      Squiz WhiteSpace SuperfluousWhitespace EndLine:
+        enabled: false
+      CleanCode/ElseExpression:
+        enabled: false
 ratings:
   paths:
   - "**.php"

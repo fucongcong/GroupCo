@@ -10,7 +10,7 @@ use Group\Events\HttpEvent;
 use Group\Container\Container;
 use Response;
 
-Class Router implements RouterContract
+class Router implements RouterContract
 {
     /**
      * 支持的http方法
@@ -104,11 +104,7 @@ Class Router implements RouterContract
         foreach ($matches[0] as $key => $match) {
             $regex = str_replace($match, "(\S+)", $routeKey);
             $routeKey = $regex;
-
             $regex = str_replace("/", "\/", $regex);
-
-            $parameters[] = $match;
-
         }
 
         foreach ($matches[1] as $key => $match) {
@@ -143,7 +139,7 @@ Class Router implements RouterContract
     }
 
     public function getTpl($config)
-    {   
+    {
         list($group, $subGroup, $controller, $action) = explode(':', $config['controller']);
         $className = 'src\\'.$group.'\\Controller\\'.$subGroup.'\\'.$controller.'Controller';
         $action = $action.'Action';
