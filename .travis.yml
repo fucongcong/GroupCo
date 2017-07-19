@@ -9,10 +9,14 @@ services:
 env:
     - DB=mysql
 before_script:
-    - sudo apt-get update
-    - sudo apt-get install python-hiredis
+    - wget https://github.com/redis/hiredis/archive/v0.13.3.zip
+    - unzip v0.13.3.zip
+    - cd hiredis-0.13.3
+    - make && make install
+    - ldconfig
+    - cd ..
     - wget https://github.com/swoole/swoole-src/archive/v1.9.15.zip
-    - unzip swoole-src-1.9.15.zip
+    - unzip v1.9.15.zip
     - cd swoole-src-1.9.15
     - phpize
     - ./configure --enable-async-redis
