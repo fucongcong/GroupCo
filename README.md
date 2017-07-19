@@ -53,6 +53,7 @@
 - AsyncLog
 - AsyncFile
 - Container
+- Controller
 - Config
 - Event
 - Route
@@ -60,6 +61,15 @@
 - Response
 - StaticCache
 - Sync
+  - Container
+  - Console
+  - FileCache
+  - RedisCache
+  - StaticCache
+  - Log
+  - Dao
+  - Service
+- Test
 
 #### 常用特性使用
 
