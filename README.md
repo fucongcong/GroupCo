@@ -1,5 +1,7 @@
 # Group-Co	
 
+[![Code Climate](https://codeclimate.com/github/fucongcong/Group-Co/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
+
 #### 为什么写这个框架？
 - 利用协程特性以同步方式来编写异步代码，增强可读性。
 - 将swoole的异步特性与传统框架的MVC相结合。
@@ -42,8 +44,10 @@
 - 将无法使用service_center()方法获取服务模块，只能使用service直接调用
 
 ##### 使用
-- 热重启httpserver => php server.php -s reload
-- 关闭httpserver => php server.php -s stop
+- 启动http server => php server.php
+- 热重启htt pserver => php server.php -s reload
+- 关闭http server => php server.php -s stop
+- 启动某个服务 => app/service user
 - 热重启某个服务 => app/service user reload
 - 关闭某个服务 => app/service user stop
 

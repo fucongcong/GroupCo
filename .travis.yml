@@ -1,21 +1,26 @@
 language: php
 php:
-    - 5.5
     - 5.6
     - 7.0
 install:
     - composer install
 services:
   - redis-server
+env:
+  - DB=mysql
 before_script:
+    - apt-get update
+    - apt-get install python-hiredis
+    - wget https://github.com/swoole/swoole-src/archive/v1.9.15.zip
+    - unzip swoole-src-1.9.15.zip
+    - cd swoole-src-1.9.15
+    - phpize
+    - ./configure --enable-async-redis
+    - make
+    - make install
+    - cd ..
     - phpenv config-add config.ini
-    # - wget http://download.redis.io/releases/redis-3.0.5.tar.gz
-    # - tar xzf redis-3.0.5.tar.gz
-    # - cd redis-3.0.5
-    # - make
-    # - sudo sed -i 's/daemonize no/daemonize yes/g' redis.conf
-    # - src/redis-server &
-    # - cd ..
+    - app/service user
 script:
     - sudo find -L ./core -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
     - phpunit --bootstrap app/test.php core/Group

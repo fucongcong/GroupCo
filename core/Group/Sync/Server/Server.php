@@ -129,7 +129,7 @@ class Server
         try {
             $config = $this->config;
             foreach($data as $one){
-                if ($one == 'ping') {
+                if ($one == 'p') {
                     $this->sendData($serv, $fd, 1);
                     return;
                 }
