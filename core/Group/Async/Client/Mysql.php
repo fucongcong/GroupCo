@@ -112,7 +112,6 @@ class Mysql extends Base
 
         if ($this->sql == "rollback") {
             $this->mysql->rollback(function(swoole_mysql $mysql, $res) use ($callback) {
-                dump($res);
                 if ($res === false) {
                     call_user_func_array($callback, array('response' => false, 'error' => $mysql->error));
                     return;

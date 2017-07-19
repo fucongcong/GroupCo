@@ -41,8 +41,8 @@ abstract class Test extends PHPUnit_Framework_TestCase
     {
         app('redisPool')->close();
         $container = (yield getContainer());
-        if (!is_null($container->singleton('redis'))) {
-            $container->singleton('redis')->close();
+        if (!is_null($container->singleton('redis'))) {var_dump(1);
+            $container->singleton('redis')->close();var_dump(2);
         }
     }
 
@@ -50,8 +50,8 @@ abstract class Test extends PHPUnit_Framework_TestCase
     {
         app('mysqlPool')->close();
         $container = (yield getContainer());
-        if (!is_null($container->singleton('mysql'))) {
-            $container->singleton('mysql')->close();
+        if (!is_null($container->singleton('mysql'))) {var_dump(3);
+            $container->singleton('mysql')->close();var_dump(4);
         }
     }
 }
