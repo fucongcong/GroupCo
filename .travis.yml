@@ -24,6 +24,7 @@ before_script:
     - sudo make
     - sudo make install
     - cd ..
+    - php --ri swoole
     - phpenv config-add config.ini
     - app/service user
 script:
