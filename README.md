@@ -20,7 +20,7 @@
 - php5.6
 - swoole >=1.9.15 (在编译swoole时加入--enable-async-redis，开启异步redis客户端)
 
-##### 安装
+##### 安装(请先完成环境依赖安装)
 - 克隆项目
 - 执行 => composer install
 - 新建一个runtime目录，用于存放日志等cache文件
@@ -30,7 +30,7 @@
 - 修改配置nginx，见doc/nginx.md,配置hosts
 - 配置config中的service,database等配置文件
 - 执行脚本 => app/console sql:migrate 
-- 启动node_center服务 => app/service node_center
+- 启动node_center服务 => app/service node_center (注意修改config/service.php中的node_center)
 - 启动user服务 => app/service user
 - 还可以启动其他服务，自行配置
 - 查看节点信息 => groupco.com/admin，上线User服务
