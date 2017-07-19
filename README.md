@@ -30,8 +30,11 @@
 - 修改配置nginx，见doc/nginx.md,配置hosts
 - 配置config中的service,database等配置文件
 - 执行脚本 => app/console sql:migrate 
-- 启动async服务 => app/service user
-- 访问配置的servername => groupco.com/demo
+- 启动node_center服务 => app/service node_center
+- 启动user服务 => app/service user
+- 还可以启动其他服务，自行配置
+- 查看节点信息 => groupco.com/admin，上线User服务
+- 访问配置的servername => groupco.com/demo 即可
 
 ##### 使用
 - 热重启httpserver => php server.php -s reload
@@ -50,6 +53,7 @@
 - AsyncLog
 - AsyncFile
 - Container
+- Config
 - Event
 - Route
 - Request
@@ -57,10 +61,12 @@
 - StaticCache
 - Sync
 
-##### 串行调用
+#### 常用特性使用
+
+##### 串行调用(不使用服务中心)
 
 ```php
-
+    
     $start = microtime(true);
     //设置2秒超时
     service("user")->setTimeout(2);
@@ -69,7 +75,20 @@
 
 ```
 
-##### 并行调用
+##### 串行调用(使用服务中心)
+
+```php
+    
+    $start = microtime(true);
+    //设置2秒超时
+    $service = (yield service_center("User"));
+    $service->setTimeout(2);
+    $users = (yield $service->call("User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
+    dump($users);
+
+```
+
+##### 并行调用(不使用服务中心)
 
 ```php
 
@@ -80,6 +99,25 @@
     $callId1 = service("user")->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
     $callId2 = service("user")->addCall("User\User::getUser", ['id' => 1]);
     $res = (yield service("user")->multiCall());
+
+    dump($res[$callId1]);
+    dump($res[$callId2]);
+    dump(microtime(true) - $start);
+    
+```
+
+##### 并行调用(使用服务中心)
+
+```php
+
+    $start = microtime(true);
+    //设置2秒超时
+    $service = (yield service_center("User"));
+    $service->setTimeout(2);
+
+    $callId1 = $service->addCall("User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
+    $callId2 = $service->addCall("User::getUser", ['id' => 1]);
+    $res = (yield $service->multiCall());
 
     dump($res[$callId1]);
     dump($res[$callId2]);
@@ -220,6 +258,10 @@
     }
 
 ```
+
+##### 服务治理示意图
+
+![服务治理](soa.png)
 
 ##### License MIT
 ##### 感谢Swoole

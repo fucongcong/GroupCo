@@ -4,6 +4,8 @@ namespace Group\Async;
 
 class AsyncService
 {   
+    protected $service = null;
+
     protected $serv;
 
     protected $port;
@@ -28,10 +30,23 @@ class AsyncService
         $this->timeout = $timeout;
     }
 
+    public function setService($service)
+    {
+        $this->service = $service;
+    }
+
     public function call($cmd, $data = [], $timeout = false)
     {   
+        if (!$this->serv || !$this->port) {
+            yield false;
+        }
+        
         if (is_numeric($timeout)) {
             $this->timeout = $timeout;
+        }
+
+        if ($this->service) {
+            $cmd = $this->service."\\".$cmd;
         }
 
         $data = \Group\Sync\DataPack::pack($cmd, $data);

@@ -12,6 +12,13 @@ class AsyncServiceTest extends Test
         $this->assertArrayHasKey('id', $user);
     }
 
+    // public function unitservicecenter()
+    // {   
+    //     $userService = (yield service_center('User'));
+    //     $res = (yield $userService->call('User::getUser', ['id' => 1]));
+    //     $this->assertArrayHasKey('id', $user);
+    // }
+
     public function unitexception()
     {
         try {
