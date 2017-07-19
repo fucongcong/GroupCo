@@ -1,8 +1,8 @@
 <?php
 
-namespace Group\ASync\Pool;
+namespace Group\Async\Pool;
 
-use Group\ASync\Pool\RedisPool;
+use Group\Async\Pool\RedisPool;
 
 class RedisPoolServiceProvider extends \ServiceProvider
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Group\ASync\Pool;
+namespace Group\Async\Pool;
 
-use Group\ASync\Pool\MysqlPool;
+use Group\Async\Pool\MysqlPool;
 
 class MysqlPoolServiceProvider extends \ServiceProvider
 {

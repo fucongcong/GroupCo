@@ -1,11 +1,11 @@
 <?php
 
-namespace Group\ASync\Pool;
+namespace Group\Async\Pool;
 
 use swoole_redis;
 use splQueue;
 use Config;
-use Group\ASync\Pool\Pool;
+use Group\Async\Pool\Pool;
 
 class RedisPool extends Pool
 {   

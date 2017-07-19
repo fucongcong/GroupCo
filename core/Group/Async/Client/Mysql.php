@@ -4,7 +4,7 @@ namespace Group\Async\Client;
 
 use swoole_mysql;
 use Config;
-use Group\ASync\Pool\Result;
+use Group\Async\Pool\Result;
 
 class Mysql extends Base
 {

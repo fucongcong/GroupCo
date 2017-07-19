@@ -1,6 +1,6 @@
 <?php
 
-namespace Group\ASync\Pool;
+namespace Group\Async\Pool;
 
 use splQueue;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Group\ASync\Pool;
+namespace Group\Async\Pool;
 
 use swoole_mysql;
-use Group\ASync\Pool\Pool;
-use Group\ASync\Pool\Result;
+use Group\Async\Pool\Pool;
+use Group\Async\Pool\Result;
 use splQueue;
 use Config;
 
