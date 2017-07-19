@@ -36,6 +36,11 @@
 - 查看节点信息 => groupco.com/admin，上线User服务
 - 访问配置的servername => groupco.com/demo 即可
 
+##### 不使用服务中心
+- 将config/service.php中的node_center地址设为空
+- 将config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'注释
+- 将无法使用service_center()方法获取服务模块，只能使用service直接调用
+
 ##### 使用
 - 热重启httpserver => php server.php -s reload
 - 关闭httpserver => php server.php -s stop
