@@ -12,7 +12,7 @@ use Log;
 
 class Server 
 {
-	protected $serv;
+    protected $serv;
 
     protected $servName;
 
@@ -38,8 +38,8 @@ class Server
         'open_eof_split' => true, //底层拆分eof的包
         ];
 
-	public function __construct($config =[], $servName, $argv = [])
-	{   
+    public function __construct($config =[], $servName, $argv = [])
+    {   
         $this->argv = $argv;
         $config['config'] = array_merge($this->setting, $config['config']);
         $this->config = $config;
@@ -60,7 +60,7 @@ class Server
         $this->serv->on('Finish', [$this, 'onFinish']);
 
         $this->serv->start();
-	}
+    }
 
     public function onStart(swoole_server $serv)
     {

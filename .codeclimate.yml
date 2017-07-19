@@ -19,4 +19,3 @@ exclude_paths:
 - test/**/*
 - vendor/**/*
 - config/**/*
-- core/Group/Plugin/**/*

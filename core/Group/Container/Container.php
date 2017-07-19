@@ -13,7 +13,7 @@ class Container implements ContainerContract
 {   
     protected $instances;
 
-	private static $instance;
+    private static $instance;
 
     protected $timezone;
 
@@ -70,22 +70,22 @@ class Container implements ContainerContract
         return isset($this->instances[$name]) ? $this->instances[$name] : null;
     }
 
-	/**
-	 * build a moudle class
-	 *
-	 * @param  class
-	 * @return ReflectionClass class
-	 */
-	public function buildMoudle($class)
-	{
-		if (!class_exists($class)) {
-			throw new NotFoundException("Class ".$class." not found !");
-		}
+    /**
+     * build a moudle class
+     *
+     * @param  class
+     * @return ReflectionClass class
+     */
+    public function buildMoudle($class)
+    {
+        if (!class_exists($class)) {
+            throw new NotFoundException("Class ".$class." not found !");
+        }
 
-		$reflector = new ReflectionClass($class);
+        $reflector = new ReflectionClass($class);
 
-		return $reflector;
-	}
+        return $reflector;
+    }
 
     /**
      * do the moudle class action
@@ -95,16 +95,16 @@ class Container implements ContainerContract
      * @param  array parameters
      * @return string
      */
-	public function doAction($class, $action, array $parameters, \Request $request)
-	{
-		$reflector = $this->buildMoudle($class);
+    public function doAction($class, $action, array $parameters, \Request $request)
+    {
+        $reflector = $this->buildMoudle($class);
 
-		if (!$reflector->hasMethod($action)) {
-			throw new NotFoundException("Class ".$class." exist ,But the Action ".$action." not found");
-		}
+        if (!$reflector->hasMethod($action)) {
+            throw new NotFoundException("Class ".$class." exist ,But the Action ".$action." not found");
+        }
 
-		$instanc = $reflector->newInstanceArgs(array(App::getInstance(), $this));
-		$method = $reflector->getmethod($action);
+        $instanc = $reflector->newInstanceArgs(array(App::getInstance(), $this));
+        $method = $reflector->getmethod($action);
         $args = [];
         foreach ($method->getParameters() as $arg) {
             $paramName = $arg ->getName();
@@ -113,7 +113,7 @@ class Container implements ContainerContract
         }
         
         return $method->invokeArgs($instanc, $args);
-	}
+    }
 
     public function setSwooleResponse($response)
     {

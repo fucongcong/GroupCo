@@ -25,16 +25,16 @@ class Service
     }
     // protected $serviceName;
 
-	public function createDao($serviceName)
-	{
-		list($group, $serviceName) = explode(":", $serviceName);
-		$class = $serviceName."DaoImpl";
-		$serviceName = "src\\Service\\$group\\Dao\\Impl\\$class";
+    public function createDao($serviceName)
+    {
+        list($group, $serviceName) = explode(":", $serviceName);
+        $class = $serviceName."DaoImpl";
+        $serviceName = "src\\Service\\$group\\Dao\\Impl\\$class";
 
         return app()->singleton(strtolower($serviceName), function() use ($serviceName) {
             return new $serviceName();
         });
-	}
+    }
 
     public function task($cmd, $data)
     {   

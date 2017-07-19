@@ -3,8 +3,8 @@
 namespace Group\Events;
 
 final class HttpEvent extends \Event
-{	
-	protected $request;
+{   
+    protected $request;
 
     protected $response;
 
@@ -13,8 +13,8 @@ final class HttpEvent extends \Event
     protected $container;
 
     public function __construct(\Request $request = null, $response = null, $swooleHttpResponse, $container = null)
-    {	
-    	$this->request = $request;
+    {   
+        $this->request = $request;
         $this->response = $response;
         $this->swooleHttpResponse = $swooleHttpResponse;
         $this->container = $container;

@@ -4,7 +4,7 @@ namespace Group\Services;
 
 class ServiceCenterProvider extends \ServiceProvider
 {
-	/**
+    /**
      * Register the service provider.
      *
      * @return object

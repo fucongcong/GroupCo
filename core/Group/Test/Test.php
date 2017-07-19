@@ -6,8 +6,8 @@ use PHPUnit_Framework_TestCase;
 use Group\Container\Container;
 
 abstract class Test extends PHPUnit_Framework_TestCase
-{	
-	protected $taskMethodPattern = '/^unit.+/i';
+{   
+    protected $taskMethodPattern = '/^unit.+/i';
 
     public function __construct()
     {
@@ -16,9 +16,9 @@ abstract class Test extends PHPUnit_Framework_TestCase
     }
 
     public function testCo()
-    {	
-    	$container = new Container();
-    	$task = new \Group\Coroutine\Task(1, $container, $this->scanTasks());
+    {   
+        $container = new Container();
+        $task = new \Group\Coroutine\Task(1, $container, $this->scanTasks());
         $task->run();
     }
 

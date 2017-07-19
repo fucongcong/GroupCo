@@ -11,20 +11,20 @@ class ArrayToolkit
      * @param  columnName
      * @return array
      */
-	public static function column(array $array, $columnName)
-	{
-		if (empty($array)) {
-			return array();
-		}
+    public static function column(array $array, $columnName)
+    {
+        if (empty($array)) {
+            return array();
+        }
 
-		$column = array();
-		foreach ($array as $item) {
+        $column = array();
+        foreach ($array as $item) {
             if (isset($item[$columnName])) {
                 $column[] = $item[$columnName];
             }
-		}
-    	return $column;
-	}
+        }
+        return $column;
+    }
 
     /**
      * 过滤数组中的key
@@ -33,15 +33,15 @@ class ArrayToolkit
      * @param  keys
      * @return array
      */
-	public static function parts(array $array, array $keys)
-	{
-		foreach (array_keys($array) as $key) {
-			if (!in_array($key, $keys)) {
-				unset($array[$key]);
-			}
-		}
-		return $array;
-	}
+    public static function parts(array $array, array $keys)
+    {
+        foreach (array_keys($array) as $key) {
+            if (!in_array($key, $keys)) {
+                unset($array[$key]);
+            }
+        }
+        return $array;
+    }
 
     /**
      * 数组中的key是否存在
@@ -50,15 +50,15 @@ class ArrayToolkit
      * @param  keys
      * @return boolean
      */
-	public static function requireds(array $array, array $keys)
-	{
-		foreach ($keys as $key) {
-			if (!array_key_exists($key, $array)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public static function requireds(array $array, array $keys)
+    {
+        foreach ($keys as $key) {
+            if (!array_key_exists($key, $array)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * 数组间的差异
@@ -67,20 +67,20 @@ class ArrayToolkit
      * @param  array
      * @return array
      */
-	public static function changes(array $before, array $after)
-	{
-		$changes = array('before' => array(), 'after' => array());
-		foreach ($after as $key => $value) {
-			if (!isset($before[$key])) {
-				continue;
-			}
-			if ($value != $before[$key]) {
-				$changes['before'][$key] = $before[$key];
-				$changes['after'][$key] = $value;
-			}
-		}
-		return $changes;
-	}
+    public static function changes(array $before, array $after)
+    {
+        $changes = array('before' => array(), 'after' => array());
+        foreach ($after as $key => $value) {
+            if (!isset($before[$key])) {
+                continue;
+            }
+            if ($value != $before[$key]) {
+                $changes['before'][$key] = $before[$key];
+                $changes['after'][$key] = $value;
+            }
+        }
+        return $changes;
+    }
 
     /**
      * 根据指定key进行分组
@@ -134,29 +134,29 @@ class ArrayToolkit
      */
     public static function filter(array $array, array $specialValues)
     {
-    	$filtered = array();
-    	foreach ($specialValues as $key => $value) {
-    		if (!array_key_exists($key, $array)) {
-    			continue;
-    		}
+        $filtered = array();
+        foreach ($specialValues as $key => $value) {
+            if (!array_key_exists($key, $array)) {
+                continue;
+            }
 
-			if (is_array($value)) {
-				$filtered[$key] = (array) $array[$key];
-			} elseif (is_int($value)) {
-				$filtered[$key] = (int) $array[$key];
-			} elseif (is_float($value)) {
-				$filtered[$key] = (float) $array[$key];
-			} elseif (is_bool($value)) {
-				$filtered[$key] = (bool) $array[$key];
-			} else {
-				$filtered[$key] = (string) $array[$key];
-			}
+            if (is_array($value)) {
+                $filtered[$key] = (array) $array[$key];
+            } elseif (is_int($value)) {
+                $filtered[$key] = (int) $array[$key];
+            } elseif (is_float($value)) {
+                $filtered[$key] = (float) $array[$key];
+            } elseif (is_bool($value)) {
+                $filtered[$key] = (bool) $array[$key];
+            } else {
+                $filtered[$key] = (string) $array[$key];
+            }
 
-			if (empty($filtered[$key])) {
-				$filtered[$key] = $value;
-			}
-    	}
+            if (empty($filtered[$key])) {
+                $filtered[$key] = $value;
+            }
+        }
 
-    	return $filtered;
+        return $filtered;
     }
 }

@@ -8,7 +8,7 @@ use Group\Exceptions\NotFoundException;
 
 class Container
 {   
-	private static $instance;
+    private static $instance;
 
     protected $timezone;
 
@@ -31,22 +31,22 @@ class Container
         $this->needDebug();
     }
 
-	/**
-	 * build a moudle class
-	 *
-	 * @param  class
-	 * @return ReflectionClass class
-	 */
-	public function buildMoudle($class)
-	{
-		if (!class_exists($class)) {
-			throw new NotFoundException("Class ".$class." not found !");
-		}
+    /**
+     * build a moudle class
+     *
+     * @param  class
+     * @return ReflectionClass class
+     */
+    public function buildMoudle($class)
+    {
+        if (!class_exists($class)) {
+            throw new NotFoundException("Class ".$class." not found !");
+        }
 
-		$reflector = new ReflectionClass($class);
+        $reflector = new ReflectionClass($class);
 
-		return $reflector;
-	}
+        return $reflector;
+    }
 
     /**
      * do the moudle class action
@@ -56,16 +56,16 @@ class Container
      * @param  array parameters
      * @return string
      */
-	public function doAction($class, $action, array $parameters, \Request $request)
-	{
-		$reflector = $this->buildMoudle($class);
+    public function doAction($class, $action, array $parameters, \Request $request)
+    {
+        $reflector = $this->buildMoudle($class);
 
-		if (!$reflector->hasMethod($action)) {
-			throw new NotFoundException("Class ".$class." exist ,But the Action ".$action." not found");
-		}
+        if (!$reflector->hasMethod($action)) {
+            throw new NotFoundException("Class ".$class." exist ,But the Action ".$action." not found");
+        }
 
-		$instanc = $reflector->newInstanceArgs(array(App::getInstance(), $this));
-		$method = $reflector->getmethod($action);
+        $instanc = $reflector->newInstanceArgs(array(App::getInstance(), $this));
+        $method = $reflector->getmethod($action);
         $args = [];
         foreach ($method->getParameters() as $arg) {
             $paramName = $arg ->getName();
@@ -73,22 +73,22 @@ class Container
             if (!empty($arg->getClass()) && $arg->getClass()->getName() == 'Group\Http\Request') $args[$paramName] = $request;
         }
 
-		return $method->invokeArgs($instanc, $args);
-	}
+        return $method->invokeArgs($instanc, $args);
+    }
 
     /**
      * return single class
      *
      * @return Group\Container Container
      */
-	public static function getInstance()
+    public static function getInstance()
     {
-		if (!(self::$instance instanceof self)){
-			self::$instance = new self;
-		}
+        if (!(self::$instance instanceof self)){
+            self::$instance = new self;
+        }
 
-		return self::$instance;
-	}
+        return self::$instance;
+    }
 
     /**
      * 设置时区

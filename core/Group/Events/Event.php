@@ -3,8 +3,8 @@
 namespace Group\Events;
 
 class Event
-{	
-	protected $property;
+{   
+    protected $property;
 
     public function __construct($property = null)
     {

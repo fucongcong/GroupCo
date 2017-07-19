@@ -14,7 +14,7 @@ class KernalRequestListener extends \Listener
     }
 
     public function onKernalRequest(\Event $event)
-    {	
-    	//$request = $event->getRequest();
+    {   
+        //$request = $event->getRequest();
     }
 }

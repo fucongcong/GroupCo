@@ -4,7 +4,7 @@ namespace Group\Common;
 
 class SecurityToolkit
 {
-	/**
+    /**
      * 转换为安全的纯文本
      *
      * @param string  $text

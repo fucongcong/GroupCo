@@ -13,8 +13,8 @@ class KernalResponseListener extends \Listener
     }
 
     public function onKernalResponse(\Event $event)
-    {	
-    	$response = $event->getResponse();
+    {   
+        $response = $event->getResponse();
         $swooleHttpResponse = $event->getSwooleHttpResponse();
 
         if ($response instanceof \Response 

@@ -8,8 +8,8 @@ use Config;
 class ConfigTest extends Test
 {
     public function testGet()
-    {	
-    	Config::set('app', 'environment', 'prod');
+    {   
+        Config::set('app', 'environment', 'prod');
         $environment = Config::get('app::environment');
         $this->assertEquals('prod', $environment);
 
