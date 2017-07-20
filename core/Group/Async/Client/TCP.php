@@ -20,6 +20,8 @@ class TCP extends Base
 
     protected $isInit = false;
 
+    protected $isFinish = false;
+
     public function __construct($ip, $port)
     {
         $this->ip = $ip;
@@ -41,9 +43,16 @@ class TCP extends Base
     public function call(callable $callback)
     {   
         if (!$this->isInit) {
-            $this->client->on("connect", function ($cli) {
+            $this->client->on("connect", function ($cli) use ($callback) {
                 $this->calltime = microtime(true);
                 $cli->send($this->data);
+
+                swoole_timer_after(floatval($this->timeout) * 1000, function () use ($callback) {
+                    if (!$this->isFinish) {
+                        $this->client->close();
+                        call_user_func_array($callback, array('response' => 'false', 'calltime' => $this->timeout, 'error' => 'timeout'));
+                    }
+                });
             });
 
             $this->client->on('close', function ($cli) {
@@ -55,6 +64,7 @@ class TCP extends Base
             });
 
             $this->client->on("receive", function ($cli, $data) use ($callback) {
+                $this->isFinish = true;
                 $this->calltime = microtime(true) - $this->calltime;
                 $cli->close();
                 call_user_func_array($callback, array('response' => $data, 'error' => null, 'calltime' => $this->calltime));
@@ -62,6 +72,7 @@ class TCP extends Base
             $this->isInit = true;
         }
 
+        $this->isFinish = false;
         $this->client->connect($this->ip, $this->port, $this->timeout, 1);
     }
 }
