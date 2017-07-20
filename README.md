@@ -3,8 +3,6 @@
 [![Build Status](https://travis-ci.org/fucongcong/Group-Co.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co)
 [![Code Climate](https://codeclimate.com/github/fucongcong/Group-Co/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
 
-##### [English Documentation](https://github.com/fucongcong/Group-Co/blob/master/en.md)
-
 #### 为什么写这个框架？
 - 利用协程特性以同步方式来编写异步代码，增强可读性。
 - 将swoole的异步特性与传统框架的MVC相结合。
@@ -17,6 +15,10 @@
 #### * Mysql事务处理
 #### * Twig、Doctrine支持视图、服务数据层
 #### * 单元测试覆盖
+
+##### TODO
+- 调用超时机制
+- http异步客户端
 
 ##### 环境依赖
 - [hiredis](https://github.com/redis/hiredis)
@@ -36,16 +38,14 @@
 - 修改配置nginx，见doc/nginx.md,配置hosts
 - 配置config中的service配置文件
 - 执行脚本 => app/console sql:migrate 
-- 启动node_center服务 => app/service node_center (注意修改config/service.php中的node_center)
 - 启动user服务 => app/service user
 - 还可以启动其他服务，自行配置
-- 查看节点信息 => groupco.com/admin，上线User服务
 - 访问配置的servername => groupco.com/demo 即可
 
-##### 不使用服务中心
-- 将config/service.php中的node_center地址设为空
-- 将config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'注释
-- 将无法使用service_center()方法获取服务模块，只能使用service直接调用
+##### 使用服务中心
+- 设置config/service.php中的node_center地址
+- 开启config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'
+- 使用service_center()方法获取服务模块
 
 ##### 使用
 - 启动http server => php server.php

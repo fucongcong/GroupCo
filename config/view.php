@@ -11,7 +11,7 @@ return [
     'notfound_page' => 'Web/Views/Error/404.html.twig',
 
     //false|true
-    'cache' => true,
+    'cache' => false,
 
     //缓存的目录
     'cache_dir' => 'runtime/cache/views',

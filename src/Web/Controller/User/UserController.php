@@ -11,8 +11,6 @@ class UserController extends BaseController
 {   
     public function demoAction(Request $request)
     {   
-                $service = (yield service_center('User'));
-        $user = (yield $service->call("User::getUser", ['id' => 1]));
         yield $this->getUser();
         //渲染模版 模版的启始路径可在config的view.php配置
         yield $this->render('Web/Views/Default/index.html.twig');
@@ -45,8 +43,8 @@ class UserController extends BaseController
     			'mobile' => $mobile,
     			'password' => $password
     		];
-            $service = (yield service_center('User'));
-    		$res = (yield $service->call("User::addUser", ['user' => $user]));
+            //$service = (yield service_center('User'));
+    		$res = (yield service("user")->call("User\User::addUser", ['user' => $user]));
     		if ($res) {
     			$response = new JsonResponse([
 		                'msg' => '注册成功',
@@ -54,7 +52,7 @@ class UserController extends BaseController
 		                'code' => 200
 		            ]
 		        );
-		        $user = (yield $service->call("User::getUser", ['id' => $res]));
+		        $user = (yield service("user")->call("User\User::getUser", ['id' => $res]));
 		        yield $this->setJwt($request, $res, $response);
     		} else {
     			yield new JsonResponse([
@@ -102,8 +100,8 @@ class UserController extends BaseController
     			'mobile' => $mobile,
     			'password' => $password
     		];
-            $service = (yield service_center('User'));
-    		$user = (yield $service->call("User::getUserByMobile", ['mobile' => $mobile]));
+            //$service = (yield service_center('User'));
+    		$user = (yield service("user")->call("User\User::getUserByMobile", ['mobile' => $mobile]));
     		if (isset($user['password']) && $user['password'] == $password) {
 
     			$response = new JsonResponse([

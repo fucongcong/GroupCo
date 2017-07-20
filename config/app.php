@@ -1,10 +1,10 @@
 <?php
 return [
     // prod|dev
-    'environment' => 'prod',
+    'environment' => 'dev',
 
     //只有在dev环境下才生效。tip: swoole http server下无法正常debug
-    'debug' => false,
+    'debug' => true,
 
     //zh|en|fr...
     'locale' => 'zh',
@@ -57,6 +57,6 @@ return [
 
     //在启动时可以添加用户自定义的工作进程,必须是swoole_process
     'swoole_process' => [
-        'src\Admin\Process\HeartbeatProcess',
+        //'src\Admin\Process\HeartbeatProcess',
     ],
 ];
