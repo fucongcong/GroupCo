@@ -11,8 +11,6 @@ class UserController extends BaseController
 {   
     public function demoAction(Request $request)
     {   
-                $service = (yield service_center('User'));
-        $user = (yield $service->call("User::getUser", ['id' => 1]));
         yield $this->getUser();
         //渲染模版 模版的启始路径可在config的view.php配置
         yield $this->render('Web/Views/Default/index.html.twig');
