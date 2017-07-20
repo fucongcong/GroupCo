@@ -27,6 +27,7 @@
 - clone project
 - run => composer install
 - make dir => runtime
+- configuring config/database.php
 - start http server => php server.php
 - visit http://localhost:9777/ ,it's work!
 
@@ -267,7 +268,7 @@
 
 ##### Demo
 - configuring Nginx，=> doc/nginx.md. Configuring hosts
-- configuring config/service.php,database.php
+- configuring config/service.php
 - exec => app/console sql:migrate 
 - start node_center service => app/service node_center (config/service.php => node_center)
 - start user service => app/service user
