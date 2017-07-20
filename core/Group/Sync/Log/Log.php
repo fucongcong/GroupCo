@@ -9,14 +9,14 @@ use Monolog\Handler\FirePHPHandler;
 class Log
 {   
     protected static $levels = array(
-        100 => 'DEBUG',
-        200 => 'INFO',
-        250 => 'NOTICE',
-        300 => 'WARNING',
-        400 => 'ERROR',
-        500 => 'CRITICAL',
-        550 => 'ALERT',
-        600 => 'EMERGENCY',
+        'debug'     => Logger::DEBUG,
+        'info'      => Logger::INFO,
+        'notice'    => Logger::NOTICE,
+        'warning'   => Logger::WARNING,
+        'error'     => Logger::ERROR,
+        'critical'  => Logger::CRITICAL,
+        'alert'     => Logger::ALERT,
+        'emergency' => Logger::EMERGENCY,
     );
 
     public static $cacheDir = "runtime/logs/service";

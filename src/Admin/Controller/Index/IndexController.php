@@ -100,11 +100,10 @@ class IndexController extends Controller
         $ip = $request->request->get('ip');
         $port = $request->request->get('port');
 
+        $res = (yield AsyncMysql::query("DELETE FROM `nodes` WHERE ip = '{$ip}' and port = '{$port}'"));
+
         $service = new AsyncService($ip, $port);
         $res = (yield $service->call('close'));
-        if ($res) {
-            $res = (yield AsyncMysql::query("DELETE FROM `nodes` WHERE ip = '{$ip}' and port = '{$port}'"));
-        }
         
         yield 1;
     }
