@@ -3,6 +3,8 @@
 namespace Group\Async;
 
 use Group\Async\Client\TCP;
+use Group\Events\KernalEvent;
+use Event;
 
 class AsyncService
 {   
@@ -14,7 +16,7 @@ class AsyncService
 
     protected $packageEof;
 
-    protected $timeout = 1;
+    protected $timeout = 5;
 
     protected $calls = [];
 
@@ -64,6 +66,10 @@ class AsyncService
         $res = (yield $client);
 
         if ($res && $res['response']) {
+            //抛出一个事件出去，方便做上报
+            yield $container->singleton('eventDispatcher')->dispatch(KernalEvent::SERVICE_CALL, 
+                new Event(['cmd' => $cmd, 'calltime' => $res['calltime']]));
+
             $res['response'] = json_decode($res['response'], true);
             yield $res['response'];
         }

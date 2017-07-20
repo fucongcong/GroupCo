@@ -15,4 +15,6 @@ final class KernalEvent extends \Event
     const NOTFOUND = "kernal.notfound";
 
     const HTTPFINISH = "kernal.httpfinish";
+
+    const SERVICE_CALL = "kernal.service_call";
 }
