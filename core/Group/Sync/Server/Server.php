@@ -273,7 +273,11 @@ class Server
     }
 
     private function sendData(swoole_server $serv, $fd, $data)
-    {
+    {   
+        if ($data === false) {
+            $data = 0;
+        }
+
         $fdinfo = $serv->connection_info($fd);
         if($fdinfo){
             //如果这个时候客户端还连接者的话说明需要返回返回的信息,

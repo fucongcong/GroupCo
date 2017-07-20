@@ -7,10 +7,18 @@ use Group\Common\ValidatorToolkit;
 use JsonResponse;
 use Request;
 
-class UserController extends Controller
-{
+class UserController extends BaseController
+{   
+    public function demoAction(Request $request)
+    {   
+        yield $this->getUser();
+        //渲染模版 模版的启始路径可在config的view.php配置
+        yield $this->render('Web/Views/Default/index.html.twig');
+    }
+
     public function registerAction(Request $request)
     {	
+        yield $this->getUser();
     	//post请求
     	if ($request->getMethod() == "POST") {
     		$mobile = $request->request->get('mobile');
@@ -67,6 +75,7 @@ class UserController extends Controller
 
     public function loginAction(Request $request)
     {	
+        yield $this->getUser();
     	//post请求
     	if ($request->getMethod() == "POST") {
     		$mobile = $request->request->get('mobile');
@@ -124,7 +133,7 @@ class UserController extends Controller
     }
 
     public function logoutAction(Request $request)
-    {
+    {   
         $response = $this->redirect('/demo');
         yield $this->clearJwt($request, $response);
     }
