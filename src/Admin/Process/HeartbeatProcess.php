@@ -23,7 +23,9 @@ class HeartbeatProcess extends Process
 		        $res = $dao->querySql($sql, 'default')->fetchAll();
 
 		        foreach ($res as $serv) {
-		        	$client = new Tcp($serv['ip'], $serv['port'], "p\r\n", 5);
+		        	$client = new Tcp($serv['ip'], $serv['port']);
+		        	$client->setTimeout(5);
+		        	$client->setData("p\r\n");
 					$client->call(function($response, $error, $calltime) use ($serv, $dao) {
 						//服务挂了，或者异常了
 					    if (!$response) {

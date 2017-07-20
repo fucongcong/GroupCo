@@ -2,6 +2,8 @@
 
 namespace Group\Async;
 
+use Group\Async\Client\TCP;
+
 class AsyncService
 {   
     protected $service = null;
@@ -51,20 +53,18 @@ class AsyncService
 
         $data = \Group\Sync\DataPack::pack($cmd, $data);
         $data .= $this->packageEof;
-        $res = (yield new \Group\Async\Client\TCP($this->serv, $this->port, $data, $this->timeout));
+        //$res = (yield new \Group\Async\Client\TCP($this->serv, $this->port, $data, $this->timeout));
+        $container = (yield getContainer());
+        $client = $container->singleton('tcp:'.$this->serv.':'.$this->port, function() {
+            return new TCP($this->serv, $this->port);
+        });
+
+        $client->setTimeout($this->timeout);
+        $client->setData($data);
+        $res = (yield $client);
 
         if ($res && $res['response']) {
             $res['response'] = json_decode($res['response'], true);
-
-            // if (app()->singleton('debugbar')->hasCollector('service')) {
-            //     $array = [
-            //         0 => $cmd,
-            //         1 => $res['calltime'],
-            //         2 => $res['response']
-            //     ];
-            //     app()->singleton('debugbar')->getCollector('service')->setData($array);
-            // }
-
             yield $res['response'];
         }
 

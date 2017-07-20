@@ -2,6 +2,8 @@
 
 namespace Group\Async\Client;
 
+use swoole_client;
+
 class TCP extends Base
 {
     protected $ip;
@@ -14,36 +16,52 @@ class TCP extends Base
 
     protected $calltime;
 
-    public function __construct($ip, $port, $data, $timeout)
+    protected $client;
+
+    protected $isInit = false;
+
+    public function __construct($ip, $port)
     {
-        parent::__construct($ip, $port, $data, $timeout);
+        $this->ip = $ip;
+        $this->port = $port;
+
+        $this->client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
+    }
+
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+    }
+
+    public function setData($data)
+    {
+        $this->data = $data;
     }
 
     public function call(callable $callback)
-    {
-        $client = new \swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
+    {   
+        if (!$this->isInit) {
+            $this->client->on("connect", function ($cli) {
+                $this->calltime = microtime(true);
+                $cli->send($this->data);
+            });
 
-        $client->on("connect", function ($cli) {
-            $cli->send($this->data);
-        });
+            $this->client->on('close', function ($cli) {
+            });
 
-        $client->on('close', function ($cli) {
-        });
+            $this->client->on('error', function ($cli) use ($callback) {
+                $this->calltime = microtime(true) - $this->calltime;
+                call_user_func_array($callback, array('response' => false, 'error' => socket_strerror($cli->errCode), 'calltime' => $this->calltime));
+            });
 
-        $client->on('error', function ($cli) use ($callback) {
-            $this->calltime = microtime(true) - $this->calltime;
-            call_user_func_array($callback, array('response' => false, 'error' => socket_strerror($cli->errCode), 'calltime' => $this->calltime));
-        });
-
-        $client->on("receive", function ($cli, $data) use ($callback) {
-            $this->calltime = microtime(true) - $this->calltime;
-
-            $cli->close();
-            call_user_func_array($callback, array('response' => $data, 'error' => null, 'calltime' => $this->calltime));
-        });
-
-        if ($client->connect($this->ip, $this->port, $this->timeout, 1)) {
-            $this->calltime = microtime(true);
+            $this->client->on("receive", function ($cli, $data) use ($callback) {
+                $this->calltime = microtime(true) - $this->calltime;
+                $cli->close();
+                call_user_func_array($callback, array('response' => $data, 'error' => null, 'calltime' => $this->calltime));
+            });
+            $this->isInit = true;
         }
+
+        $this->client->connect($this->ip, $this->port, $this->timeout, 1);
     }
 }

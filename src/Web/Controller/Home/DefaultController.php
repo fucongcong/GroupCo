@@ -10,7 +10,8 @@ class DefaultController extends Controller
 {
     //一个action 与route对应
     public function indexAction(Request $request)
-    {
+    {   
+        $users = (yield $this->getUserService()->call("User\User::getUser", ['id' => 1]));
         yield "hello world!";
     }
 
