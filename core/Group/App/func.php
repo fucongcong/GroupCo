@@ -64,7 +64,7 @@ function service_center($serviceName)
     $container = (yield getContainer());
 
     if (!$container->singleton('serviceCenter')->getService($serviceName)) {
-        $res = (yield service('node_center')->call("NodeCenter\NodeCenter::getService", ['serviceName' => $serviceName]));
+        $res = (yield service('node_center')->call("NodeCenter\NodeCenter::getService", ['serviceName' => $serviceName], false, false));
         $container->singleton('serviceCenter')->setService($serviceName, $res['ip'], $res['port']);
     }
 
@@ -83,7 +83,6 @@ function service($serviceName)
 {   
     return app('service')->createService($serviceName);
 }
-
 
 function getTaskId() {
     return new SysCall(function(Task $task){

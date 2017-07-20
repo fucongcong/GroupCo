@@ -39,7 +39,7 @@ class AsyncService
         $this->service = $service;
     }
 
-    public function call($cmd, $data = [], $timeout = false)
+    public function call($cmd, $data = [], $timeout = false, $monitor = true)
     {   
         if (!$this->serv || !$this->port) {
             yield false;
@@ -66,10 +66,14 @@ class AsyncService
         $res = (yield $client);
 
         if ($res && $res['response']) {
-            //抛出一个事件出去，方便做上报
-            yield $container->singleton('eventDispatcher')->dispatch(KernalEvent::SERVICE_CALL, 
-                new Event(['cmd' => $cmd, 'calltime' => $res['calltime']]));
-
+            if ($monitor) {
+                //抛出一个事件出去，方便做上报
+                yield $container->singleton('eventDispatcher')->dispatch(KernalEvent::SERVICE_CALL, 
+                    new Event(['cmd' => $cmd, 'calltime' => $res['calltime'], 'ip' => $this->serv,
+                     'port' => $this->port, 'error' => $res['error']
+                        ]));
+            }
+        
             $res['response'] = json_decode($res['response'], true);
             yield $res['response'];
         }

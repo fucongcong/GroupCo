@@ -26,6 +26,24 @@ return [
             ],
             'public' => 'NodeCenter',
         ],
+        'monitor' => [
+            //本机当前内网ip
+            'ip' => '127.0.0.1',
+            'serv' => '0.0.0.0',
+            'port' => 9517,
+            'config' => [
+                'daemonize' => true,        
+                'worker_num' => 1,
+                'max_request' => 50000,
+                'task_worker_num' => 2,
+                'task_max_request' => 50000,
+                'heartbeat_idle_time' => 300,
+                'heartbeat_check_interval' => 60,
+                'dispatch_mode' => 3,
+                'log_file' => 'runtime/service/monitor.log',
+            ],
+            'public' => 'Monitor',
+        ],
         //可以配置多个server，注意请监听不同的端口。
         //serverName
         'user' => [
@@ -38,11 +56,11 @@ return [
             'config' => [
                 'daemonize' => true,
                 //worker进程数量         
-                'worker_num' => 5,
+                'worker_num' => 25,
                 //最大请求数，超过后讲重启worker进程
                 'max_request' => 50000,
                 //task进程数量
-                'task_worker_num' => 10,
+                'task_worker_num' => 50,
                 //task进程最大处理请求上限，超过后讲重启task进程
                 'task_max_request' => 50000,
                 //心跳检测,长连接超时自动断开，秒
@@ -66,9 +84,9 @@ return [
             'port' => 9521,
             'config' => [
                 'daemonize' => true,        
-                'worker_num' => 5,
+                'worker_num' => 25,
                 'max_request' => 50000,
-                'task_worker_num' => 10,
+                'task_worker_num' => 50,
                 'task_max_request' => 50000,
                 'heartbeat_idle_time' => 300,
                 'heartbeat_check_interval' => 60,
