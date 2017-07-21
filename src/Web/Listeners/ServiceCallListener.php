@@ -4,6 +4,7 @@ namespace src\Web\Listeners;
 
 use Listener;
 use Event;
+use AsyncFile;
 use Group\Async\Client\Tcp;
 
 class ServiceCallListener extends Listener
@@ -33,9 +34,10 @@ class ServiceCallListener extends Listener
                 'port' => $data['port'],
             ];
             //直接这么上报肯定是有性能问题的，应该写入日志或者丢入内存，再上报。
-            yield \AsyncFile::write(__ROOT__."runtime/monitor.log", json_encode($info)."\n", FILE_APPEND);
-            //$monitor = (yield service_center('Monitor'));
-            //$res = (yield $monitor->call('Monitor::add', ['info' => $info], false, false));
+            //$date = date("YmdHi");
+            //yield AsyncFile::write(__ROOT__."runtime/monitor/{$date}.log", json_encode($info)."\n", FILE_APPEND);
+            $monitor = (yield service_center('Monitor'));
+            $res = (yield $monitor->call('Monitor::add', ['info' => $info], false, false));
         }
     }
 }

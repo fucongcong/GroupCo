@@ -11,6 +11,11 @@ class MonitorServiceImpl extends MonitorBaseService implements MonitorService
     {
         $info['calltime'] = round($info['calltime'], 5);
         if (is_null($info['error'])) $info['error'] = '';
-        return $this->getMonitorDao()->add($info);
+
+        $date = date("YmdHi");
+        file_put_contents(__ROOT__."runtime/monitor/{$date}.log", json_encode($info)."\n", FILE_APPEND);
+
+        return true;
+        //return $this->getMonitorDao()->add($info);
     }
 }

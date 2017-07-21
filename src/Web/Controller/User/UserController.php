@@ -11,9 +11,10 @@ class UserController extends BaseController
 {   
     public function demoAction(Request $request)
     {   
-        yield $this->getUser();
+        //yield $this->getUser();
+        yield 1;
         //渲染模版 模版的启始路径可在config的view.php配置
-        yield $this->render('Web/Views/Default/index.html.twig');
+        //yield $this->render('Web/Views/Default/index.html.twig');
     }
 
     public function registerAction(Request $request)

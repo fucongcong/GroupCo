@@ -89,12 +89,12 @@ class IndexController extends Controller
         $ip = $request->request->get('ip');
         $port = $request->request->get('port');
 
-        $service = new AsyncService($ip, $port);
-        $res = (yield $service->call('close'));
-
         yield AsyncMysql::query("UPDATE `nodes`  SET `serviceStatus` = 'offline' WHERE ip = '{$ip}' and port = '{$port}'");
 
         $res = (yield AsyncMysql::query("DELETE FROM `nodes` WHERE ip = '{$ip}' and port = '{$port}'"));
+
+        $service = new AsyncService($ip, $port);
+        $res = (yield $service->call('close'));
 
         yield 1;
     }

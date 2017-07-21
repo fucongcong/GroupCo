@@ -4,8 +4,8 @@ return [
     'encipher' => 'uoI49l^^M!a5&bZt',
 
     //服务中心地址
-    'node_center' => '',
-    //'node_center' => 'http://groupco.com',
+    //'node_center' => '',
+    'node_center' => 'http://groupco.com',
 
     //配置service
     'server' => [
@@ -15,9 +15,9 @@ return [
             'port' => 9518,
             'config' => [
                 'daemonize' => true,        
-                'worker_num' => 5,
+                'worker_num' => 20,
                 'max_request' => 50000,
-                'task_worker_num' => 10,
+                'task_worker_num' => 50,
                 'task_max_request' => 50000,
                 'heartbeat_idle_time' => 300,
                 'heartbeat_check_interval' => 60,
@@ -33,9 +33,9 @@ return [
             'port' => 9517,
             'config' => [
                 'daemonize' => true,        
-                'worker_num' => 1,
+                'worker_num' => 20,
                 'max_request' => 50000,
-                'task_worker_num' => 2,
+                'task_worker_num' => 50,
                 'task_max_request' => 50000,
                 'heartbeat_idle_time' => 300,
                 'heartbeat_check_interval' => 60,
