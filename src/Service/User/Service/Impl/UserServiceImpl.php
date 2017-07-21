@@ -4,12 +4,18 @@ namespace src\Service\User\Service\Impl;
 
 use src\Service\User\Service\Rely\UserBaseService;
 use src\Service\User\Service\UserService;
+use Cache;
 
 class UserServiceImpl extends UserBaseService implements UserService
 {
 	public function getUser($id)
-	{  
-		return $this->getUserDao()->getUser($id);
+	{
+        $user = Cache::get('user_'.$id);
+        if (!$user) {
+            $user = $this->getUserDao()->getUser($id);
+            Cache::set('user_'.$id, $user, 3600);
+        }
+		return $user;
 	}
 
     //单进程慢速任务 通过异步的多task去做，速度会翻倍

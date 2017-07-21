@@ -4,13 +4,19 @@ namespace src\Service\NodeCenter\Service\Impl;
 
 use src\Service\NodeCenter\Service\Rely\NodeCenterBaseService;
 use src\Service\NodeCenter\Service\NodeCenterService;
+use Cache;
 
 class NodeCenterServiceImpl extends NodeCenterBaseService implements NodeCenterService
 {
 	public function getService($serviceName)
 	{	
 		$actvieServices = [];
-		$nodes = $this->getNodeCenterDao()->getActiveNodes();
+		$nodes = Cache::get('nodes');
+        if (!$nodes) {
+            $nodes = $this->getNodeCenterDao()->getActiveNodes();
+            Cache::set('nodes', $nodes, 3600);
+        }
+
 		foreach ($nodes as $node) {
 			$services = $node['services'];
 			$services = explode(",", $services);
@@ -30,5 +36,11 @@ class NodeCenterServiceImpl extends NodeCenterBaseService implements NodeCenterS
 		}
 
 		return [];
+	}
+
+	public function updateService()
+	{
+		$nodes = $this->getNodeCenterDao()->getActiveNodes();
+        return Cache::set('nodes', $nodes, 3600);
 	}
 }

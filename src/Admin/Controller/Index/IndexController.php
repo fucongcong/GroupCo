@@ -31,6 +31,7 @@ class IndexController extends Controller
         if ($res && $res->getResult()) {
         	yield 1;
         }
+
         yield 0;
     }
 
@@ -47,6 +48,7 @@ class IndexController extends Controller
 
     	if ($isExist && $isExist->getResult()) {
     		$res = (yield AsyncMysql::query("UPDATE `nodes`  SET `status` = 'close',`serviceStatus` = 'offline' WHERE ip = '{$ip}' and port = '{$port}'"));
+
     		if ($res && $res->getResult()) {
     			yield 1;
     		}
@@ -56,20 +58,6 @@ class IndexController extends Controller
     	}
     }
 
-    // public function sleepNodeAction(Request $request)
-    // {
-    //     $ip = $request->request->get('ip');
-    //     $port = $request->request->get('port');
-
-    //     $service = new AsyncService($ip, $port);
-    //     $res = (yield $service->call('sleep'));
-    //     if ($res) {
-    //         $res = (yield \AsyncMysql::query("UPDATE `nodes`  SET `status` = 'sleep' WHERE ip = '{$ip}' and port = '{$port}'"));
-    //     }
-
-    //     yield 1;
-    // }
-
     public function closeNodeAction(Request $request)
     {
         $ip = $request->request->get('ip');
@@ -78,6 +66,7 @@ class IndexController extends Controller
         $service = new AsyncService($ip, $port);
         $res = (yield $service->call('close'));
         if ($res) {
+            yield AsyncMysql::query("UPDATE `nodes`  SET `serviceStatus` = 'offline' WHERE ip = '{$ip}' and port = '{$port}'");
             $res = (yield AsyncMysql::query("UPDATE `nodes`  SET `status` = 'close' WHERE ip = '{$ip}' and port = '{$port}'"));
         }
 
@@ -100,11 +89,13 @@ class IndexController extends Controller
         $ip = $request->request->get('ip');
         $port = $request->request->get('port');
 
-        $res = (yield AsyncMysql::query("DELETE FROM `nodes` WHERE ip = '{$ip}' and port = '{$port}'"));
-
         $service = new AsyncService($ip, $port);
         $res = (yield $service->call('close'));
-        
+
+        yield AsyncMysql::query("UPDATE `nodes`  SET `serviceStatus` = 'offline' WHERE ip = '{$ip}' and port = '{$port}'");
+
+        $res = (yield AsyncMysql::query("DELETE FROM `nodes` WHERE ip = '{$ip}' and port = '{$port}'"));
+
         yield 1;
     }
 
@@ -114,6 +105,7 @@ class IndexController extends Controller
         $port = $request->request->get('port');
         
         $res = (yield AsyncMysql::query("UPDATE `nodes`  SET `serviceStatus` = 'online' WHERE ip = '{$ip}' and port = '{$port}'"));
+        yield $this->updateService();
         yield 1;
     }
 
@@ -123,7 +115,13 @@ class IndexController extends Controller
         $port = $request->request->get('port');
 
         $res = (yield AsyncMysql::query("UPDATE `nodes`  SET `serviceStatus` = 'offline' WHERE ip = '{$ip}' and port = '{$port}'"));
+        yield $this->updateService();
         yield 1;
+    }
+
+    private function updateService()
+    {
+        $res = (yield service('node_center')->call("NodeCenter\NodeCenter::updateService", []));
     }
 }
 

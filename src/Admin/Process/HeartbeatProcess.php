@@ -12,11 +12,10 @@ class HeartbeatProcess extends Process
 {
 	public function register()
 	{	
-		$app = new SyncApp();
-		$dao = new Dao();
-
 		$server = $this->server;
-		$process = new swoole_process(function($process) use ($server, $dao) {
+		$process = new swoole_process(function($process) use ($server) {
+			$app = new SyncApp();
+			$dao = new Dao();
 		    //心跳检测
 			$server->tick(5000, function() use ($dao) {
 				$sql = "SELECT ip,port FROM `nodes` WHERE status = 'active'";

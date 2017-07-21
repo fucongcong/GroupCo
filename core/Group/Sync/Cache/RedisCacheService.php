@@ -23,8 +23,13 @@ class RedisCacheService
      * @return string|array|false
      */
     public function get($cacheName)
-    {
-        return $this->redis->get($cacheName);
+    {   
+        $value = $this->redis->get($cacheName);
+
+        if ($value) $value = gzinflate($value);
+
+        $jsonData =json_decode($value, true);
+        return ($jsonData === NULL) ? $value : $jsonData;
     }
 
     /**
@@ -36,7 +41,14 @@ class RedisCacheService
      * @return boolean
      */
     public function set($cacheName, $data, $expireTime = 3600)
-    {
+    {   
+        $data  =  (is_object($data) || is_array($data)) ? json_encode($data) : $data;
+        if (strlen($data) > 4096){
+            $data = gzdeflate($data, 6);
+        }else{
+            $data = gzdeflate($data, 0);
+        }
+
         return $this->redis->set($cacheName, $data, $expireTime);
     }
 
