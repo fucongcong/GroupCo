@@ -93,7 +93,7 @@ class SwooleKernal
         $request->server['REQUEST_URI'] = isset($request->server['request_uri']) ? $request->server['request_uri'] : '';
         preg_match_all("/^(.+\.php)(\/.*)$/", $request->server['REQUEST_URI'], $matches);
 
-        $request->server['REQUEST_URI'] = isset($matches[2][0]) ? $matches[2][0] : '';
+        $request->server['REQUEST_URI'] = isset($matches[2][0]) ? $matches[2][0] : $request->server['REQUEST_URI'];
         foreach ($request->server as $key => $value) {
             $request->server[strtoupper($key)] = $value;
         }
