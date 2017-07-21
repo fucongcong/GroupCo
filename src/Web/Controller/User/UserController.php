@@ -43,8 +43,8 @@ class UserController extends BaseController
     			'mobile' => $mobile,
     			'password' => $password
     		];
-            $service = (yield service_center('User'));
-    		$res = (yield $service->call("User::addUser", ['user' => $user]));
+            //$service = (yield service_center('User'));
+    		$res = (yield service("user")->call("User\User::addUser", ['user' => $user]));
     		if ($res) {
     			$response = new JsonResponse([
 		                'msg' => '注册成功',
@@ -52,7 +52,7 @@ class UserController extends BaseController
 		                'code' => 200
 		            ]
 		        );
-		        $user = (yield $service->call("User::getUser", ['id' => $res]));
+		        $user = (yield service("user")->call("User\User::getUser", ['id' => $res]));
 		        yield $this->setJwt($request, $res, $response);
     		} else {
     			yield new JsonResponse([
@@ -100,8 +100,8 @@ class UserController extends BaseController
     			'mobile' => $mobile,
     			'password' => $password
     		];
-            $service = (yield service_center('User'));
-    		$user = (yield $service->call("User::getUserByMobile", ['mobile' => $mobile]));
+            //$service = (yield service_center('User'));
+    		$user = (yield service("user")->call("User\User::getUserByMobile", ['mobile' => $mobile]));
     		if (isset($user['password']) && $user['password'] == $password) {
 
     			$response = new JsonResponse([

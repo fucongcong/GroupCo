@@ -4,8 +4,8 @@ return [
     'encipher' => 'uoI49l^^M!a5&bZt',
 
     //服务中心地址
-    //'node_center' => '',
-    'node_center' => 'http://groupco.com',
+    'node_center' => '',
+    //'node_center' => 'http://groupco.com',
 
     //配置service
     'server' => [
