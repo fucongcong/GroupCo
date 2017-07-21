@@ -17,7 +17,6 @@
 #### * 单元测试覆盖
 
 ##### TODO
-- 调用超时机制
 - http异步客户端
 
 ##### 环境依赖
@@ -42,7 +41,7 @@
 - 还可以启动其他服务，自行配置
 - 访问配置的servername => groupco.com/demo 即可
 
-##### 使用服务中心
+##### 使用服务治理中心
 - 设置config/service.php中的node_center地址
 - 开启config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'
 - 使用service_center()方法获取服务模块
