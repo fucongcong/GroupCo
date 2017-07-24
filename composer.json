@@ -1,15 +1,11 @@
 {
-    "name": "group/framework",
-    "description": "The Group Framework.",
+    "name": "group-co/framework",
+    "description": "The Group-co Framework.",
     "keywords": ["framework", "Group"],
     "type": "project",
     "license": "MIT",
     "autoload": {
-        "files": [
-            "core/Group/App/helpers.php"
-        ],
         "psr-4": {
-            "Group\\": "core/Group/",
             "src\\": "src/"
         }
     },

@@ -1,7 +1,7 @@
 # Group-Co	
 
-[![Build Status](https://travis-ci.org/fucongcong/Group-Co.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co)
-[![Code Climate](https://codeclimate.com/github/fucongcong/Group-Co/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
+[![Build Status](https://travis-ci.org/fucongcong/co-framework.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co)
+[![Code Climate](https://codeclimate.com/github/fucongcong/co-framework/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
 
 #### 为什么写这个框架？
 - 利用协程特性以同步方式来编写异步代码，增强可读性。
