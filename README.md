@@ -44,7 +44,12 @@
 ##### 使用服务治理中心
 - 设置config/service.php中的node_center地址
 - 开启config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'
-- 使用service_center()方法获取服务模块
+- 重启user服务 => app/service user reload
+- 启动node_center服务 => app/service node_center
+- 重启http server
+- 访问 /admin 路由，开始服务治理
+- 注意使用service_center()方法获取服务模块
+- 使用监控Monitor服务 app/service monitor
 
 ##### 使用
 - 启动http server => php server.php
