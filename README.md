@@ -18,6 +18,9 @@
 
 ##### TODO
 - http异步客户端
+- 同步模式下PDO的断线重连优化，现在是ping的方式
+- Protocal Buffer的支持，目前已json方式序列化数据。
+- 异步大文件读取，目前只能读取<4M的文件
 
 ##### 环境依赖
 - [hiredis](https://github.com/redis/hiredis)
@@ -60,8 +63,9 @@
 - 关闭某个服务 => app/service user stop
 
 ##### 要注意的点
-- 1.因为是异步的，无法设置swoole的max_request参数。（1.9.17将解决此问题，包括重启、关闭服务）
-- 2.内存释放的问题，局部静态变量，全局变量的释放。
+- 1.因为是异步的，无法设置swoole的max_request参数,stop 与reload的使用也会使部分请求失败。（解决：升级版本到>1.9.17）
+- 2.格外内存释放的问题，局部静态变量，全局变量的释放。
+- 3.断线重连机制内部已封装。
 
 ##### 基础服务
 - AsyncMysql
