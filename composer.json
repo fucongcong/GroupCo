@@ -1,15 +1,11 @@
 {
-    "name": "group/framework",
-    "description": "The Group Framework.",
+    "name": "group-co",
+    "description": "The Group-co Framework.",
     "keywords": ["framework", "Group"],
     "type": "project",
     "license": "MIT",
     "autoload": {
-        "files": [
-            "core/Group/App/helpers.php"
-        ],
         "psr-4": {
-            "Group\\": "core/Group/",
             "src\\": "src/"
         }
     },
@@ -23,12 +19,6 @@
     ],
     "require": {
         "php": ">=5.3",
-        "twig/twig": "~1.0",
-        "symfony/filesystem": "~2.7.0",
-        "doctrine/dbal": "v2.5.12",
-        "monolog/monolog":"~1.17.1",
-        "symfony/http-foundation": "~2.7.0",
-        "phpunit/phpunit": "4.*",
-        "firebase/php-jwt": "5.0.0"
+        "group-co/framework": "dev-master"
     }
 }

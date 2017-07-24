@@ -1,7 +1,7 @@
 # Group-Co	
 
-[![Build Status](https://travis-ci.org/fucongcong/Group-Co.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co)
-[![Code Climate](https://codeclimate.com/github/fucongcong/Group-Co/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
+[![Build Status](https://travis-ci.org/fucongcong/co-framework.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co)
+[![Code Climate](https://codeclimate.com/github/fucongcong/co-framework/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
 
 #### 为什么写这个框架？
 - 利用协程特性以同步方式来编写异步代码，增强可读性。
@@ -17,7 +17,6 @@
 #### * 单元测试覆盖
 
 ##### TODO
-- 调用超时机制
 - http异步客户端
 
 ##### 环境依赖
@@ -42,7 +41,7 @@
 - 还可以启动其他服务，自行配置
 - 访问配置的servername => groupco.com/demo 即可
 
-##### 使用服务中心
+##### 使用服务治理中心
 - 设置config/service.php中的node_center地址
 - 开启config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'
 - 使用service_center()方法获取服务模块
@@ -56,7 +55,7 @@
 - 关闭某个服务 => app/service user stop
 
 ##### 要注意的点
-- 1.因为是异步的，无法设置swoole的max_request参数。
+- 1.因为是异步的，无法设置swoole的max_request参数。（1.9.17将解决此问题，包括重启、关闭服务）
 - 2.内存释放的问题，局部静态变量，全局变量的释放。
 
 ##### 基础服务
