@@ -6,7 +6,7 @@
 #### 为什么写这个框架？
 - 利用协程特性以同步方式来编写异步代码，增强可读性。
 - 将swoole的异步特性与传统框架的MVC相结合。
-- 可以用作api也可以用作http server。
+- 可以用作api也可以用作http server,rpc server.
 
 #### * 异步协程调度，应对高并发
 #### * SOA服务化调用，支持并行、串行调用、请求合并调用
@@ -43,6 +43,9 @@
 - 启动user服务 => app/service user
 - 还可以启动其他服务，自行配置
 - 访问配置的servername => groupco.com/demo 即可
+
+##### 更新代码
+- 执行 => composer update
 
 ##### 使用服务治理中心
 - 设置config/service.php中的node_center地址
