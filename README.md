@@ -9,7 +9,9 @@
 - 可以用作api也可以用作http server。
 
 #### * 异步协程调度，应对高并发
-#### * SOA服务化调用，支持并行、串行调用、请求合并调用。服务端采用AsyncTask进行异步处理后合并数据并返回。
+#### * SOA服务化调用，支持并行、串行调用、请求合并调用
+#### * 支持EOF结束符协议、自定义网络通信协议，支持json化、php序列化包体，支持gzip。
+#### * 服务端采用异步Task处理后合并数据并返回。
 #### * 支持异步日志,异步文件读写,异步Mysql,异步Redis
 #### * 支持Mysql连接池,Redis连接池
 #### * Mysql事务处理
@@ -18,7 +20,6 @@
 
 ##### TODO
 - http异步客户端
-- 包头+包体协议支持，目前只支持EOF结束符协议
 - 异步大文件读取，目前只能读取<4M的文件
 
 ##### 环境依赖
@@ -74,6 +75,7 @@
 - AsyncFile
 - Container
 - Controller
+- Protocol
 - [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
 - [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
 - [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
