@@ -6,10 +6,12 @@
 #### 为什么写这个框架？
 - 利用协程特性以同步方式来编写异步代码，增强可读性。
 - 将swoole的异步特性与传统框架的MVC相结合。
-- 可以用作api也可以用作http server。
+- 可以用作api也可以用作http server,rpc server.
 
 #### * 异步协程调度，应对高并发
-#### * SOA服务化调用，支持并行、串行调用、请求合并调用。服务端采用AsyncTask进行异步处理后合并数据并返回。
+#### * SOA服务化调用，支持并行、串行调用、请求合并调用
+#### * 支持EOF结束符协议、自定义网络通信协议，支持json化、php序列化包体，支持gzip。
+#### * 服务端采用异步Task处理后合并数据并返回。
 #### * 支持异步日志,异步文件读写,异步Mysql,异步Redis
 #### * 支持Mysql连接池,Redis连接池
 #### * Mysql事务处理
@@ -18,13 +20,14 @@
 
 ##### TODO
 - http异步客户端
+- 异步大文件读取，目前只能读取<4M的文件
 
 ##### 环境依赖
 - [hiredis](https://github.com/redis/hiredis)
 - redis
 - mysql
 - php5.6
-- swoole >=1.9.15 (在编译swoole时加入--enable-async-redis，开启异步redis客户端)
+- swoole >=1.9.17 (在编译swoole时加入--enable-async-redis，开启异步redis客户端)
 
 ##### 安装(请先完成环境依赖安装)
 - 克隆项目
@@ -41,10 +44,18 @@
 - 还可以启动其他服务，自行配置
 - 访问配置的servername => groupco.com/demo 即可
 
+##### 更新代码
+- 执行 => composer update
+
 ##### 使用服务治理中心
 - 设置config/service.php中的node_center地址
 - 开启config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'
-- 使用service_center()方法获取服务模块
+- 重启user服务 => app/service user reload
+- 启动node_center服务 => app/service node_center
+- 重启http server
+- 访问 /admin 路由，开始服务治理
+- 注意使用service_center()方法获取服务模块
+- 使用监控Monitor服务 app/service monitor
 
 ##### 使用
 - 启动http server => php server.php
@@ -55,8 +66,9 @@
 - 关闭某个服务 => app/service user stop
 
 ##### 要注意的点
-- 1.因为是异步的，无法设置swoole的max_request参数。（1.9.17将解决此问题，包括重启、关闭服务）
-- 2.内存释放的问题，局部静态变量，全局变量的释放。
+- 1.因为是异步的，无法设置swoole的max_request参数,stop 与reload的使用也会使部分请求失败。（解决：升级版本到>1.9.17）
+- 2.格外内存释放的问题，局部静态变量，全局变量的释放。
+- 3.断线重连机制内部已封装(在执行sql时如果出现长连接已失效，将尝试3次重连操作)。
 
 ##### 基础服务
 - AsyncMysql
@@ -66,21 +78,22 @@
 - AsyncFile
 - Container
 - Controller
-- Config
-- Event
-- Route
-- Request
-- Response
-- StaticCache
+- Protocol
+- [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
+- [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
+- [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
+- [Request](https://fucongcong.gitbooks.io/group-doc/content/requestqing-qiu.html)
+- [Response](https://fucongcong.gitbooks.io/group-doc/content/responsexiang-ying.html)
+- [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
 - Sync
   - Container
-  - Console
-  - FileCache
-  - RedisCache
-  - StaticCache
-  - Log
-  - Dao
-  - Service
+  - [Console](https://fucongcong.gitbooks.io/group-doc/content/consolekong-zhi-tai.html)
+  - [FileCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  - [RedisCache](https://fucongcong.gitbooks.io/group-doc/content/cachehuan-cun.html)
+  - [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  - [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
+  - [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
+  - [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
 - Test
 
 #### 常用特性使用

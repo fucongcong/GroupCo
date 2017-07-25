@@ -6,7 +6,8 @@ use swoole_process;
 use Group\Process;
 use Group\Sync\Dao\Dao;
 use Group\Sync\SyncApp;
-use Group\Async\Client\Tcp;
+use Group\Protocol\Protocol;
+use Group\Protocol\Client;
 
 class HeartbeatProcess extends Process
 {
@@ -22,9 +23,10 @@ class HeartbeatProcess extends Process
 		        $res = $dao->querySql($sql, 'default')->fetchAll();
 
 		        foreach ($res as $serv) {
-		        	$client = new Tcp($serv['ip'], $serv['port']);
+		        	$client = new Client($serv['ip'], $serv['port']);
+		        	$client = $client->getClient();
 		        	$client->setTimeout(5);
-		        	$client->setData("p\r\n");
+		        	$client->setData(Protocol::pack('ping'));
 					$client->call(function($response, $error, $calltime) use ($serv, $dao) {
 						//服务挂了，或者异常了
 					    if (!$response) {
