@@ -55,8 +55,8 @@ return [
         'dispatch_mode' => 3, 
     ],
 
-    //通信协议 eof：结束符, buf：自定义包头+包体
-    'protocol' => 'buf',
+    //默认不会发生粘包，可不填。通信协议 eof：结束符, buf：自定义包头+包体
+    'protocol' => '',
     //包体的打包方式json,serialize
     'pack' => 'serialize',
     //是否启用gzip压缩true,false
