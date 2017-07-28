@@ -55,12 +55,14 @@ return [
         'dispatch_mode' => 3, 
     ],
 
+    /*******客户端与服务端的数据发包设置********/
     //默认不会发生粘包，可不填。通信协议 eof：结束符, buf：自定义包头+包体
     'protocol' => '',
-    //包体的打包方式json,serialize
+    //数据包体的打包方式json,serialize
     'pack' => 'serialize',
-    //是否启用gzip压缩true,false
-    'gzip' => true,
+    //是否启用gzip压缩数据包true,false
+    'gzip' => false,
+
 
     //在启动时可以添加用户自定义的工作进程,必须是swoole_process
     'process' => [

@@ -98,66 +98,18 @@
 
 #### 常用特性使用
 
-##### 串行调用(不使用服务中心)
-
-```php
-    
-    $start = microtime(true);
-    //设置2秒超时
-    service("user")->setTimeout(2);
-    $users = (yield service("user")->call("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
-    dump($users);
-
-```
-
-##### 串行调用(使用服务中心)
-
-```php
-    
-    $start = microtime(true);
-    //设置2秒超时
-    $service = (yield service_center("User"));
-    $service->setTimeout(2);
-    $users = (yield $service->call("User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
-    dump($users);
-
-```
-
-##### 请求合并(不使用服务中心)
+##### 异步Tcp客户端
 
 ```php
 
-    $start = microtime(true);
-    //设置2秒超时
-    service("user")->setTimeout(2);
+    use AsyncTcp;
 
-    $callId1 = service("user")->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
-    $callId2 = service("user")->addCall("User\User::getUser", ['id' => 1]);
-    $res = (yield service("user")->multiCall());
+    $tcp = new AsyncTcp('127.0.0.1', 9501);
+    $tcp->setTimeout(2);
+    $res = (yield $tcp->call('hello server!'));
 
-    dump($res[$callId1]);
-    dump($res[$callId2]);
-    dump(microtime(true) - $start);
-    
-```
+    //*tcp 客户端的数据包格式可在config/app.php中配置
 
-##### 请求合并(使用服务中心，只能针对同一服务模块)
-
-```php
-
-    $start = microtime(true);
-    //设置2秒超时
-    $service = (yield service_center("User"));
-    $service->setTimeout(2);
-
-    $callId1 = $service->addCall("User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
-    $callId2 = $service->addCall("User::getUser", ['id' => 1]);
-    $res = (yield $service->multiCall());
-
-    dump($res[$callId1]);
-    dump($res[$callId2]);
-    dump(microtime(true) - $start);
-    
 ```
 
 ##### 异步redis(默认使用连接池)
@@ -293,6 +245,69 @@
     }
 
 ```
+
+##### SOA客户端，串行调用(不使用服务中心)
+
+```php
+    
+    $start = microtime(true);
+    //设置2秒超时
+    service("user")->setTimeout(2);
+    $users = (yield service("user")->call("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
+    dump($users);
+
+```
+
+##### SOA客户端，串行调用(使用服务中心)
+
+```php
+    
+    $start = microtime(true);
+    //设置2秒超时
+    $service = (yield service_center("User"));
+    $service->setTimeout(2);
+    $users = (yield $service->call("User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
+    dump($users);
+
+```
+
+##### SOA客户端，请求合并(不使用服务中心)
+
+```php
+
+    $start = microtime(true);
+    //设置2秒超时
+    service("user")->setTimeout(2);
+
+    $callId1 = service("user")->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
+    $callId2 = service("user")->addCall("User\User::getUser", ['id' => 1]);
+    $res = (yield service("user")->multiCall());
+
+    dump($res[$callId1]);
+    dump($res[$callId2]);
+    dump(microtime(true) - $start);
+    
+```
+
+##### SOA客户端，请求合并(使用服务中心，只能针对同一服务模块)
+
+```php
+
+    $start = microtime(true);
+    //设置2秒超时
+    $service = (yield service_center("User"));
+    $service->setTimeout(2);
+
+    $callId1 = $service->addCall("User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
+    $callId2 = $service->addCall("User::getUser", ['id' => 1]);
+    $res = (yield $service->multiCall());
+
+    dump($res[$callId1]);
+    dump($res[$callId2]);
+    dump(microtime(true) - $start);
+    
+```
+
 
 ##### 服务治理示意图
 

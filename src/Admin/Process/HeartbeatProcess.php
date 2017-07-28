@@ -6,7 +6,7 @@ use swoole_process;
 use Group\Process;
 use Group\Sync\Dao\Dao;
 use Group\Sync\SyncApp;
-use Group\Protocol\Protocol;
+use Group\Protocol\ServiceProtocol as Protocol;
 use Group\Protocol\Client;
 
 class HeartbeatProcess extends Process
