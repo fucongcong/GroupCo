@@ -47,16 +47,6 @@
 ##### 更新代码
 - 执行 => composer update
 
-##### 使用服务治理中心
-- 设置config/service.php中的node_center地址
-- 开启config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'
-- 重启user服务 => app/service user reload
-- 启动node_center服务 => app/service node_center
-- 重启http server
-- 访问 /admin 路由，开始服务治理
-- 注意使用service_center()方法获取服务模块
-- 使用监控Monitor服务 app/service monitor
-
 ##### 使用
 - 启动http server => php server.php
 - 热重启htt pserver => php server.php -s reload
@@ -69,32 +59,6 @@
 - 1.因为是异步的，无法设置swoole的max_request参数,stop 与reload的使用也会使部分请求失败。（解决：升级版本到>1.9.17）
 - 2.格外内存释放的问题，局部静态变量，全局变量的释放。
 - 3.断线重连机制内部已封装(在执行sql时如果出现长连接已失效，将尝试3次重连操作)。
-
-##### 基础服务
-- AsyncMysql
-- AsyncRedis
-- AsyncService
-- AsyncLog
-- AsyncFile
-- Container
-- Controller
-- Protocol
-- [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
-- [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
-- [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
-- [Request](https://fucongcong.gitbooks.io/group-doc/content/requestqing-qiu.html)
-- [Response](https://fucongcong.gitbooks.io/group-doc/content/responsexiang-ying.html)
-- [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-- Sync
-  - Container
-  - [Console](https://fucongcong.gitbooks.io/group-doc/content/consolekong-zhi-tai.html)
-  - [FileCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-  - [RedisCache](https://fucongcong.gitbooks.io/group-doc/content/cachehuan-cun.html)
-  - [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-  - [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
-  - [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
-  - [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
-- Test
 
 #### 常用特性使用
 
@@ -308,6 +272,15 @@
     
 ```
 
+##### 使用服务治理中心
+- 设置config/service.php中的node_center地址
+- 开启config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'
+- 重启user服务 => app/service user reload
+- 启动node_center服务 => app/service node_center
+- 重启http server
+- 访问 /admin 路由，开始服务治理
+- 注意使用service_center()方法获取服务模块
+- 使用监控Monitor服务 app/service monitor
 
 ##### 服务治理示意图
 
@@ -315,6 +288,32 @@
 
 ##### License MIT
 ##### 感谢Swoole
+
+##### 服务总览
+- AsyncMysql
+- AsyncRedis
+- AsyncService
+- AsyncLog
+- AsyncFile
+- Container
+- Controller
+- Protocol
+- [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
+- [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
+- [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
+- [Request](https://fucongcong.gitbooks.io/group-doc/content/requestqing-qiu.html)
+- [Response](https://fucongcong.gitbooks.io/group-doc/content/responsexiang-ying.html)
+- [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+- Sync
+  - Container
+  - [Console](https://fucongcong.gitbooks.io/group-doc/content/consolekong-zhi-tai.html)
+  - [FileCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  - [RedisCache](https://fucongcong.gitbooks.io/group-doc/content/cachehuan-cun.html)
+  - [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  - [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
+  - [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
+  - [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
+- Test
 
 ##### Monitor监控上报
 
