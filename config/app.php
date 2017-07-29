@@ -52,7 +52,8 @@ return [
         'backlog' => 256,   //listen backlog
         'heartbeat_idle_time' => 30,
         'heartbeat_check_interval' => 10,
-        'dispatch_mode' => 3, 
+        'dispatch_mode' => 1,
+        'max_request' => 10000,
     ],
 
     /*******客户端与服务端的数据发包设置********/
