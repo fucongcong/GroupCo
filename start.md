@@ -1,11 +1,11 @@
-##### 环境依赖
+#### 环境依赖
 - [hiredis](https://github.com/redis/hiredis)
 - redis
 - mysql
 - php5.6
 - swoole >=1.9.17 (在编译swoole时加入--enable-async-redis，开启异步redis客户端)
 
-##### 安装(请先完成环境依赖安装)
+#### 安装(请先完成环境依赖安装)
 - 克隆项目
 - 执行 => composer install
 - 新建一个runtime目录，用于存放日志等cache文件
@@ -20,10 +20,10 @@
 - 还可以启动其他服务，自行配置
 - 访问配置的servername => groupco.com/demo 即可
 
-##### 更新代码
+#### 更新代码
 - 执行 => composer update
 
-##### 使用
+#### 使用
 - 启动http server => php server.php
 - 热重启htt pserver => php server.php -s reload
 - 关闭http server => php server.php -s stop
@@ -31,7 +31,7 @@
 - 热重启某个服务 => app/service user reload
 - 关闭某个服务 => app/service user stop
 
-##### 要注意的点
+#### 要注意的点
 - 1.因为是异步的，无法设置swoole的max_request参数,stop 与reload的使用也会使部分请求失败。（解决：升级版本到>1.9.17）
 - 2.格外内存释放的问题，局部静态变量，全局变量的释放。
 - 3.断线重连机制内部已封装(在执行sql时如果出现长连接已失效，将尝试3次重连操作)。
