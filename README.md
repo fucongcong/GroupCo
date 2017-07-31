@@ -22,7 +22,7 @@
 - * Twig、Doctrine支持视图、服务数据层
 - * 单元测试覆盖
 
-##### [使用说明](https://github.com/fucongcong/Group-Co/blob/master/start.md)
+#### [使用说明,戳这里](https://github.com/fucongcong/Group-Co/blob/master/start.md)
 
 #### 常用特性使用
 
