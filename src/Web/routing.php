@@ -9,7 +9,7 @@ return array(
 
     'demo'=>[
         'pattern' => '/demo',
-        'controller' => 'Web:Home:Default:demo',
+        'controller' => 'Web:User:User:demo',
     ],
 
     'register'=>[

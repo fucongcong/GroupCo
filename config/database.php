@@ -14,9 +14,9 @@ return
 
             "dbname" => "Demo",
 
-            "user" => "cm",
+            "user" => "root",
 
-            "password" => "123",
+            "password" => "",
 
             "charset" => "utf8",
         ],
@@ -97,7 +97,7 @@ return
     ],
 
     //mysql连接池数量
-    'maxPool' => 50,
+    'maxPool' => 5,
 
     //mysql连接超时时间
     'timeout' => 5,
@@ -110,7 +110,7 @@ return
     'redis' => [
 
         //redis连接池数量
-        'maxPool' => 50,
+        'maxPool' => 5,
 
         //redis连接超时时间
         'timeout' => 5,

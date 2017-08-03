@@ -7,10 +7,18 @@ use Group\Common\ValidatorToolkit;
 use JsonResponse;
 use Request;
 
-class UserController extends Controller
-{
+class UserController extends BaseController
+{   
+    public function demoAction(Request $request)
+    {   
+        yield $this->getUser();
+        //渲染模版 模版的启始路径可在config的view.php配置
+        yield $this->render('Web/Views/Default/index.html.twig');
+    }
+
     public function registerAction(Request $request)
     {	
+        yield $this->getUser();
     	//post请求
     	if ($request->getMethod() == "POST") {
     		$mobile = $request->request->get('mobile');
@@ -35,7 +43,8 @@ class UserController extends Controller
     			'mobile' => $mobile,
     			'password' => $password
     		];
-    		$res = (yield $this->getUserService()->call("User\User::addUser", ['user' => $user]));
+            //$service = (yield service_center('User'));
+    		$res = (yield service("user")->call("User\User::addUser", ['user' => $user]));
     		if ($res) {
     			$response = new JsonResponse([
 		                'msg' => '注册成功',
@@ -43,7 +52,7 @@ class UserController extends Controller
 		                'code' => 200
 		            ]
 		        );
-		        $user = (yield $this->getUserService()->call("User\User::getUser", ['id' => $res]));
+		        $user = (yield service("user")->call("User\User::getUser", ['id' => $res]));
 		        yield $this->setJwt($request, $res, $response);
     		} else {
     			yield new JsonResponse([
@@ -66,6 +75,7 @@ class UserController extends Controller
 
     public function loginAction(Request $request)
     {	
+        yield $this->getUser();
     	//post请求
     	if ($request->getMethod() == "POST") {
     		$mobile = $request->request->get('mobile');
@@ -90,7 +100,8 @@ class UserController extends Controller
     			'mobile' => $mobile,
     			'password' => $password
     		];
-    		$user = (yield $this->getUserService()->call("User\User::getUserByMobile", ['mobile' => $mobile]));
+            //$service = (yield service_center('User'));
+    		$user = (yield service("user")->call("User\User::getUserByMobile", ['mobile' => $mobile]));
     		if (isset($user['password']) && $user['password'] == $password) {
 
     			$response = new JsonResponse([
@@ -122,7 +133,7 @@ class UserController extends Controller
     }
 
     public function logoutAction(Request $request)
-    {
+    {   
         $response = $this->redirect('/demo');
         yield $this->clearJwt($request, $response);
     }

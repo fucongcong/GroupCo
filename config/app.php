@@ -18,8 +18,8 @@ return [
     ],
 
     'onWorkStartServices' => [
-        'Group\ASync\Pool\MysqlPoolServiceProvider',
-        'Group\ASync\Pool\RedisPoolServiceProvider',
+        'Group\Async\Pool\MysqlPoolServiceProvider',
+        'Group\Async\Pool\RedisPoolServiceProvider',
     ],
 
     'onRequestServices' => [
@@ -40,18 +40,33 @@ return [
         ],
     ],
 
-    'swoole_host' => '127.0.0.1',
+    'host' => '127.0.0.1',
 
-    'swoole_port' => 9777,
+    'port' => 9777,
 
-    'swoole_setting' => [
+    'setting' => [
         //日志
+        //'daemonize' => true,
         'log_file' => 'runtime/error.log',
         'worker_num' => 2,    //worker process num
         'backlog' => 256,   //listen backlog
         'heartbeat_idle_time' => 30,
         'heartbeat_check_interval' => 10,
-        'dispatch_mode' => 3, 
+        'dispatch_mode' => 1,
+        'max_request' => 10000,
     ],
 
+    /*******客户端与服务端的数据发包设置********/
+    //默认不会发生粘包，可不填。通信协议 eof：结束符, buf：自定义包头+包体
+    'protocol' => '',
+    //数据包体的打包方式json,serialize
+    'pack' => 'serialize',
+    //是否启用gzip压缩数据包true,false
+    'gzip' => false,
+
+
+    //在启动时可以添加用户自定义的工作进程,必须是swoole_process
+    'process' => [
+        //'src\Admin\Process\HeartbeatProcess',
+    ],
 ];
