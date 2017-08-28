@@ -3,7 +3,7 @@
 - redis
 - mysql
 - php5.6
-- swoole >=1.9.17 (在编译swoole时加入--enable-async-redis，开启异步redis客户端)
+- swoole >=1.9.17 (在编译swoole时加入--enable-async-redis，开启异步redis客户端, --enable-openssl开启openssl支持,--with-openssl-dir指定你的openssl目录)
 
 #### 安装(请先完成环境依赖安装)
 - 克隆项目
