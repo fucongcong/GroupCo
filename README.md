@@ -10,6 +10,7 @@
 
 ### 特性
 - 全异步协程调度，支持高并发
+- 异步TCP，HTTP客户端
 - 异步日志
 - 异步文件读写
 - 异步Mysql
@@ -17,7 +18,7 @@
 - 异步Redis
 - 支持Mysql连接池,Redis连接池
 - SOA服务化调用，内部封装完整的RPC通信，服务端采用异步Task处理后合并数据并返回。
-- TCP客户端支持并行、串行调用
+- 异步TCP客户端支持并行、串行调用
 - 支持EOF结束符协议、自定义网络通信协议，支持json化、php序列化包体，支持gzip。
 - Twig、Doctrine支持视图、服务数据层
 - 单元测试覆盖
@@ -50,6 +51,24 @@
 - protocol为buf时，是按包头+包体封装数据包的，包头为4个字节，存放包体的长度，解包时同样也是按包头+包体解包，所以服务端send数据时也要按同样规则封包。
 - protocol为eof时，是按'\r\n'结束符封装数据包的，解包时同样也是按'\r\n'解包，所以服务端send数据时也要按'\r\n'结束符封装数据包。
 - protocol为空的话，不封装数据包。在应答式响应中可以使用，否则会出现粘包现象。(框架内部封装的service为该模式)
+
+#### 异步Http客户端
+
+```php
+
+    use AsyncHttp;
+
+    //不使用https, get方式
+    $http = new AsyncHttp('127.0.0.1', 80);
+    $http->setHost('groupco.com');
+    $res = (yield $http->get('/'));
+
+    //使用https, post方式
+    $http = new AsyncHttp('127.0.0.1', 443, true);
+    $http->setHost('groupco.com');
+    $res = (yield $http->post('/test', ['postId' => 52]));
+
+```
 
 #### 异步redis(默认使用连接池)
 
@@ -316,6 +335,6 @@
 
 ### TODO
 - 自定义protocol。
-- http异步客户端
+- http异步客户端使用优化
 - 异步大文件读取，目前只能读取<4M的文件
 
