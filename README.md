@@ -58,14 +58,17 @@
 
     use AsyncHttp;
 
-    //不使用https, get方式
-    $http = new AsyncHttp('127.0.0.1', 80);
+    //直接使用域名, get方式
+    $http = new AsyncHttp('http://groupco.com');
+    $res = (yield $http->get('/'));
+
+    //也可以通过ip:port方式
+    $http = new AsyncHttp('http://127.0.0.1:80');
     $http->setHost('groupco.com');
     $res = (yield $http->get('/'));
 
     //使用https, post方式
-    $http = new AsyncHttp('127.0.0.1', 443, true);
-    $http->setHost('groupco.com');
+    $http = new AsyncHttp('https://groupco.com');
     $res = (yield $http->post('/test', ['postId' => 52]));
 
 ```
