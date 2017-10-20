@@ -319,6 +319,8 @@
 ##### License MIT
 ##### 感谢Swoole
 
+### 以下服务”使用方式“与Group框架使用方式一致。所以直接给出了Group框架使用时的文档链接
+
 ### 异步Http server还可以使用的服务
 - [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
 - [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
