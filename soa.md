@@ -6,7 +6,7 @@
     'registry_address' => 'redis://127.0.0.1:6379'
 
 ##### 设置依赖的服务
-修改config/app.services.你需要将项目依赖的服务模块写入该数组，在server启动时，会单独起一个进程订阅每个服务
+修改config/app.php的services.你需要将项目依赖的服务模块写入该数组，在server启动时，会单独起一个进程订阅每个服务
 
     //依赖的服务模块 
     'services' => ["User", "Order", "Monitor"],
