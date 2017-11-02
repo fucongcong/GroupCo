@@ -215,6 +215,28 @@
 
 ```
 
+##### 其他基础服务
+- [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
+- [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
+- [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
+- [Request](https://fucongcong.gitbooks.io/group-doc/content/requestqing-qiu.html)
+- [Response](https://fucongcong.gitbooks.io/group-doc/content/responsexiang-ying.html)
+- [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+- Sync
+  - [Console](https://fucongcong.gitbooks.io/group-doc/content/consolekong-zhi-tai.html)
+  - [FileCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  - [RedisCache](https://fucongcong.gitbooks.io/group-doc/content/cachehuan-cun.html)
+  - [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  - [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
+  - [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
+  - [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
+
+
+#### 服务治理示意图
+
+![服务治理](soa.png)
+
+
 ### SOA客户端，串行调用(不使用服务中心)
 
 ```php
@@ -276,40 +298,6 @@
     dump(microtime(true) - $start);
     
 ```
-
-##### 基础服务
-- AsyncTcp
-- AsyncHttp
-- AsyncMysql
-- AsyncRedis
-- AsyncService
-- AsyncLog
-- AsyncFile
-- Container
-- Controller
-- Protocol
-- [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
-- [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
-- [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
-- [Request](https://fucongcong.gitbooks.io/group-doc/content/requestqing-qiu.html)
-- [Response](https://fucongcong.gitbooks.io/group-doc/content/responsexiang-ying.html)
-- [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-- Sync
-  - Container
-  - [Console](https://fucongcong.gitbooks.io/group-doc/content/consolekong-zhi-tai.html)
-  - [FileCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-  - [RedisCache](https://fucongcong.gitbooks.io/group-doc/content/cachehuan-cun.html)
-  - [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-  - [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
-  - [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
-  - [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
-- Test
-
-
-<!-- #### 服务治理示意图
-
-![服务治理](soa.png)
- -->
 
 #### Monitor监控上报
 
