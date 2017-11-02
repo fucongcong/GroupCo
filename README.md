@@ -30,6 +30,7 @@
 
 ### 环境依赖与使用
 - [环境依赖与使用,戳这里](https://github.com/fucongcong/Group-Co/blob/master/start.md)
+- [注册中心的使用,戳这里](https://github.com/fucongcong/Group-Co/blob/master/soa.md)
 
 ### 异步Tcp客户端
 

@@ -13,7 +13,8 @@
 - 设置config/service.php中的registry_address.目前只支持redis作为注册中心
 - 启动http server => php server.php
 - 访问 http://localhost:9777/ 开始异步协程之旅
-- demo 查看，请继续一下步骤，将用nginx做一次反向代理资源文件
+
+#### demo 查看，请继续以下步骤，将用nginx做一次反向代理资源文件
 - 修改配置nginx，见doc/nginx.md,配置hosts
 - 配置config中的service配置文件
 - 执行脚本 => app/console sql:migrate 
