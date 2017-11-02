@@ -10,7 +10,7 @@
 - 执行 => composer install
 - 新建一个runtime目录，用于存放日志等cache文件
 - 配置config中的database配置文件
-- 设置config/service.php中的registry_address.目前只支持redis作为服务中心
+- 设置config/service.php中的registry_address.目前只支持redis作为注册中心
 - 启动http server => php server.php
 - 访问 http://localhost:9777/ 开始异步协程之旅
 - demo 查看，请继续一下步骤，将用nginx做一次反向代理资源文件
@@ -35,5 +35,5 @@
 
 #### 要注意的点
 - 1.因为是异步的，无法设置swoole的max_request参数,stop 与reload的使用也会使部分请求失败。（解决：升级版本到>1.9.17）
-- 2.格外内存释放的问题，局部静态变量，全局变量的释放。
+- 2.额外内存释放的问题，局部静态变量，全局变量的释放。
 - 3.断线重连机制内部已封装(在执行sql时如果出现长连接已失效，将尝试3次重连操作)。
