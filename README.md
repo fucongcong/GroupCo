@@ -28,6 +28,11 @@
 - Twig、Doctrine支持视图、服务数据层
 - 单元测试覆盖
 
+#### 服务治理示意图
+
+![服务治理](soa.png)
+
+
 ### 环境依赖与使用
 - [环境依赖与使用,戳这里](https://github.com/fucongcong/Group-Co/blob/master/start.md)
 - [注册中心的使用,戳这里](https://github.com/fucongcong/Group-Co/blob/master/soa.md)
@@ -230,12 +235,6 @@
   - [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
   - [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
   - [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
-
-
-#### 服务治理示意图
-
-![服务治理](soa.png)
-
 
 ### SOA客户端，串行调用(不使用服务中心)
 
