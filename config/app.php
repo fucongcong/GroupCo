@@ -1,5 +1,6 @@
 <?php
 return [
+/****************FRAMEWORK CONFIG*********************/
     // prod|dev
     'environment' => 'dev',
 
@@ -39,31 +40,38 @@ return [
             'help' => '清除日志', //提示
         ],
     ],
+//**修改一下配置后需要restart server。reload不生效！
+/****************SERVER CONFIG*********************/
+    //本机当前内网ip
+    'ip' => '127.0.0.1',
 
-    'host' => '127.0.0.1',
-
+    'host' => '0.0.0.0',
     'port' => 9777,
 
     'setting' => [
         //日志
-        //'daemonize' => true,
+        'daemonize' => true,
         'log_file' => 'runtime/error.log',
         'worker_num' => 2,    //worker process num
         'backlog' => 256,   //listen backlog
         'heartbeat_idle_time' => 30,
         'heartbeat_check_interval' => 10,
-        'dispatch_mode' => 3, 
+        'dispatch_mode' => 1, 
+        'max_request' => 10000,
     ],
 
-    //通信协议 eof：结束符, buf：自定义包头+包体
+    //依赖的服务模块 
+    'services' => ["User", "Order", "Monitor"],
+
+    //在启动时可以添加用户自定义的工作进程,必须是swoole_process,请继承Group\Process抽象类
+    'process' => [
+    ],
+
+    //此参数可不填。通信协议 eof：结束符, buf：包头+包体。也可以填自定义的customProtocols
     'protocol' => 'eof',
     //包体的打包方式json,serialize
     'pack' => 'serialize',
     //是否启用gzip压缩true,false
     'gzip' => false,
 
-    //在启动时可以添加用户自定义的工作进程,必须是swoole_process
-    'process' => [
-        'src\Admin\Process\HeartbeatProcess',
-    ],
 ];

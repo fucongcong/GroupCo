@@ -3,9 +3,8 @@ return [
     //加密token，16位。可修改
     'encipher' => 'uoI49l^^M!a5&bZt',
 
-    //服务中心地址
-    //'node_center' => '',
-    'node_center' => 'http://groupco.com',
+    //注册中心，如果不为空的话，在server启动时会起一个子进程订阅依赖的服务列表。
+    'registry_address' => 'redis://127.0.0.1:6379',
 
     //配置service
     'server' => [
@@ -43,6 +42,10 @@ return [
                 'log_file' => 'runtime/service/monitor.log',
             ],
             'public' => 'Monitor',
+            'process' => [
+                //如果用redis作服务中心，你可以使用框架封装的心跳检测进程
+                'Group\Process\RedisHeartbeatProcess',
+            ],
         ],
         //可以配置多个server，注意请监听不同的端口。
         //serverName
