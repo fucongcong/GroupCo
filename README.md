@@ -7,6 +7,7 @@
 - 利用协程特性以同步方式来编写异步代码，增强可读性。
 - 将swoole的异步特性与传统框架的MVC相结合。
 - 可以用作api也可以用作http server,rpc server.
+- 目前实现了以redis为注册中心的服务化治理.
 
 ### 如何使用，与传统框架的区别？
 - 框架基本使用与传统框架基本一致，路由，控制器，服务层，数据层。
@@ -31,6 +32,7 @@
 - [环境依赖与使用,戳这里](https://github.com/fucongcong/Group-Co/blob/master/start.md)
 
 ### 异步Tcp客户端
+
 
 ```php
 
@@ -274,15 +276,34 @@
     
 ```
 
-### 使用服务治理中心
-- 设置config/service.php中的node_center地址
-- 开启config/app.php中swoole_process选项的'src\Admin\Process\HeartbeatProcess'
-- 重启user服务 => app/service user reload
-- 启动node_center服务 => app/service node_center
-- 重启http server
-- 访问 /admin 路由，开始服务治理
-- 注意使用service_center()方法获取服务模块
-- 使用监控Monitor服务 app/service monitor
+##### 基础服务
+- AsyncTcp
+- AsyncHttp
+- AsyncMysql
+- AsyncRedis
+- AsyncService
+- AsyncLog
+- AsyncFile
+- Container
+- Controller
+- Protocol
+- [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
+- [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
+- [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
+- [Request](https://fucongcong.gitbooks.io/group-doc/content/requestqing-qiu.html)
+- [Response](https://fucongcong.gitbooks.io/group-doc/content/responsexiang-ying.html)
+- [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+- Sync
+  - Container
+  - [Console](https://fucongcong.gitbooks.io/group-doc/content/consolekong-zhi-tai.html)
+  - [FileCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  - [RedisCache](https://fucongcong.gitbooks.io/group-doc/content/cachehuan-cun.html)
+  - [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  - [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
+  - [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
+  - [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
+- Test
+
 
 #### 服务治理示意图
 
@@ -322,26 +343,6 @@
 ```
 ##### License MIT
 ##### 感谢Swoole
-
-### 以下服务”使用方式“与Group框架使用方式一致。所以直接给出了Group框架使用时的文档链接
-
-### 异步Http server还可以使用的服务
-- [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
-- [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
-- [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
-- [Request](https://fucongcong.gitbooks.io/group-doc/content/requestqing-qiu.html)
-- [Response](https://fucongcong.gitbooks.io/group-doc/content/responsexiang-ying.html)
-- [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-
-### Service还可以使用的服务
-- [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-- [Console](https://fucongcong.gitbooks.io/group-doc/content/consolekong-zhi-tai.html)
-- [FileCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-- [RedisCache](https://fucongcong.gitbooks.io/group-doc/content/cachehuan-cun.html)
-- [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
-- [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
-- [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
-
 
 ### TODO
 - 自定义protocol。

@@ -10,6 +10,7 @@
 - 执行 => composer install
 - 新建一个runtime目录，用于存放日志等cache文件
 - 配置config中的database配置文件
+- 设置config/service.php中的registry_address.目前只支持redis作为服务中心
 - 启动http server => php server.php
 - 访问 http://localhost:9777/ 开始异步协程之旅
 - demo 查看，请继续一下步骤，将用nginx做一次反向代理资源文件
@@ -17,6 +18,7 @@
 - 配置config中的service配置文件
 - 执行脚本 => app/console sql:migrate 
 - 启动user服务 => app/service user
+- 使用监控Monitor服务 app/service monitor
 - 还可以启动其他服务，自行配置
 - 访问配置的servername => groupco.com/demo 即可
 
