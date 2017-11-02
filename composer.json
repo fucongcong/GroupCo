@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "group-co/framework": "dev-redis_registry_center"
+        "group-co/framework": "dev-master"
     },
     "repositories": {
         "packagist": {

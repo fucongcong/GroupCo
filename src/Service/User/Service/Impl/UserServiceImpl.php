@@ -38,7 +38,10 @@ class UserServiceImpl extends UserBaseService implements UserService
     }
 
     public function addUser($user)
-    {
+    {   
+        if ($this->getUserByMobile($user['mobile'])) {
+            return false;
+        }
         return $this->getUserDao()->addUser($user);
     }
 

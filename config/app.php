@@ -73,5 +73,4 @@ return [
     'pack' => 'serialize',
     //是否启用gzip压缩true,false
     'gzip' => false,
-
 ];
