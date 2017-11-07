@@ -50,7 +50,19 @@
   * [服务调用](doc/fu-wu-zhong-xin/yi-bu-http-server-zhong-shi-yong-fu-wu.md)
   * [服务调用监控](doc/fu-wu-zhong-xin/fu-wu-diao-yong-jian-kong.md)
 * 基础服务(待更新)
-  * [Config](doc/ji-chu-fu-wu/config.md)
+  * Config
+  * StaticCache
+  * Event
+  * Route
+  * Request
+  * Response
+* 同步服务(用于服务开发)
+  * FileCache
+  * RedisCache
+  * Log
+  * Dao
+  * Service
+* 控制台
 
 ### 环境依赖
 
