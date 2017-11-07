@@ -35,23 +35,23 @@
 
 ### 环境依赖
 
-* #### [**hiredis**](https://github.com/redis/hiredis)**（redis异步库）**
-* #### **redis**
-* #### **mysql**
-* #### **php &gt;5.6 或者 php &gt; 7.0**
-* #### swoole &gt;=1.9.23\(建议升级到最新版本\) \(在编译swoole时加入--enable-async-redis，开启异步redis客户端, --enable-openssl开启openssl支持,--with-openssl-dir指定你的openssl目录\)
+* [**hiredis**](https://github.com/redis/hiredis)**（redis异步库）**
+* **redis**
+* **mysql**
+* **php &gt;5.6 或者 php &gt; 7.0**
+* **swoole &gt;=1.9.23\(建议升级到最新版本\) \(在编译swoole时加入--enable-async-redis，开启异步redis客户端, --enable-openssl开启openssl支持,--with-openssl-dir指定你的openssl目录\)**
 
 > ##### 注：openssl是用于http异步客户端抓取https网址时依赖的模块，可以选择性开启
 
 ### 启动项目\(请先完成环境依赖安装\)
 
-1. #### 克隆项目
-2. #### 执行 =&gt; composer install
-3. #### 新建一个runtime目录，用于存放日志等cache文件
-4. #### 配置config中的database配置文件
-5. #### 设置config/service.php中的registry\_address.目前只支持redis、mysql作为注册中心
-6. #### 启动http server =&gt; php server.php
-7. #### 访问 [http://localhost:9777/](http://localhost:9777/) 开始异步协程之旅
+1. 克隆项目
+2. 执行 =&gt; composer install
+3. 新建一个runtime目录，用于存放日志等cache文件
+4. 配置config中的database配置文件
+5. 设置config/service.php中的registry\_address.目前只支持redis、mysql作为注册中心
+6. 启动http server =&gt; php server.php
+7. 访问 [http://localhost:9777/](http://localhost:9777/) 开始异步协程之旅
 
 
 ### 异步Tcp客户端
