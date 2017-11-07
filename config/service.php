@@ -4,7 +4,9 @@ return [
     'encipher' => 'uoI49l^^M!a5&bZt',
 
     //注册中心，如果不为空的话，在server启动时会起一个子进程订阅依赖的服务列表。
-    'registry_address' => 'redis://127.0.0.1:6379',
+    //'registry_address' => 'redis://127.0.0.1:6379',
+    //mysql注册中心，开启后，请执行doc/mysql-registry.sql中的sql，创建2张表
+    'registry_address' => 'mysql://127.0.0.1:3306?dbname=Demo&user=root&password=123',
 
     //配置service
     'server' => [
@@ -26,8 +28,8 @@ return [
             ],
             'public' => 'Monitor',
             'process' => [
-                //如果用redis作服务中心，你可以使用框架封装的心跳检测进程
-                'Group\Process\RedisHeartbeatProcess',
+                //你可以使用框架封装的心跳检测进程
+                'Group\Process\HeartbeatProcess',
             ],
         ],
         //可以配置多个server，注意请监听不同的端口。
