@@ -1,47 +1,48 @@
-# Group-Co	
+# Group-Co
 
-[![Build Status](https://travis-ci.org/fucongcong/co-framework.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co)
+[![Build Status](https://travis-ci.org/fucongcong/co-framework.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co)  
 [![Code Climate](https://codeclimate.com/github/fucongcong/co-framework/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
 
 ### 为什么写这个框架？
-- 利用协程特性以同步方式来编写异步代码，增强可读性。
-- 将swoole的异步特性与传统框架的MVC相结合。
-- 可以用作api也可以用作http server,rpc server.
-- 目前实现了以Redis、Mysql为注册中心的服务化治理.
+
+* 利用协程特性以同步方式来编写异步代码，增强可读性。
+* 将swoole的异步特性与传统框架的MVC相结合。
+* 可以用作api也可以用作http server,rpc server.
+* 目前实现了以Redis、Mysql为注册中心的服务化治理.
 
 ### 如何使用，与传统框架的区别？
-- 框架基本使用与传统框架基本一致，路由，控制器，服务层，数据层。
-- 在异步调用的地方需要以yield关键词来触发协程切换
+
+* 框架基本使用与传统框架基本一致，路由，控制器，服务层，数据层。
+* 在异步调用的地方需要以yield关键词来触发协程切换
 
 ### 特性
-- 全异步协程调度，支持高并发
-- 异步TCP，HTTP客户端
-- 异步日志
-- 异步文件读写
-- 异步Mysql
-- 异步Mysql事务处理
-- 异步Redis
-- 支持Mysql连接池,Redis连接池
-- SOA服务化调用，内部封装完整的RPC通信，服务端采用异步Task处理后合并数据并返回。
-- 异步TCP客户端支持并行、串行调用
-- 支持EOF结束符协议、自定义网络通信协议，支持json化、php序列化包体，支持gzip。
-- Twig、Doctrine支持视图、服务数据层
-- 单元测试覆盖
+
+* 全异步协程调度，支持高并发
+* 异步TCP，HTTP客户端
+* 异步日志
+* 异步文件读写
+* 异步Mysql
+* 异步Mysql事务处理
+* 异步Redis
+* 支持Mysql连接池,Redis连接池
+* SOA服务化调用，内部封装完整的RPC通信，服务端采用异步Task处理后合并数据并返回。
+* 异步TCP客户端支持并行、串行调用
+* 支持EOF结束符协议、自定义网络通信协议，支持json化、php序列化包体，支持gzip。
+* Twig、Doctrine支持视图、服务数据层
+* 单元测试覆盖
 
 #### 服务治理示意图
 
 ![服务治理](soa.png)
 
-
 ### 环境依赖与使用
-- [快速开始,戳这里](https://github.com/fucongcong/Group-Co/blob/master/start.md)
-- [注册中心的使用,戳这里](https://github.com/fucongcong/Group-Co/blob/master/soa.md)
+
+* [快速开始,戳这里](https://github.com/fucongcong/Group-Co/blob/master/start.md)
+* [注册中心的使用,戳这里](https://github.com/fucongcong/Group-Co/blob/master/soa.md)
 
 ### 异步Tcp客户端
 
-
 ```php
-
     use AsyncTcp;
 
     $tcp = new AsyncTcp('127.0.0.1', 9501);
@@ -54,18 +55,18 @@
     $tcp->addCall('hello server1!');
     $tcp->addCall('hello server2!');
     $res = (yield $tcp->multiCall());
-
 ```
-##### Tips(如果使用tcp异步客户端和其他服务端通信)
-- tcp客户端的数据包格式可在config/app.php中配置.
-- protocol为buf时，是按包头+包体封装数据包的，包头为4个字节，存放包体的长度，解包时同样也是按包头+包体解包，所以服务端send数据时也要按同样规则封包。
-- protocol为eof时，是按'\r\n'结束符封装数据包的，解包时同样也是按'\r\n'解包，所以服务端send数据时也要按'\r\n'结束符封装数据包。
-- protocol为空的话，不封装数据包。在应答式响应中可以使用，否则会出现粘包现象。(框架内部封装的service为该模式)
+
+##### Tips\(如果使用tcp异步客户端和其他服务端通信\)
+
+* tcp客户端的数据包格式可在config/app.php中配置.
+* protocol为buf时，是按包头+包体封装数据包的，包头为4个字节，存放包体的长度，解包时同样也是按包头+包体解包，所以服务端send数据时也要按同样规则封包。
+* protocol为eof时，是按'\r\n'结束符封装数据包的，解包时同样也是按'\r\n'解包，所以服务端send数据时也要按'\r\n'结束符封装数据包。
+* protocol为空的话，不封装数据包。在应答式响应中可以使用，否则会出现粘包现象。\(框架内部封装的service为该模式\)
 
 ### 异步Http客户端
 
 ```php
-
     use AsyncHttp;
 
     //直接使用域名, get方式
@@ -83,13 +84,11 @@
     //使用https, post方式
     $http = new AsyncHttp('https://groupco.com');
     $res = (yield $http->post('/test', ['postId' => 52]));
-
 ```
 
-### 异步Redis(默认使用连接池)
+### 异步Redis\(默认使用连接池\)
 
 ```php
-    
     use AsyncRedis;
 
     //关闭连接池
@@ -104,15 +103,13 @@
     $user = json_encode(['foo' => 'bar']);
     yield AsyncRedis::hSet('user', 1, $user);
     dump(yield AsyncRedis::hGet('user', 1));
-    
 ```
 
-### 异步Mysql(默认使用连接池)
+### 异步Mysql\(默认使用连接池\)
 
 ```php
-    
     use AsyncMysql;
-    
+
     //第二个参数设为false将不会使用连接池中的资源，默认都会从连接池中取，配置连接池数量 => config/database.php
     AsyncMysql::query($sql, $usePool = true);
 
@@ -126,15 +123,13 @@
         $affectedRows = $res->getAffectedRows();
         $id = $res->getInsertId();
     }
-    
 ```
 
 ### 异步Mysql事务处理
 
 ```php
-    
     use AsyncMysql;
-    
+
     public function test()
     {
         try {
@@ -170,7 +165,6 @@
 ### 异步Log
 
 ```php
-    
     use AsyncLog;
 
     yield AsyncLog::info('hello world');
@@ -188,14 +182,11 @@
     yield AsyncLog::alert('hello world');
 
     yield AsyncLog::emergency('hello world');
-    
 ```
-
 
 ### 异步文件读写
 
 ```php
-    
     use AsyncFile;
 
     $content = (yield AsyncFile::read(__ROOT__."runtime/test.txt"));
@@ -203,13 +194,11 @@
     $res = (yield AsyncFile::write(__ROOT__."runtime/test.txt", "hello wordls!"));
 
     $res = (yield AsyncFile::write(__ROOT__."runtime/test.txt", "hello wordls!", FILE_APPEND));
-
 ```
 
 ### 异常处理
 
 ```php
-    
     //如果在业务层不catch，框架层会捕捉，并返回一个500的server error响应。如果在开发环境会返回一个500的具体错误的trace响应。
     try {
         throw new \Exception("Error Processing Request", 1); 
@@ -217,54 +206,49 @@
     } catch (\Exception $e) {
         echo  $e->getMessage();
     }
-
 ```
 
 ##### 其他基础服务
-- [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
-- [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
-- [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
-- [Request](https://fucongcong.gitbooks.io/group-doc/content/requestqing-qiu.html)
-- [Response](https://fucongcong.gitbooks.io/group-doc/content/responsexiang-ying.html)
-- [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-- Sync
-  - [Console](https://fucongcong.gitbooks.io/group-doc/content/consolekong-zhi-tai.html)
-  - [FileCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-  - [RedisCache](https://fucongcong.gitbooks.io/group-doc/content/cachehuan-cun.html)
-  - [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
-  - [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
-  - [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
-  - [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
 
-### SOA客户端，串行调用(不使用服务中心)
+* [Config](https://fucongcong.gitbooks.io/group-doc/content/configpei-zhi.html)
+* [Event](https://fucongcong.gitbooks.io/group-doc/content/eventshi-jian.html)
+* [Route](https://fucongcong.gitbooks.io/group-doc/content/lu-you.html)
+* [Request](https://fucongcong.gitbooks.io/group-doc/content/requestqing-qiu.html)
+* [Response](https://fucongcong.gitbooks.io/group-doc/content/responsexiang-ying.html)
+* [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+* Sync
+  * [Console](https://fucongcong.gitbooks.io/group-doc/content/consolekong-zhi-tai.html)
+  * [FileCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  * [RedisCache](https://fucongcong.gitbooks.io/group-doc/content/cachehuan-cun.html)
+  * [StaticCache](https://fucongcong.gitbooks.io/group-doc/content/filecachewen-jian-huan-cun.html)
+  * [Log](https://fucongcong.gitbooks.io/group-doc/content/logri-zhi.html)
+  * [Dao](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
+  * [Service](https://fucongcong.gitbooks.io/group-doc/content/servicefu-wu.html)
+
+### SOA客户端，串行调用\(不使用服务中心\)
 
 ```php
-    
     $start = microtime(true);
     //设置2秒超时
     service("user")->setTimeout(2);
     $users = (yield service("user")->call("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
     dump($users);
-
 ```
 
-### SOA客户端，串行调用(使用服务中心)
+### SOA客户端，串行调用\(使用服务中心\)
 
 ```php
-    
     $start = microtime(true);
     //设置2秒超时
     $service = (yield service_center("User"));
     $service->setTimeout(2);
     $users = (yield $service->call("User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
     dump($users);
-
 ```
 
-### SOA客户端，并行调用(不使用服务中心)
+### SOA客户端，并行调用\(不使用服务中心\)
 
 ```php
-
     $start = microtime(true);
     //设置2秒超时
     service("user")->setTimeout(2);
@@ -276,13 +260,11 @@
     dump($res[$callId1]);
     dump($res[$callId2]);
     dump(microtime(true) - $start);
-    
 ```
 
-### SOA客户端，并行调用(使用服务中心，只能针对同一服务模块)
+### SOA客户端，并行调用\(使用服务中心，只能针对同一服务模块\)
 
 ```php
-
     $start = microtime(true);
     //设置2秒超时
     $service = (yield service_center("User"));
@@ -295,13 +277,11 @@
     dump($res[$callId1]);
     dump($res[$callId2]);
     dump(microtime(true) - $start);
-    
 ```
 
 #### Monitor监控上报
 
 ```php
-
     //在框架层，调用servcie时，会抛出KernalEvent::SERVICE_CALL事件，你可以监听该事件，做数据上报处理，请以异步方式上报，例如：
 
     <?php
@@ -329,10 +309,15 @@
         }
     }
 ```
+
 ##### License MIT
+
 ##### 感谢Swoole
 
 ### TODO
-- 自定义protocol。
-- 异步大文件读取，目前只能读取<4M的文件
+
+* 自定义protocol。
+* 异步大文件读取，目前只能读取&lt;4M的文件
+
+
 
