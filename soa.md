@@ -1,10 +1,13 @@
 #### 使用注册中心
 
 ##### 设置注册中心
-修改config/service.php中的registry_address.目前只支持redis注册中心 
+修改config/service.php中的registry_address.目前只支持Redis、Mysql注册中心 
 
     'registry_address' => 'redis://127.0.0.1:6379'
 
+    //mysql注册中心，开启后，请执行doc/mysql-registry.sql中的sql，创建2张表
+    'registry_address' => 'mysql://127.0.0.1:3306?dbname=Demo&user=root&password=123',
+    
 ##### 设置依赖的服务
 修改config/app.php的services.你需要将项目依赖的服务模块写入该数组，在server启动时，会单独起一个进程订阅每个服务
 
