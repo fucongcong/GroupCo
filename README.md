@@ -49,14 +49,25 @@
   * [注册中心](doc/fu-wu-zhong-xin/zhu-ce-zhong-xin.md)
   * [服务调用](doc/fu-wu-zhong-xin/yi-bu-http-server-zhong-shi-yong-fu-wu.md)
   * [服务调用监控](doc/fu-wu-zhong-xin/fu-wu-diao-yong-jian-kong.md)
-* 基础服务(待更新)
+* 基础服务\(待更新\)
+
   * Config
   * StaticCache
-  * Event
+
   * Route
+
+  * Controller
+  * View
+
   * Request
+
   * Response
-* 同步服务(用于服务开发)
+  * Event
+  * Listener
+  * Subscriber
+  * EventDispatcher
+
+* 同步服务\(用于服务开发\)
   * FileCache
   * RedisCache
   * Log
@@ -83,7 +94,6 @@
 5. 设置config/service.php中的registry\_address.目前只支持redis、mysql作为注册中心
 6. 启动http server =&gt; php server.php
 7. 访问 [http://localhost:9777/](http://localhost:9777/) 开始异步协程之旅
-
 
 ### 异步Tcp客户端
 
@@ -122,7 +132,6 @@
 * protocol为空的话，不封装数据包。在应答式响应中可以使用，否则会出现粘包现象。\(框架内部封装的service为该模式\)
 
 ### 
-
 
 ### 异步Http客户端
 
@@ -176,8 +185,6 @@
 ```
 
 > ##### 注：若请求https地址，需要在编译swoole时开启openssl
-
-
 
 ### 异步Mysql客户端
 
@@ -241,8 +248,6 @@
             yield true;
         }
 
-
-
 ### 异步Redis客户端
 
 #### 连接池（连接池默认开启）
@@ -266,7 +271,7 @@
 
     yield AsyncRedis::set('foo', 'bar');
     dump(yield AsyncRedis::get('foo'));
-    
+
     $user = json_encode(['foo' => 'bar']);
     yield AsyncRedis::hSet('user', 1, $user);
     dump(yield AsyncRedis::hGet('user', 1));
@@ -282,7 +287,7 @@
 
         //redis连接超时时间
         'timeout' => 5,
-    
+
         'default' => [
             'host'     => '127.0.0.1',
             'port'     => 6379,
@@ -296,12 +301,9 @@
 
 ### 
 
-
-
 ### 异步Log日志
 
 ```
-    
     use AsyncLog;
 
     yield AsyncLog::info('hello world');
@@ -321,8 +323,6 @@
     yield AsyncLog::emergency('hello world');
 ```
 
-
-
 ### 异步文件读写
 
 #### 读文件
@@ -331,7 +331,6 @@
     use AsyncFile;
 
     $content = (yield AsyncFile::read(__ROOT__."runtime/test.txt"));
-
 ```
 
 #### 写文件
@@ -343,8 +342,6 @@
 ```
 
 > 目前仅支持小于4M的文件
-
-
 
 ### 异常Exception
 
@@ -367,21 +364,19 @@
 
 ![](soa.png)
 
-
-
 ### 注册中心
 
 #### 设置注册中心
 
-修改config/service.php中的registry\_address.目前只支持Redis、Mysql注册中心 
+修改config/service.php中的registry\_address.目前只支持Redis、Mysql注册中心
 
-##### Redis注册中心 
+##### Redis注册中心
 
 ```
     'registry_address' => 'redis://127.0.0.1:6379'
 ```
 
-##### Mysql注册中心 
+##### Mysql注册中心
 
 ```
     //mysql注册中心，开启后，请执行doc/mysql-registry.sql中的sql，创建2张表
@@ -428,8 +423,6 @@ app/service user
         ],
 ```
 
-
-
 ### 在异步HTTP SERVER中使用服务
 
 #### 全局方法service\_center\(\)
@@ -462,7 +455,7 @@ app/service user
     $callId1 = $service->addCall("User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
     $callId2 = $service->addCall("User::getUser", ['id' => 1]);
     $res = (yield $service->multiCall());
-    
+
     dump($res[$callId1]);
     dump($res[$callId2]);
 ```
@@ -499,8 +492,6 @@ service\(\)不会通过注册中心发现服务
     dump($res[$callId2]);
 ```
 
-
-
 ### 服务调用监控
 
 #### KernalEvent::SERVICE\_CALL事件
@@ -535,7 +526,6 @@ service\(\)不会通过注册中心发现服务
 ```
 
 ##### 具体可见Event基础服务使用
-
 
 
 
