@@ -24,9 +24,8 @@
   * [Controller控制器类](doc/ji-chu-fu-wu/controllerkong-zhi-qi-lei.md)
   * [View视图类](doc/ji-chu-fu-wu/viewshi-tu-lei.md)
   * [Request请求类](doc/ji-chu-fu-wu/requestqing-qiu-lei.md)
+  * [Response响应类](doc/ji-chu-fu-wu/responsexiang-ying-lei.md)
   * [Event事件类](doc/ji-chu-fu-wu/eventshi-jian-lei.md)
   * [Listener监听类](doc/ji-chu-fu-wu/listenerjian-ting-lei.md)
-  * [Subscriber多事件监听](doc/ji-chu-fu-wu/subscriberduo-shi-jian-jian-ting.md)
-  * Request请求类
-  * Response响应类
+  * [Response响应类](doc/ji-chu-fu-wu/responsexiang-ying-lei.md)
 
