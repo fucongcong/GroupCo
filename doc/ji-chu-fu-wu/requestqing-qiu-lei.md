@@ -5,28 +5,33 @@
 * ##### GET {#get}
 
 ```
-public
-function
-testAction
-(Request $request)
-{
-        
-//get
+Request
 
-        $request -
->
- query -
->
- get(
-'xxx'
-);
-        $request -
->
- query -
->
- all();
+参照symfony2的Request服务
+
+GET
+
+    public function testAction(Request $request)
+    {
+        //get
+        $request -> query -> get('xxx');
+        $request -> query -> all();
     }
+POST
 
+    public function testAction(Request $request)
+    {
+        //post
+        $request -> request -> get('xxx');
+        $request -> request -> all()
+    }
+FILE
+
+    public function testAction(Request $request)
+    {
+        //file
+        $request -> file -> get('xxxx');
+    }
 ```
 
 * ##### POST {#post}
@@ -37,7 +42,7 @@ function
 testAction
 (Request $request)
 {
-        
+
 //post
 
         $request -
@@ -53,7 +58,6 @@ testAction
 >
  all()
     }
-
 ```
 
 * ##### FILE {#file}
@@ -64,7 +68,7 @@ function
 testAction
 (Request $request)
 {
-        
+
 //file
 
         $request -
