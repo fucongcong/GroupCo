@@ -10,4 +10,9 @@ abstract class UserBaseService extends Service
     {
         return $this->createDao("User:User");
     }
+
+    public function getUserProfileService()
+    {
+        return $this->createService("User:UserProfile");
+    }
 }

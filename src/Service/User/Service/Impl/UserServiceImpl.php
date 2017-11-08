@@ -15,6 +15,11 @@ class UserServiceImpl extends UserBaseService implements UserService
             $user = $this->getUserDao()->getUser($id);
             Cache::set('user_'.$id, $user, 3600);
         }
+
+        if ($user) {
+            $user['profile'] = $this->getUserProfileService()->getUserProfile($id);
+        }
+        
 		return $user;
 	}
 
