@@ -30,7 +30,7 @@
     $callId1 = $service->addCall("User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
     $callId2 = $service->addCall("User::getUser", ['id' => 1]);
     $res = (yield $service->multiCall());
-    
+
     dump($res[$callId1]);
     dump($res[$callId2]);
 ```
