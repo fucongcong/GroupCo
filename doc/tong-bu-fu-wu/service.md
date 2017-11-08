@@ -47,15 +47,75 @@ $this-&gt;createService\($serviceName\)
 > 实例化一个service类
 
 ```
+//返回User模块下UserDao接口实例
 public function getUserDao()
 {
     return $this->createDao("User:User");
 }
 
-
+//返回User模块下UserProfileService接口实例
 public function getUserProfileService()
 {
     return $this->createService("User:UserProfile");
+}
+```
+
+#### 异步多task任务
+
+**在Service内部封装了一套异步多task模拟map-reduce的处理慢速任务的方法，可以极大提升单个接口吞吐**
+
+```
+    //单进程慢速任务 通过异步的多task去做，速度会翻倍
+    public function getUsersCache($ids)
+    {   
+        //异步多task模式。耗时8ms
+        foreach ($ids as $id) {
+            $this->task('User\User::getUser', ['id' => $id]);
+        }
+
+        return $this->finish();
+
+        //正常模式 耗时250ms
+        // $users = [];
+        // foreach ($ids as $id) {
+        //     $users[] = $this->getUser($id);
+        // }
+
+        // return $users;
+    }
+```
+
+**通过**
+
+**$this-&gt;task\($cmd, $data\),**
+
+**$this-&gt;finish\(\);**
+
+**两个方法实现**
+
+* **注意使用此方式实现的接口无法再内部调用。以下方式调用是无效的：**
+
+```
+public function getUser($id)
+{
+     $user = $this->getUserDao()->getUser($id);
+     
+     //此时无法返回正常数据。
+     $user['users'] = $this->getUsersCache([1,2,3]);
+     
+     return $user;
+}
+
+//单进程慢速任务 通过异步的多task去做，速度会翻倍
+public function getUsersCache($ids)
+{
+     //异步多task模式。耗时8ms
+     foreach ($ids as $id) {
+     $this->task('User\User::getUser', ['id' => $id]);
+     }
+     
+     return $this->finish();
+
 }
 ```
 
