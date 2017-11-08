@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "group-co/framework": "v1.0.2"
+        "group-co/framework": "dev-master"
     },
     "repositories": {
         "packagist": {
