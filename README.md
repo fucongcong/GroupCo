@@ -82,7 +82,7 @@
 ### 启动项目\(请先完成环境依赖安装\)
 
 1. 克隆项目
-2. 执行 =&gt; composer install
+2. 执行 =&gt; composer install (如果安装很慢，可以使用国内镜像，但是镜像包会有延迟)
 3. 新建一个runtime目录，用于存放日志等cache文件
 4. 配置config中的database配置文件
 5. 设置config/service.php中的registry\_address.目前只支持redis、mysql作为注册中心
