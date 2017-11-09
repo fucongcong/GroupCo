@@ -40,7 +40,7 @@ return [
             'help' => '清除日志', //提示
         ],
     ],
-//**修改一下配置后需要restart server。reload不生效！
+//**修改以下配置后需要restart server。reload不生效！
 /****************SERVER CONFIG*********************/
     //本机当前内网ip
     'ip' => '127.0.0.1',
@@ -67,7 +67,7 @@ return [
     'process' => [
     ],
 
-    //此参数可不填。通信协议 eof：结束符, buf：包头+包体。也可以填自定义的customProtocols
+    //此参数可不填。通信协议 eof：结束符, buf：包头+包体。
     'protocol' => 'eof',
     //包体的打包方式json,serialize
     'pack' => 'serialize',
