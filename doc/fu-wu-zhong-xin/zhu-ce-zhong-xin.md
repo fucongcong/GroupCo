@@ -14,7 +14,14 @@
 
 ```
     //mysql注册中心，开启后，请执行doc/mysql-registry.sql中的sql，创建2张表
-    'registry_address' => 'mysql://127.0.0.1:3306?dbname=Demo&user=root&password=123',
+    'registry_address' => [
+        'scheme' => 'mysql',
+        'host' => '127.0.0.1',
+        'port' => 3306,
+        'user' => 'root',
+        'password' => '123',
+        'dbname' => 'Demo'
+    ],
 ```
 
 #### 设置依赖的服务
