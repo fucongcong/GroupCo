@@ -4,7 +4,12 @@ return [
     'encipher' => 'uoI49l^^M!a5&bZt',
 
     //注册中心，如果不为空的话，在server启动时会起一个子进程订阅依赖的服务列表。
-    'registry_address' => 'redis://127.0.0.1:6379',
+    'registry_address' => [
+        'scheme' => 'redis',
+        'host' => '127.0.0.1',
+        'port' => 6379,
+        'auth' => '',
+    ],
     //mysql注册中心，开启后，请执行doc/mysql-registry.sql中的sql，创建2张表
     // 'registry_address' => [
     //     'scheme' => 'mysql',

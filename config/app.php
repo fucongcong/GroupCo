@@ -4,8 +4,8 @@ return [
     // prod|dev
     'environment' => 'dev',
 
-    //只有在dev环境下才生效。tip: swoole http server下无法正常debug
-    'debug' => true,
+    //debug开启后service会打印接受到的数据包
+    'debug' => false,
 
     //zh|en|fr...
     'locale' => 'zh',

@@ -7,7 +7,12 @@
 ##### Redis注册中心 
 
 ```
-    'registry_address' => 'redis://127.0.0.1:6379'
+    'registry_address' => [
+        'scheme' => 'redis',
+        'host' => '127.0.0.1',
+        'port' => 6379,
+        'auth' => '',
+    ],
 ```
 
 ##### Mysql注册中心 
