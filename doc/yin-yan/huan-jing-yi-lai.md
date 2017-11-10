@@ -9,4 +9,11 @@
 > 注：openssl是用于http异步客户端抓取https网址时依赖的模块，可以选择性开启
 
 
+#### hiredis安装命令
+
+    wget https://github.com/redis/hiredis/archive/v0.13.3.zip
+    unzip v0.13.3.zip
+    cd hiredis-0.13.3
+    sudo make && sudo make install
+    sudo ldconfig
 

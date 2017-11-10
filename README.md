@@ -49,6 +49,7 @@
   * [注册中心](doc/fu-wu-zhong-xin/zhu-ce-zhong-xin.md)
   * [服务调用](doc/fu-wu-zhong-xin/yi-bu-http-server-zhong-shi-yong-fu-wu.md)
   * [服务调用监控](doc/fu-wu-zhong-xin/fu-wu-diao-yong-jian-kong.md)
+  * [调试模式](doc/fu-wu-zhong-xin/diao-shi-mo-shi.md)
 * 基础服务
   * [Config配置类](doc/ji-chu-fu-wu/config.md)
   * [StaticCache静态缓存类](doc/ji-chu-fu-wu/staticcache.md)
