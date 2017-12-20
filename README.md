@@ -8,7 +8,7 @@
 * 利用协程特性以同步方式来编写异步代码，增强可读性。
 * 将swoole的异步特性与传统框架的MVC相结合。
 * 可以用作api也可以用作http server,rpc server.
-* 目前实现了以Redis、Mysql为注册中心的服务化治理.
+* 目前实现了以Zookeeper、Redis、Mysql为注册中心的服务化治理.
 
 ### 如何使用，与传统框架的区别？
 
