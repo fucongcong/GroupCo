@@ -5,7 +5,7 @@
 修改config/service.php中的registry\_address.目前只支持Zookeeper、Redis、Mysql注册中心 
 
 ##### Zookeeper注册中心 
-
+* [Zookeeper扩展安装](http://pecl.php.net/package/zookeeper)
 ```
     'registry_address' => [
         'scheme' => 'zookeeper',
