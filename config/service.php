@@ -19,6 +19,13 @@ return [
     //     'password' => '123',
     //     'dbname' => 'Demo'
     // ],
+    // 'registry_address' => [
+    //     'scheme' => 'zookeeper',
+    //     'host' => '127.0.0.1',
+    //     'port' => 2181,
+    //     //集群模式
+    //     //'url' => '127.0.0.1:2181,127.0.0.1:2182'
+    // ],
 
     //配置service
     'server' => [
