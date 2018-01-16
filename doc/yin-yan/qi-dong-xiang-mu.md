@@ -25,7 +25,7 @@
 #### 使用
 
 * 启动http server =&gt; php server.php
-* 热重启htt pserver =&gt; php server.php -s reload
+* 热重启http server =&gt; php server.php -s reload
 * 关闭http server =&gt; php server.php -s stop
 * 重启http server =&gt; php server.php -s restart
 * 启动某个服务 =&gt; app/service user
