@@ -51,5 +51,22 @@
 
 > ##### 注：若请求https地址，需要在编译swoole时开启openssl
 
+#### 其他使用形式（自定义）
 
+```php
+    use AsyncHttp;
+
+    $http = new AsyncHttp('http://127.0.0.1:9200');
+    yield $http->parseDomain();
+    
+    $client = $http->getClient("/search");
+    $client->setMethod("GET");
+    $client->setData('xxxx');
+    $client->setHeaders(['Content-Type' => 'application/json']);
+    $res = (yield $client);
+    if ($res && $res['response']) {
+        dump($res['response']);
+    }
+
+```
 
