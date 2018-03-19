@@ -59,7 +59,7 @@ class DefaultController extends Controller
                 'Content-Type' => "text/html; charset=UTF-8"
             ]);
         } else {
-            yield new Response('秒杀结束了！', 200, [
+            yield new Response('秒杀结束了！获得资格的用户如下：'.implode(",", $userIds), 200, [
                 'Content-Type' => "text/html; charset=UTF-8"
             ]);
         }
