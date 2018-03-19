@@ -10,7 +10,7 @@ return
         'maxPool' => 5,
 
         //redis连接超时时间
-        'timeout' => 5,
+        'timeout' => 0.1,
     
         'default' => [
             'host'     => '127.0.0.1',

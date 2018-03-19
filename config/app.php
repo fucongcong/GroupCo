@@ -25,7 +25,7 @@ return [
 
     'onRequestServices' => [
         //如果做api服务,可以不加载twig
-        'Group\Controller\TwigServiceProvider',
+        //'Group\Controller\TwigServiceProvider',
     ],
 
     //需要实例化的单例
@@ -46,13 +46,13 @@ return [
     'ip' => '127.0.0.1',
 
     'host' => '0.0.0.0',
-    'port' => 9777,
+    'port' => 9876,
 
     'setting' => [
         //日志
-        'daemonize' => true,
+        //'daemonize' => true,
         'log_file' => 'runtime/error.log',
-        'worker_num' => 2,    //worker process num
+        'worker_num' => 1,    //worker process num
         'backlog' => 256,   //listen backlog
         'heartbeat_idle_time' => 30,
         'heartbeat_check_interval' => 10,
