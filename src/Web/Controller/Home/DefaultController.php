@@ -14,12 +14,16 @@ class DefaultController extends Controller
     //一个action 与route对应
     public function indexAction(Request $request)
     {   
+        // for ($i=0; $i < 1555; $i++) { 
+        //     yield \AsyncFile::write(__ROOT__."url-go.txt", "http://127.0.0.1:9876/seckill?userId={$i}\n", FILE_APPEND);
+        // }
+        
         yield "hello world!";
     }
 
     public function seckillAction(Request $request, $userId)
     {   
-        $stime = "2018-03-19 11:08:50";
+        $stime = "2018-03-20 13:52:50";
         if (date('Y-m-d H:i:s') <= $stime) yield new Response('秒杀开始时间为'.$stime, 200, [
             'Content-Type' => "text/html; charset=UTF-8"
         ]);
@@ -55,13 +59,16 @@ class DefaultController extends Controller
         //这个才是最终判断 是否秒杀成功的条件
         $userIds = (yield AsyncRedis::lRange('saleInfo', 0, 10));
         if (in_array($userId, $userIds)) {
-            yield new Response('恭喜你，获得了资格，秒杀活动已结束！', 200, [
+            yield new Response('秒杀成功！获得资格', 200, [
                 'Content-Type' => "text/html; charset=UTF-8"
             ]);
         } else {
-            yield new Response('秒杀结束了！获得资格的用户如下：'.implode(",", $userIds), 200, [
+            yield new Response('秒杀结束了！', 200, [
                 'Content-Type' => "text/html; charset=UTF-8"
             ]);
+            // yield new Response('秒杀结束了！获得资格的用户如下：'.implode(",", $userIds), 200, [
+            //     'Content-Type' => "text/html; charset=UTF-8"
+            // ]);
         }
     }
 }

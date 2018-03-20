@@ -7,7 +7,7 @@ return
     'redis' => [
 
         //redis连接池数量
-        'maxPool' => 5,
+        'maxPool' => 50,
 
         //redis连接超时时间
         'timeout' => 0.1,

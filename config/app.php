@@ -2,7 +2,7 @@
 return [
 /****************FRAMEWORK CONFIG*********************/
     // prod|dev
-    'environment' => 'dev',
+    'environment' => 'prod',
 
     //debug开启后service会打印接受到的数据包
     'debug' => false,
@@ -52,12 +52,15 @@ return [
         //日志
         //'daemonize' => true,
         'log_file' => 'runtime/error.log',
-        'worker_num' => 1,    //worker process num
+        'reactor_num' => 4,
+        'worker_num' => 4,    //worker process num
         'backlog' => 256,   //listen backlog
-        'heartbeat_idle_time' => 30,
-        'heartbeat_check_interval' => 10,
-        'dispatch_mode' => 1, 
-        'max_request' => 10000,
+        'heartbeat_idle_time' => 300,
+        'heartbeat_check_interval' => 60,
+        'dispatch_mode' => 1,
+        'max_connection' => 10000,
+        'max_request' => 50000,
+        'open_cpu_affinity' => true,
     ],
 
     //依赖的服务模块 
