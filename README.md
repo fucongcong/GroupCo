@@ -15,9 +15,9 @@
 #### 测试
 - 修改src\Web\Controller\Home\DefaultController的seckillAction的秒杀开始时间
 - 访问/seckill/123 后面的数字为用户ID
-- 使用压测攻击测试并发
+- 使用压测工具测试并发
 
-#### mac pro 4核8g测试性能与并发数。用GroupCo框架，最后并发为2000qps左右，而用GO语言纯业务下达到了9000qps左右！
+#### mac pro 4核8g测试性能与并发数。同样使用redis连接池，最大连接数为50。用GroupCo框架，最后并发为2000qps左右，而用GO语言纯业务下达到了9000qps左右！
 
 #### 测试结果。
 
