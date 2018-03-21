@@ -48,9 +48,9 @@ func seckill(w http.ResponseWriter, r *http.Request) {
 
 	conn := pool.Get()
 	saleCount, err := redis.Int(conn.Do("llen", "saleinfo-go"))
+	defer conn.Close()
 	if err != nil {
 		fmt.Fprint(w, "服务器500")
-		defer conn.Close()
 		return
 	}
 
@@ -64,13 +64,11 @@ func seckill(w http.ResponseWriter, r *http.Request) {
 		for _, v := range res {
 			if string(v.([]byte)) == userId {
 				fmt.Fprint(w, "秒杀成功！获得资格")
-				defer conn.Close()
 				return
 			}
 		}
 
 		fmt.Fprint(w, "秒杀失败！再试试吧")
-		defer conn.Close()
 		return
 	}
 
@@ -78,12 +76,10 @@ func seckill(w http.ResponseWriter, r *http.Request) {
 	for _, v := range res {
 		if string(v.([]byte)) == userId {
 			fmt.Fprint(w, "秒杀成功！获得资格")
-			defer conn.Close()
 			return
 		}
 	}
 
 	fmt.Fprint(w, "秒杀结束了！")
-	defer conn.Close()
 	return
 }
