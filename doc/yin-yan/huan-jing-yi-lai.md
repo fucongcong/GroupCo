@@ -17,3 +17,12 @@
     sudo make && sudo make install
     sudo ldconfig
 
+#### swoole安装
+
+    wget https://github.com/swoole/swoole-src/archive/v1.9.22.zip
+    unzip v1.9.22.zip
+    cd swoole-src-1.9.22
+    phpize
+    ./configure --enable-async-redis
+    sudo make
+    sudo make install

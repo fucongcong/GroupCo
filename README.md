@@ -68,6 +68,7 @@
   * [Cache](doc/tong-bu-fu-wu/rediscache.md)
   * [Log日志类](doc/tong-bu-fu-wu/logri-zhi-lei.md)
   * [FileCache文件缓存类](doc/tong-bu-fu-wu/filecachewen-jian-huan-cun-lei.md)
+* [单元测试](doc/dan-yuan-ce-shi/dan-yuan-ce-shi.md)
 * [控制台](doc/kong-zhi-tai/kong-zhi-tai.md)
 
 ### 案例Demo(即将更新)
