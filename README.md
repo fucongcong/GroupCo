@@ -72,10 +72,11 @@
 * [单元测试](doc/dan-yuan-ce-shi/dan-yuan-ce-shi.md)
 * [控制台](doc/kong-zhi-tai/kong-zhi-tai.md)
 
-### 案例Demo(即将更新)
-- Api服务
-- 日志分析服务
+### 案例Demo与最佳实践(即将更新)
+- [实现服务异常邮件通知](doc/demo/fu-wu-yi-chang.md)
 - [秒杀系统,与GO切磋](https://github.com/fucongcong/GroupCo/tree/co/seckill)
+- [日志分析服务](doc/demo/log.md)
+- Api服务
 
 ### BUG反馈
 如果你在使用过程中遇到安全或者框架层面使用bug，请提issue。
