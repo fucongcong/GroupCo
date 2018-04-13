@@ -126,11 +126,18 @@ class ServiceFailProcess extends Process
                     $errors = json_decode($errors, true);
                     //发送邮件
 
+                    if (is_array($errors['cmd'])) {
+                        $cmd = implode(",", $errors['cmd']);
+                    } else {
+                        $cmd = $errors['cmd'];
+                    }
+
                     $email = new Email;
                     if ($errors['ip'] == "" || $errors['port'] == "") {
-                        $email->sendEmail("【服务调用失败】".$errors['service']."服务", "没有一个可用的服务。调用命令:".implode(",", $errors['cmd']));
+
+                        $email->sendEmail("【服务调用失败】".$errors['service']."服务", "没有一个可用的服务。调用命令:".$cmd);
                     } else {
-                        $email->sendEmail("【服务调用失败】".$errors['service']."服务", "服务地址: ".$errors['ip'].":".$errors['port']."。调用命令:".implode(",", $errors['cmd']));
+                        $email->sendEmail("【服务调用失败】".$errors['service']."服务", "服务地址: ".$errors['ip'].":".$errors['port']."。调用命令:".$cmd);
                     }
                     unset($email);
                 }
