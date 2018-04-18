@@ -52,11 +52,22 @@
 
 #### 启动服务
 
-执行命令 app/service \[需要执行的server名称\]
+执行命令 app/service \[需要执行的server名称\] 
 
 ```
 app/service user
 ```
+
+#### 服务使用
+
+* 启动某个服务 =&gt; app/service user
+* 热重启某个服务 =&gt; app/service user reload
+* 关闭某个服务 =&gt; app/service user stop
+* 重启某个服务 =&gt; app/service user restart
+* 启动全部服务 =&gt; app/service start
+* 热重启全部服务 =&gt; app/service reload
+* 关闭全部服务 =&gt; app/service stop
+* 重启全部服务 =&gt; app/service restart
 
 #### 监控服务
 

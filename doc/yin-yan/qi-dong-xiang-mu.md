@@ -22,15 +22,23 @@
 
 * 执行 =&gt; composer update
 
-#### 使用
+#### http server使用
 
 * 启动http server =&gt; php server.php
 * 热重启http server =&gt; php server.php -s reload
 * 关闭http server =&gt; php server.php -s stop
 * 重启http server =&gt; php server.php -s restart
+
+#### 服务使用
+
 * 启动某个服务 =&gt; app/service user
 * 热重启某个服务 =&gt; app/service user reload
 * 关闭某个服务 =&gt; app/service user stop
+* 重启某个服务 =&gt; app/service user restart
+* 启动全部服务 =&gt; app/service start
+* 热重启全部服务 =&gt; app/service reload
+* 关闭全部服务 =&gt; app/service stop
+* 重启全部服务 =&gt; app/service restart
 
 #### 特别注意
 
