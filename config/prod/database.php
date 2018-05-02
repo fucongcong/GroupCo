@@ -26,7 +26,7 @@ return
             'connect_timeout' => 2,
             'read_timeout' => 2,
             'connect'  => 'persistence',
-            'prefix' => 'groupa:',
+            'prefix' => 'group:',
         ],
         'clusters' => [
             'default' => [
