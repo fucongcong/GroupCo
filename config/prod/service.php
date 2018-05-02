@@ -7,7 +7,7 @@ return [
     'registry_address' => [
         'scheme' => 'redis',
         'host' => '127.0.0.1',
-        'prefix'   => 'group_',
+        'prefix'   => 'group:',
         'port' => 6379,
         'auth' => '',
     ],
