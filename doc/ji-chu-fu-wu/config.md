@@ -4,6 +4,7 @@
 
 #### Config::Get\($key\)
 
+框架内核版本>=2.0.1时,支持设置默认参数, Config::Get\($key, $default\)
 ```
 use Config;
 

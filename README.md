@@ -51,6 +51,8 @@
   * [服务调用监控](doc/fu-wu-zhong-xin/fu-wu-diao-yong-jian-kong.md)
   * [服务调用失败事件](doc/fu-wu-zhong-xin/fu-wu-diao-yong-shi-bai.md)
   * [调试模式](doc/fu-wu-zhong-xin/diao-shi-mo-shi.md)
+* 配置中心
+  * [配置中心的使用](doc/pei-zhi-zhong-xin/shi-yong.md)
 * 基础服务
   * [Config配置类](doc/ji-chu-fu-wu/config.md)
   * [StaticCache静态缓存类](doc/ji-chu-fu-wu/staticcache.md)
