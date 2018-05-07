@@ -23,10 +23,13 @@
 ##### 注意事项
 - 在apollo后台创建namespace时候，支持的配置文件格式目前为json,yaml,yml。
 
-#### 使用
-使用方式与Config配置类使用一模一样。
+#### 使用demo
+- 首先在apollo后台新增一个名为param的私有namespace,以yml为存储格式
+- 设置内容为 env: prod
 
+使用方式与Config配置类使用一模一样。
 ```php
-    \Config::get('param:env', 'dev');
+    echo \Config::get('param:env', 'dev');
+    //结果为prod
 ```
 
