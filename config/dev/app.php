@@ -70,4 +70,8 @@ return [
     'pack' => 'serialize',
     //是否启用gzip压缩true,false
     'gzip' => false,
+    //服务调用失败次数，超出后进行故障切换
+    'retries' => 3,
+    //异步rpc方法调用超时时间
+    'timeout' => 5,
 ];
