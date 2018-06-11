@@ -32,6 +32,12 @@
 
 #### 分布式队列
 
+- 基于Redis
+- Kafaka
+- Beanstalk
+- Rabbitmq
+- RocketMQ
+
 #### 分布式任务调度
 
 #### 自动化部署发布
