@@ -15,7 +15,7 @@ return
         'default' => [
             'host'     => '127.0.0.1',
             'port'     => 6379,
-            'prefix'   => 'group:',
+            'prefix'   => 'co:',
             'auth'     => '',
             'connect'  => 'persistence'
         ],
@@ -26,7 +26,7 @@ return
             'connect_timeout' => 2,
             'read_timeout' => 2,
             'connect'  => 'persistence',
-            'prefix' => 'groupa:',
+            'prefix' => 'co:',
         ],
         'clusters' => [
             'default' => [

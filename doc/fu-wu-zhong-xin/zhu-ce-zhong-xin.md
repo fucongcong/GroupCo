@@ -2,12 +2,12 @@
 
 #### 设置注册中心
 
-修改config/service.php中的registry\_address.目前只支持Zookeeper、Redis、Mysql注册中心 
+修改config/service.php中的registryAddress.目前只支持Zookeeper、Redis、Mysql注册中心 
 
 ##### Zookeeper注册中心 
 * [Zookeeper扩展安装](http://pecl.php.net/package/zookeeper)
 ```
-    'registry_address' => [
+    'registryAddress' => [
         'scheme' => 'zookeeper',
         'host' => '127.0.0.1',
         'port' => 2181,
@@ -19,7 +19,7 @@
 ##### Redis注册中心 
 
 ```
-    'registry_address' => [
+    'registryAddress' => [
         'scheme' => 'redis',
         'host' => '127.0.0.1',
         'port' => 6379,
@@ -31,7 +31,7 @@
 
 ```
     //mysql注册中心，开启后，请执行doc/mysql-registry.sql中的sql，创建2张表
-    'registry_address' => [
+    'registryAddress' => [
         'scheme' => 'mysql',
         'host' => '127.0.0.1',
         'port' => 3306,
