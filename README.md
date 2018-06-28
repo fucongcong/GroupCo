@@ -14,10 +14,15 @@
 * 框架基本使用与传统框架基本一致，路由，控制器，服务层，数据层。
 * 在异步调用的地方需要以yield关键词来触发协程切换
 
+#### 生产环境使用
+
+* GroupCo框架目前已经全线用于我们团队，日均处理请求百万次，基础服务调用耗时平均约为0.1ms
+
 ### 特性
 
 * 全异步协程调度，支持高并发
 * 服务发现，客户端缓存、心跳检测、服务监听
+* 统一配置中心
 * 异步TCP，HTTP客户端
 * 异步日志
 * 异步文件读写
@@ -51,6 +56,8 @@
   * [服务调用监控](doc/fu-wu-zhong-xin/fu-wu-diao-yong-jian-kong.md)
   * [服务调用失败事件](doc/fu-wu-zhong-xin/fu-wu-diao-yong-shi-bai.md)
   * [调试模式](doc/fu-wu-zhong-xin/diao-shi-mo-shi.md)
+* 配置中心
+  * [配置中心的使用](doc/pei-zhi-zhong-xin/shi-yong.md)
 * 基础服务
   * [Config配置类](doc/ji-chu-fu-wu/config.md)
   * [StaticCache静态缓存类](doc/ji-chu-fu-wu/staticcache.md)
@@ -83,16 +90,6 @@
 
 ### 理想的架构模型
 - [架构选型](doc/fu-wu-zhong-xin/jiagou.md)
-
-### 微服务化
-若尝试微服务化，目前框架需要优化的点
-- 网关层尚未完善，路由与过滤。
-- 客户端配合注册中心实现服务降级、熔断等等
-- 客户端可提供一套负载均衡算法，目前算法是随机获取某个可用服务。
-- 鉴权、oauth
-- 日志收集
-- 监控上报(目前提供了服务调用监听事件)
-- 统一配置中心
 
 ### 与Go的协程的区别
 基于Swoole的异步与php的Generator实现的异步协程，而go语言是内置协程，这是本质上的区别。swoole2.0以上版本开始支持内置协程，在触发io时会触发协程调度，不过还未稳定,但是重新定义了PHP，使得PHP可以支持更大的并发，做更多的事情。

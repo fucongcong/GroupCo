@@ -19,12 +19,6 @@
     ],
     "require": {
         "php": ">=5.3",
-        "group-co/framework": "dev-master"
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://packagist.org/"
-        }
+        "group-co/framework": "^v2.0.1"
     }
 }

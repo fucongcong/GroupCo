@@ -22,13 +22,28 @@
 
 #### 配置中心
 
+- GroupCo内置[APOLLO](https://github.com/ctripcorp/apollo)
+
 #### 服务发现
 
+- 基于Zookeeper
+- 基于Redis
+- 基于Mysql
+
 #### 分布式队列
+
+- 基于Redis
+- Kafaka
+- Beanstalk
+- Rabbitmq
+- RocketMQ
 
 #### 分布式任务调度
 
 #### 自动化部署发布
+
+- CI 
+- jenkins
 
 #### 流程图
 ![](/service.png)
