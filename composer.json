@@ -19,6 +19,6 @@
     ],
     "require": {
         "php": ">=5.3",
-        "group-co/framework": "~v2.0.1"
+        "group-co/framework": "~v2.1.0"
     }
 }

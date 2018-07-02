@@ -4,10 +4,10 @@ return [
     'encipher' => 'uoI49l^^M!a5&bZt',
 
     //注册中心，如果不为空的话，在server启动时会起一个子进程订阅依赖的服务列表。
-    'registry_address' => [
+    'registryAddress' => [
         'scheme' => 'redis',
         'host' => '127.0.0.1',
-        'prefix'   => 'group:',
+        'prefix'   => 'co:',
         'port' => 6379,
         'auth' => '',
     ],
