@@ -21,7 +21,7 @@ return
         ],
 
         //集群模式只在service下使用有效，异步redis中并不适用
-        'cluster' => true,
+        'cluster' => false,
         'cluster_options' => [
             'connect_timeout' => 2,
             'read_timeout' => 2,
