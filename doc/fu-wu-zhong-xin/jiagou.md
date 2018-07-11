@@ -14,7 +14,7 @@
 特点：基础服务要求稳定，严谨。使用RPC/Http与上层通信
 
 - GroupCo（内置RPC,php开发快）
-- Java（严谨、Spring大法）
+- [GroupCo-java](https://github.com/fucongcong/GroupCo-java) (java实现的服务层，更严谨，低耦合)
 
 #### 日志分析
 
