@@ -6,7 +6,7 @@ return [
     //注册中心，如果不为空的话，在server启动时会起一个子进程订阅依赖的服务列表。
     'registryAddress' => [
         'scheme' => 'redis',
-        'host' => '127.0.0.1',
+        'host' => '192.168.1.103',//change it
         'prefix'   => 'co:',
         'port' => 6379,
         'auth' => '',
@@ -31,8 +31,8 @@ return [
     //配置service
     'server' => [
         'monitor' => [
-            //本机当前内网ip
-            'ip' => '127.0.0.1',
+            //本机当前内网ip||如果不填默认取当前运行容器内网IP
+            'ip' => '192.168.1.103',//change it
             'serv' => '0.0.0.0',
             'port' => 9517,
             'config' => [
@@ -46,17 +46,17 @@ return [
                 'dispatch_mode' => 3,
                 'log_file' => 'runtime/service/monitor.log',
             ],
-            'public' => 'Monitor',
+            'public' => 'Monitor,Shop',
             'process' => [
                 //你可以使用框架封装的心跳检测进程
-                'Group\Process\HeartbeatProcess',
+                //'Group\Process\HeartbeatProcess',
             ],
         ],
         //可以配置多个server，注意请监听不同的端口。
         //serverName
         'user' => [
-            //本机当前内网ip
-            'ip' => '127.0.0.1',
+            //本机当前内网ip||如果不填默认取当前运行容器内网IP
+            'ip' => '192.168.1.103',//change it
 
             'serv' => '0.0.0.0',
             'port' => 9511,
@@ -85,41 +85,41 @@ return [
             //公开哪些服务，如果不填默认公开所有服务
             'public' => 'User',
         ],
-        'user_2' => [
-            //本机当前内网ip
-            'ip' => '127.0.0.1',
-            'serv' => '0.0.0.0',
-            'port' => 9521,
-            'config' => [
-                'daemonize' => true,        
-                'worker_num' => 2,
-                'max_request' => 50000,
-                'task_worker_num' => 5,
-                'task_max_request' => 50000,
-                'heartbeat_idle_time' => 300,
-                'heartbeat_check_interval' => 60,
-                'dispatch_mode' => 3,
-                'log_file' => 'runtime/service/user_2.log',
-            ],
-            'public' => 'User',
-        ],
-        'order' => [
-            //本机当前内网ip
-            'ip' => '127.0.0.1',
-            'serv' => '0.0.0.0',
-            'port' => 9520,
-            'config' => [
-                'daemonize' => true,        
-                'worker_num' => 1,
-                'max_request' => 50000,
-                'task_worker_num' => 2,
-                'task_max_request' => 50000,
-                'heartbeat_idle_time' => 300,
-                'heartbeat_check_interval' => 60,
-                'dispatch_mode' => 3,
-                'log_file' => 'runtime/service/order.log',
-            ],
-            'public' => 'Order',
-        ],
+        // 'user_2' => [
+        //     //本机当前内网ip
+        //     'ip' => '192.168.1.103',
+        //     'serv' => '0.0.0.0',
+        //     'port' => 9521,
+        //     'config' => [
+        //         'daemonize' => true,        
+        //         'worker_num' => 2,
+        //         'max_request' => 50000,
+        //         'task_worker_num' => 5,
+        //         'task_max_request' => 50000,
+        //         'heartbeat_idle_time' => 300,
+        //         'heartbeat_check_interval' => 60,
+        //         'dispatch_mode' => 3,
+        //         'log_file' => 'runtime/service/user_2.log',
+        //     ],
+        //     'public' => 'User',
+        // ],
+        // 'order' => [
+        //     //本机当前内网ip
+        //     'ip' => '192.168.1.103',
+        //     'serv' => '0.0.0.0',
+        //     'port' => 9520,
+        //     'config' => [
+        //         'daemonize' => true,        
+        //         'worker_num' => 1,
+        //         'max_request' => 50000,
+        //         'task_worker_num' => 2,
+        //         'task_max_request' => 50000,
+        //         'heartbeat_idle_time' => 300,
+        //         'heartbeat_check_interval' => 60,
+        //         'dispatch_mode' => 3,
+        //         'log_file' => 'runtime/service/order.log',
+        //     ],
+        //     'public' => 'Order',
+        // ],
     ],
 ];

@@ -13,7 +13,7 @@ return
         'timeout' => 5,
     
         'default' => [
-            'host'     => '127.0.0.1',
+            'host'     => '192.168.1.103',//change it
             'port'     => 6379,
             'prefix'   => 'co:',
             'auth'     => '',
@@ -57,13 +57,13 @@ return
 
             "driver" => "pdo_mysql",
 
-            "host" => "127.0.0.1",
+            "host" => "192.168.1.103",//change it
 
             "port" => "3306",
 
             "dbname" => "Demo",
 
-            "user" => "root",
+            "user" => "cm",
 
             "password" => "123",
 
