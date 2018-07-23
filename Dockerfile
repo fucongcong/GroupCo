@@ -7,21 +7,13 @@ RUN apt-get install -yqq libpcre3-dev
 RUN apt-get install -yqq libfreetype6-dev
 RUN apt-get install -yqq libjpeg62-turbo-dev
 RUN apt-get install -yqq libmcrypt-dev
-RUN apt-get install -yqq libpng12-dev
+RUN apt-get install -yqq libpng-dev
 RUN apt-get install -yqq libicu-dev
 RUN apt-get install -yqq git
 RUN apt-get install -yqq python
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install zip
 RUN docker-php-ext-install intl
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
-             apt-get install -y nodejs
-RUN curl -O https://bootstrap.pypa.io/get-pip.py \
-    && python get-pip.py \
-    && pip --version
-RUN pip install --upgrade awscli \
-    && aws --version
-RUN echo -e "AKIAO2Z62K7MAZEYITJQ\ntyWiT1q3XYCE0+PWQSHkomm/70x4cczYugZ3+dRc\ncn-north-1\n" | aws configure --profile cm-cn
 RUN apt-get install -yqq build-essential chrpath git-core libssl-dev libfontconfig1-dev libxft-dev
 RUN apt-get install -yqq wget
 RUN apt-get install -yqq zip
