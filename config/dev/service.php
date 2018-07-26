@@ -6,7 +6,7 @@ return [
     //注册中心，如果不为空的话，在server启动时会起一个子进程订阅依赖的服务列表。
     'registryAddress' => [
         'scheme' => 'redis',
-        'host' => '192.168.0.156',//change it
+        'host' => '192.168.1.103',//change it
         'prefix'   => 'co:',
         'port' => 6379,
         'auth' => '',
@@ -32,7 +32,7 @@ return [
     'server' => [
         'monitor' => [
             //本机当前内网ip||如果不填默认取当前运行容器内网IP
-            'ip' => '192.168.0.156',//change it
+            'ip' => '192.168.1.103',//change it
             'serv' => '0.0.0.0',
             'port' => 9517,
             'config' => [
@@ -56,7 +56,7 @@ return [
         //serverName
         'user' => [
             //本机当前内网ip||如果不填默认取当前运行容器内网IP
-            'ip' => '192.168.0.156',//change it
+            'ip' => '192.168.1.103',//change it
 
             'serv' => '0.0.0.0',
             'port' => 9511,

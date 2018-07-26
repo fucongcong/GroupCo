@@ -23,7 +23,8 @@
 - 新建数据库Demo
 - 执行 docker-compose exec groupco app/console sql:migrate 
 - 启动基础服务 docker-compose exec groupco app/service start
-- 修改配置nginx，见doc/nginx.md,配置hosts
+- 配置本地hosts文件加入： 
+    127.0.0.1   groupco.com
 - 访问配置的servername =&gt; groupco.com/demo 即可
 
 #### http server使用
@@ -44,5 +45,5 @@
 * 重启全部服务 =&gt; docker-compose exec groupco app/service restart
 * 
 #### 注意事项
-- 目前docker镜像中只内置了redis与php环境。mysql需自行安装
+- 目前docker镜像中只内置了redis、nginx与php环境。mysql需自行安装
 
