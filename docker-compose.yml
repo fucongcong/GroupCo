@@ -10,11 +10,23 @@ services:
       - "9517:9517"
     volumes:
       - .:/GroupCo
+      - .:/var/www/GroupCo
   redis:
     restart: always
     image: "redis:alpine"
     ports:
       - 6379:6379
+  nginx:
+    image: "nginx:alpine"
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx:/etc/nginx/conf.d/:ro
+      - .:/var/www/GroupCo
+      - ./runtime/nginx/:/var/log/nginx/:rw
+    restart : always
+    depends_on:
+      - groupco
   # mysql:
   #   #restart: always
   #   image: "mysql:5.7"
