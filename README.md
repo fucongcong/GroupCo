@@ -29,7 +29,7 @@
 * 异步Mysql
 * 异步Mysql事务处理
 * 异步Redis
-* 支持Mysql连接池,Redis连接池
+* 支持Tcp连接池,Mysql连接池,Redis连接池
 * SOA服务化调用，内部封装完整的RPC通信，服务端采用异步Task处理后合并数据并返回。
 * 异步TCP客户端支持并行、串行调用
 * 支持EOF结束符协议、自定义网络通信协议，支持json化、php序列化包体，支持gzip。
@@ -54,6 +54,7 @@
   * [服务治理流程](doc/fu-wu-zhong-xin/fu-wu-zhi-li-liu-cheng.md)
   * [注册中心](doc/fu-wu-zhong-xin/zhu-ce-zhong-xin.md)
   * [服务调用](doc/fu-wu-zhong-xin/yi-bu-http-server-zhong-shi-yong-fu-wu.md)
+  * [使用TCP连接池](doc/fu-wu-zhong-xin/yi-bu-http-server-lian-jie-chi.md)
   * [服务调用监控](doc/fu-wu-zhong-xin/fu-wu-diao-yong-jian-kong.md)
   * [服务调用失败事件](doc/fu-wu-zhong-xin/fu-wu-diao-yong-shi-bai.md)
   * [调试模式](doc/fu-wu-zhong-xin/diao-shi-mo-shi.md)
