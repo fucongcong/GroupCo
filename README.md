@@ -29,7 +29,7 @@
 * 异步Mysql
 * 异步Mysql事务处理
 * 异步Redis
-* 支持Tcp连接池,Mysql连接池,Redis连接池
+* 支持Tcp连接池,Mysql连接池,Redis连接池,WebSocket连接池
 * SOA服务化调用，内部封装完整的RPC通信，服务端采用异步Task处理后合并数据并返回。
 * 异步TCP客户端支持并行、串行调用
 * 支持EOF结束符协议、自定义网络通信协议，支持json化、php序列化包体，支持gzip。
@@ -44,6 +44,7 @@
   * [Docker容器启动](doc/yin-yan/docker.md)
 * 异步服务
   * [异步Tcp客户端](doc/kuang-jia-fu-wu/yi-bu-tcp-ke-hu-duan.md)
+  * [异步WebSocket客户端](doc/kuang-jia-fu-wu/yi-bu-websocket-ke-hu-duan.md)
   * [异步Http客户端](doc/kuang-jia-fu-wu/yi-bu-http-ke-hu-duan.md)
   * [异步Redis客户端](doc/kuang-jia-fu-wu/sd.md)
   * [异步Mysql客户端](doc/kuang-jia-fu-wu/yi-bu-mysql-ke-hu-duan.md)
