@@ -7,6 +7,16 @@ return array(
     	'controller' => 'Web:Home:Default:index',
     ],
 
+    'websocket'=>[
+        'pattern' => '/websocket',
+        'controller' => 'Web:Home:Default:websocket',
+    ],
+
+    'send_msg'=>[
+        'pattern' => '/sendMsg',
+        'controller' => 'Web:Home:Default:sendMsg',
+    ],
+
     'demo'=>[
         'pattern' => '/demo',
         'controller' => 'Web:User:User:demo',

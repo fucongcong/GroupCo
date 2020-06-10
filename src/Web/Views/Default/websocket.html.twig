@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+   <head>
+     <meta charset="utf-8">
+     <title>websocket demo</title>
+   </head>
+   <body>
+   
+      <div id="sse">
+         <button onclick="send()">发送数据</button>
+      </div>
+
+      <div>
+        收到消息:
+        <div id="msg"></div>
+      </div> 
+
+   <script type="text/javascript">
+            var ws = new WebSocket("ws://localhost:9527/echo");
+            var heartCheck = {
+                timeout: 9000,
+                timeoutObj: null,
+                serverTimeoutObj: null,
+                reset: function(){
+                    clearTimeout(this.timeoutObj);
+                    clearTimeout(this.serverTimeoutObj);
+                    return this;
+                },
+                ping: function(){
+                    var self = this;
+                    this.timeoutObj = setTimeout(function(){
+                        //这里发送一个心跳，后端收到后，返回一个心跳消息，
+                        //onmessage拿到返回的心跳就说明连接正常
+                        ws.send(0x9);
+                        //console.log("ping!")
+                    }, this.timeout)
+                }
+            }
+
+            ws.onopen = function()
+            {  
+               heartCheck.reset().ping(); 
+               // Web Socket 已连接上，使用 send() 方法发送数据
+               //ws.send("发送数据");
+               //alert("数据发送中...");
+            };
+             
+            ws.onmessage = function (evt) 
+            {  
+               heartCheck.reset().ping();
+               var received_msg = evt.data;
+               
+               if (received_msg == 0xA) {
+                  return;
+               }
+
+               console.log(received_msg)
+               document.getElementById('msg').innerHTML = "<p>"+received_msg+"</p>"
+               //console.log(received_msg)
+               //alert("数据已接收...");
+            };
+             
+            ws.onclose = function()
+            { 
+               // 关闭 websocket
+               console.log("连接已关闭..."); 
+            };
+
+            send = function() {
+               ws.send("hello wolrd")
+            }
+   </script>
+   </body> 
+</html>
