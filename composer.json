@@ -19,6 +19,12 @@
     ],
     "require": {
         "php": ">=5.3",
-        "group-co/framework": "~v2.1.0"
+        "group-co/framework": "dev-master"
+    },
+    "repositories": {
+      "packagist": {
+        "type": "composer",
+        "url": "https://mirrors.aliyun.com/composer"
+      }
     }
 }

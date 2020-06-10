@@ -83,7 +83,8 @@
 * [单元测试](doc/dan-yuan-ce-shi/dan-yuan-ce-shi.md)
 * [控制台](doc/kong-zhi-tai/kong-zhi-tai.md)
 
-### 案例Demo与最佳实践(即将更新)
+### 案例Demo与最佳实践
+- [WebSocket简单示例,聊聊集群时的消息转发](doc/demo/ws.md)
 - [实现服务异常邮件通知](doc/demo/fu-wu-yi-chang.md)
 - [秒杀系统,与GO切磋](https://github.com/fucongcong/GroupCo/tree/co/seckill)
 - [日志分析服务](doc/demo/log.md)

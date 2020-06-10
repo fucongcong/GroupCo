@@ -18,6 +18,7 @@ return [
     'onWorkStartServices' => [
         'Group\Async\Pool\MysqlPoolServiceProvider',
         'Group\Async\Pool\RedisPoolServiceProvider',
+        //'Group\Async\Pool\WebSocketPoolServiceProvider',
     ],
 
     'onRequestServices' => [
@@ -40,10 +41,10 @@ return [
 //**修改以下配置后需要restart server。reload不生效！
 /****************SERVER CONFIG*********************/
     //本机当前内网ip||如果不填默认取当前运行容器内网IP
-    'ip' => '192.168.1.103',//change it
+    //'ip' => '192.168.1.103',//change it
 
     'host' => '0.0.0.0',
-    'port' => 9777,
+    'port' => 9778,
 
     'setting' => [
         //日志
@@ -79,4 +80,7 @@ return [
     'retries' => 3,
     //异步rpc方法调用超时时间
     'timeout' => 5,
+
+    //连接池大小
+    'ws.maxPool' => 100,
 ];
