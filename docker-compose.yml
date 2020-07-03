@@ -11,6 +11,8 @@ services:
     volumes:
       - .:/GroupCo
       - .:/var/www/GroupCo
+    stdin_open: true
+    tty: true
   redis:
     restart: always
     image: "redis:alpine"
@@ -39,9 +41,3 @@ services:
   #     MYSQL_USER: cm
   #     MYSQL_PASSWORD: 123
   #     MYSQL_DATABASE: Demo
-  # adminer:
-  #   image: adminer
-  #   restart: always
-  #   ports:
-  #     - 8086:8086
-
