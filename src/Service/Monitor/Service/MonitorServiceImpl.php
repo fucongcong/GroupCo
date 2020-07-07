@@ -1,9 +1,9 @@
 <?php
 
-namespace src\Service\Monitor\Service\Impl;
+namespace src\Service\Monitor\Service;
 
 use src\Service\Monitor\Service\Rely\MonitorBaseService;
-use src\Service\Monitor\Service\MonitorService;
+use Api\Monitor\MonitorService;
 use FileCache;
 
 class MonitorServiceImpl extends MonitorBaseService implements MonitorService

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package api.user.model;
+
+service UserService {
+  rpc getUser(GetUserReq) returns (GetUserRes);
+
+  rpc addUser(AddUserReq) returns (AddUserRes);
+}
+
+message GetUserReq {
+  int32 id = 1;
+}
+
+message GetUserRes {
+  User user = 1;
+}
+
+message AddUserReq {
+  User user = 1;
+}
+
+message AddUserRes {
+  int32 id = 1;
+}
+
+message User {
+  int32 id = 1;
+  string mobile = 2;
+  string password = 3;
+
+  UserProfile profile = 4;
+}
+
+message UserProfile {
+  string name = 1;
+  string sex = 2;
+}

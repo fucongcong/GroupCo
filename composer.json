@@ -1,25 +1,27 @@
 {
-    "name": "group-co",
-    "description": "The Group-co Framework.",
+    "name": "groupCo",
+    "description": "The GroupCo Framework.",
     "keywords": ["framework", "Group"],
     "type": "project",
     "license": "MIT",
     "autoload": {
         "psr-4": {
+            "Api\\": "src/Api",
+            "GPBMetadata\\": "src/GPBMetadata",
             "src\\": "src/"
         }
     },
     "authors": [
         {
             "name": "Fu congcong",
-            "email": "cc@xitongxue.com",
+            "email": "664985936@qq.com",
             "homepage": "https://github.com/fucongcong",
             "role": "Lead Developer"
         }
     ],
     "require": {
-        "php": ">=5.3",
-        "group-co/framework": "dev-master"
+        "php": ">=7.0",
+        "group-co/framework": "dev-v2-dev"
     },
     "repositories": {
       "packagist": {

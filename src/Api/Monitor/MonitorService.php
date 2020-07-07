@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Service\Monitor\Service;
+namespace Api\Monitor;
 
 interface MonitorService
 {

@@ -6,12 +6,12 @@
           <a class="navbar-brand" href="/">Group-Co</a>
         </div>
 
-        
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
 
-            {% if app.user|default(0) %}
-              <li><a href="">{{ app.user.mobile|default('') }}</a></li>
+            {% if app.userId|default(0) > 0 %}
+
+              <li><a href="">{{ app.user.getMobile()|default('') }}</a></li>
               <li><a href="/logout">退出</a></li>
             {% else %}
               <li><a href="/register">注册</a></li>

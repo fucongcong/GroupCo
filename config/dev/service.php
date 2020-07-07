@@ -32,7 +32,7 @@ return [
     'server' => [
         'monitor' => [
             //本机当前内网ip||如果不填默认取当前运行容器内网IP
-            'ip' => '192.168.1.103',//change it
+            //'ip' => '192.168.1.103',//change it
             'serv' => '0.0.0.0',
             'port' => 9517,
             'config' => [
@@ -46,23 +46,23 @@ return [
                 'dispatch_mode' => 3,
                 'log_file' => 'runtime/service/monitor.log',
             ],
-            'public' => 'Monitor,Shop',
+            'public' => '',
             'process' => [
                 //你可以使用框架封装的心跳检测进程
-                //'Group\Process\HeartbeatProcess',
+                'Group\Process\HeartbeatProcess',
             ],
         ],
         //可以配置多个server，注意请监听不同的端口。
         //serverName
-        'user' => [
+        'test' => [
             //本机当前内网ip||如果不填默认取当前运行容器内网IP
-            'ip' => '192.168.1.103',//change it
+            //'ip' => '192.168.1.103',//change it
 
             'serv' => '0.0.0.0',
             'port' => 9511,
             //server配置，请根据实际情况调整参数
             'config' => [
-                'daemonize' => true,
+                //'daemonize' => true,
                 //worker进程数量         
                 'worker_num' => 2,
                 //最大请求数，超过后讲重启worker进程
@@ -82,44 +82,8 @@ return [
                 //其他配置详见swoole官方配置参数列表
             ],
             
-            //公开哪些服务，如果不填默认公开所有服务
-            'public' => 'User',
+            //公开哪些服务，如果不设置此参数默认公开所有服务
+            //'public' => 'User',
         ],
-        // 'user_2' => [
-        //     //本机当前内网ip
-        //     'ip' => '192.168.0.156',
-        //     'serv' => '0.0.0.0',
-        //     'port' => 9521,
-        //     'config' => [
-        //         'daemonize' => true,        
-        //         'worker_num' => 2,
-        //         'max_request' => 50000,
-        //         'task_worker_num' => 5,
-        //         'task_max_request' => 50000,
-        //         'heartbeat_idle_time' => 300,
-        //         'heartbeat_check_interval' => 60,
-        //         'dispatch_mode' => 3,
-        //         'log_file' => 'runtime/service/user_2.log',
-        //     ],
-        //     'public' => 'User',
-        // ],
-        // 'order' => [
-        //     //本机当前内网ip
-        //     'ip' => '192.168.0.156',
-        //     'serv' => '0.0.0.0',
-        //     'port' => 9520,
-        //     'config' => [
-        //         'daemonize' => true,        
-        //         'worker_num' => 1,
-        //         'max_request' => 50000,
-        //         'task_worker_num' => 2,
-        //         'task_max_request' => 50000,
-        //         'heartbeat_idle_time' => 300,
-        //         'heartbeat_check_interval' => 60,
-        //         'dispatch_mode' => 3,
-        //         'log_file' => 'runtime/service/order.log',
-        //     ],
-        //     'public' => 'Order',
-        // ],
     ],
 ];
