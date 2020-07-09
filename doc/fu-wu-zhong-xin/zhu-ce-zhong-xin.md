@@ -4,7 +4,7 @@
 
 修改config/service.php中的registryAddress.目前只支持Zookeeper、Redis、Mysql注册中心 
 
-##### Zookeeper注册中心 
+##### Zookeeper注册中心  (生产环境推荐)
 * [Zookeeper扩展安装](http://pecl.php.net/package/zookeeper)
 ```
     'registryAddress' => [
@@ -16,7 +16,7 @@
     ],
 ```
 
-##### Redis注册中心 
+##### Redis注册中心 (生产环境不推荐)
 
 ```
     'registryAddress' => [
@@ -27,7 +27,7 @@
     ],
 ```
 
-##### Mysql注册中心 
+##### Mysql注册中心  (生产环境不推荐)
 
 ```
     //mysql注册中心，开启后，请执行doc/mysql-registry.sql中的sql，创建2张表
