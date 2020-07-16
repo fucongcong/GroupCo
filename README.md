@@ -3,9 +3,13 @@
 [![Build Status](https://travis-ci.org/fucongcong/co-framework.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co) 
 [![Code Climate](https://codeclimate.com/github/fucongcong/co-framework/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
 
+### 2.0版本预告更新
+- 基础服务内部依赖与调用
+- 基于protobuf的协议的API，支持跨语言调用
+
 ### 框架结构
 
-框架其实分为两大板块, 协程客户端(BFF —— Backend For Frontend)与提供基础服务的服务端。(V2.0将升级支持多协议的服务端)
+框架其实分为两大板块, 协程客户端(BFF —— Backend For Frontend)与提供基础服务的服务端。
 
 #### 客户端（BFF）
 * 利用协程特性以同步方式来编写异步代码，增强可读性。
