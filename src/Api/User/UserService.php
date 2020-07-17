@@ -2,18 +2,13 @@
 
 namespace Api\User;
 
-use Api\User\Model\GetUserReq;
-use Api\User\Model\GetUserRes;
-use Api\User\Model\AddUserReq;
-use Api\User\Model\AddUserRes;
-
 interface UserService
 {
-    public function getUser(GetUserReq $getUserReq) : GetUserRes;
+    public function getUser(\Api\User\Model\GetUserReq $getUserReq) : \Api\User\Model\GetUserRes;
 
-    public function addUser(AddUserReq $addUserReq) : AddUserRes;
+    public function addUser(\Api\User\Model\AddUserReq $addUserReq) : \Api\User\Model\AddUserRes;
 
-    public function getUserByMobile($mobile);
+    public function getUserByMobile(\Api\User\Model\GetUserByMobileReq $getUserByMobileReq) : \Api\User\Model\GetUserByMobileRes;
 
-    public function updateUserPassword($userId, $password);
+    public function updateUserPassword(\Api\User\Model\UpdateUserPasswordReq $UpdateUserPasswordReq) : \Api\User\Model\UpdateUserPasswordRes;
 }

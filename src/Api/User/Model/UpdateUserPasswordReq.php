@@ -9,14 +9,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>api.user.model.AddUserReq</code>
+ * Generated from protobuf message <code>api.user.model.UpdateUserPasswordReq</code>
  */
-class AddUserReq extends \Google\Protobuf\Internal\Message
+class UpdateUserPasswordReq extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>string mobile = 1;</code>
+     * Generated from protobuf field <code>int32 id = 1;</code>
      */
-    protected $mobile = '';
+    protected $id = 0;
     /**
      * Generated from protobuf field <code>string password = 2;</code>
      */
@@ -28,7 +28,7 @@ class AddUserReq extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type string $mobile
+     *     @type int $id
      *     @type string $password
      * }
      */
@@ -38,23 +38,23 @@ class AddUserReq extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string mobile = 1;</code>
-     * @return string
+     * Generated from protobuf field <code>int32 id = 1;</code>
+     * @return int
      */
-    public function getMobile()
+    public function getId()
     {
-        return $this->mobile;
+        return $this->id;
     }
 
     /**
-     * Generated from protobuf field <code>string mobile = 1;</code>
-     * @param string $var
+     * Generated from protobuf field <code>int32 id = 1;</code>
+     * @param int $var
      * @return $this
      */
-    public function setMobile($var)
+    public function setId($var)
     {
-        GPBUtil::checkString($var, True);
-        $this->mobile = $var;
+        GPBUtil::checkInt32($var);
+        $this->id = $var;
 
         return $this;
     }

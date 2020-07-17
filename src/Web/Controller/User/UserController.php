@@ -39,21 +39,22 @@ class UserController extends BaseController
                     ]
                 );
             }
-            $user = [
+
+            $addUserReq = new \Api\User\Model\AddUserReq([
                 'mobile' => $mobile,
                 'password' => $password
-            ];
+            ]);
+
             $service = (yield service_center('User'));
-            $res = (yield $service->call("User::addUser", ['user' => $user]));
-            if ($res) {
+            $res = (yield $service->call("User/addUser", $addUserReq));
+            if ($res && $res->getId() > 0) {
                 $response = new JsonResponse([
                         'msg' => '注册成功',
                         'data' => '',
                         'code' => 200
                     ]
                 );
-                $user = (yield $service->call("User::getUser", ['id' => $res]));
-                yield $this->setJwt($request, $res, $response);
+                yield $this->setJwt($request, $res->getId(), $response);
             } else {
                 yield new JsonResponse([
                         'msg' => '注册失败',
@@ -96,13 +97,12 @@ class UserController extends BaseController
                     ]
                 );
             }
-            $user = [
-                'mobile' => $mobile,
-                'password' => $password
-            ];
+            $getUserByMobileReq = new \Api\User\Model\GetUserByMobileReq(['mobile' => $mobile]);
+
             $service = (yield service_center('User'));
-            $user = (yield $service->call("User::getUserByMobile", ['mobile' => $mobile]));
-            if (isset($user['password']) && $user['password'] == $password) {
+            $res = (yield $service->call("User/getUserByMobile", $getUserByMobileReq));
+            $user = $res->getUser();
+            if ($user->getPassword() == $password) {
 
                 $response = new JsonResponse([
                         'msg' => '登录成功',
@@ -111,7 +111,7 @@ class UserController extends BaseController
                     ]
                 );
 
-                yield $this->setJwt($request, $user['id'], $response);
+                yield $this->setJwt($request, $user->getId(), $response);
 
             } else {
                 yield new JsonResponse([

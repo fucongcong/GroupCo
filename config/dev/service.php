@@ -11,15 +11,6 @@ return [
         'port' => 6379,
         'auth' => '',
     ],
-    //mysql注册中心，开启后，请执行doc/mysql-registry.sql中的sql，创建2张表
-    // 'registry_address' => [
-    //     'scheme' => 'mysql',
-    //     'host' => '127.0.0.1',
-    //     'port' => 3306,
-    //     'user' => 'root',
-    //     'password' => '123',
-    //     'dbname' => 'Demo'
-    // ],
     // 'registry_address' => [
     //     'scheme' => 'zookeeper',
     //     'host' => '127.0.0.1',
@@ -37,13 +28,6 @@ return [
             'port' => 9517,
             'config' => [
                 'daemonize' => true,        
-                'worker_num' => 2,
-                'max_request' => 50000,
-                'task_worker_num' => 5,
-                'task_max_request' => 50000,
-                'heartbeat_idle_time' => 300,
-                'heartbeat_check_interval' => 60,
-                'dispatch_mode' => 3,
                 'log_file' => 'runtime/service/monitor.log',
             ],
             'public' => '',
@@ -57,7 +41,6 @@ return [
         'test' => [
             //本机当前内网ip||如果不填默认取当前运行容器内网IP
             //'ip' => '192.168.1.103',//change it
-
             'serv' => '0.0.0.0',
             'port' => 9511,
             //server配置，请根据实际情况调整参数
@@ -71,12 +54,6 @@ return [
                 'task_worker_num' => 5,
                 //task进程最大处理请求上限，超过后讲重启task进程
                 'task_max_request' => 50000,
-                //心跳检测,长连接超时自动断开，秒
-                'heartbeat_idle_time' => 300,
-                //心跳检测间隔，秒
-                'heartbeat_check_interval' => 60,
-                //1平均分配，2按FD取摸固定分配，3抢占式分配，默认为取模
-                'dispatch_mode' => 3,
                 //日志
                 'log_file' => 'runtime/service/user.log',
                 //其他配置详见swoole官方配置参数列表
@@ -84,6 +61,7 @@ return [
             
             //公开哪些服务，如果不设置此参数默认公开所有服务
             //'public' => 'User',
+            'rely' => ''
         ],
     ],
 ];

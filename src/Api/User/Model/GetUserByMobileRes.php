@@ -9,9 +9,9 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>api.user.model.GetUserRes</code>
+ * Generated from protobuf message <code>api.user.model.GetUserByMobileRes</code>
  */
-class GetUserRes extends \Google\Protobuf\Internal\Message
+class GetUserByMobileRes extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>.api.user.model.User user = 1;</code>

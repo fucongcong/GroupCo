@@ -14,12 +14,9 @@ class BaseController extends Controller
 
         $req = new \Api\User\Model\GetUserReq;
         $req->setId($userId);
-        $res = (yield $service->call("User::getUser", $req));
+        $res = (yield $service->call("User/getUser", $req));
         //$res = (yield $service->call("User::getUser", ['id' => $userId]));
-
-        $ret = new \Api\User\Model\GetUserRes;
-        $ret->mergeFromString($res);
-        $user = $ret->getUser();
+        $user = $res->getUser();
         if ($user) {
             $this->container->singleton('twig')->addGlobal('app', ['userId' => $user->getId(), 'user' => $user]);
         } else {

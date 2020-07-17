@@ -3,6 +3,12 @@
 [![Build Status](https://travis-ci.org/fucongcong/co-framework.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co) 
 [![Code Climate](https://codeclimate.com/github/fucongcong/co-framework/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
 
+### V2.0的几个重要改动 
+- 不在支持php5.6以下版本。php>=7.0
+- 基础服务之间的依赖与通信松耦合(写业务时要考虑到事务的处理)
+- 数据传输通过protobuf编码，所以基础服务层编码规范要严格定义数据类型
+- 将基础服务拆分了，单独分离了接口(API interface)与ServiceImpl。
+
 ### 框架结构
 
 框架其实分为两大板块, 协程客户端(BFF —— Backend For Frontend)与提供基础服务的服务端。
@@ -30,7 +36,7 @@
 * 稳定性、已得到线上验证
 
 ### 生产环境使用
-* GroupCo框架目前已经全线用于我们团队，日均处理请求百万次，基础服务调用耗时平均约为0.1ms
+* GroupCo框架目前已经全线用于我们团队，日均处理请求百万次
 * 大型项目，服务发现不建议使用redis/mysql。也可以自己集成etcd/consul等其他服务发现工具（框架后面会更新支持）
 
 ### 特性

@@ -9,14 +9,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>api.user.model.AddUserRes</code>
+ * Generated from protobuf message <code>api.user.model.UpdateUserPasswordRes</code>
  */
-class AddUserRes extends \Google\Protobuf\Internal\Message
+class UpdateUserPasswordRes extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int32 id = 1;</code>
+     * Generated from protobuf field <code>bool res = 1;</code>
      */
-    protected $id = 0;
+    protected $res = false;
 
     /**
      * Constructor.
@@ -24,7 +24,7 @@ class AddUserRes extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $id
+     *     @type bool $res
      * }
      */
     public function __construct($data = NULL) {
@@ -33,23 +33,23 @@ class AddUserRes extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 id = 1;</code>
-     * @return int
+     * Generated from protobuf field <code>bool res = 1;</code>
+     * @return bool
      */
-    public function getId()
+    public function getRes()
     {
-        return $this->id;
+        return $this->res;
     }
 
     /**
-     * Generated from protobuf field <code>int32 id = 1;</code>
-     * @param int $var
+     * Generated from protobuf field <code>bool res = 1;</code>
+     * @param bool $var
      * @return $this
      */
-    public function setId($var)
+    public function setRes($var)
     {
-        GPBUtil::checkInt32($var);
-        $this->id = $var;
+        GPBUtil::checkBool($var);
+        $this->res = $var;
 
         return $this;
     }

@@ -7,7 +7,6 @@
     "autoload": {
         "psr-4": {
             "Api\\": "src/Api",
-            "GPBMetadata\\": "src/GPBMetadata",
             "src\\": "src/"
         }
     },

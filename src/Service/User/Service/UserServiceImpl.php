@@ -37,28 +37,40 @@ class UserServiceImpl extends UserBaseService implements UserService
 
     public function addUser(AddUserReq $addUserReq) : AddUserRes
     {   
-        $user = $addUserReq->getUser();
+        $user = [
+            'mobile' => $addUserReq->getMobile(),
+            'password' => $addUserReq->getPassword()
+        ];
 
-        if ($this->getUserByMobile($user->getMobile())) {
+        if ($this->getUserDao()->getUserByMobile($user['mobile'])) {
             //直接return一个空的对象出去
             return new AddUserRes();
         }
 
         $uid = $this->getUserDao()->addUser($user);
-
         $res = new AddUserRes();
-        $res->setId($uid);
+        $res->setId((int) $uid);
+        
         return $res;
     }
 
-    public function getUserByMobile($mobile)
-    {
-        return $this->getUserDao()->getUserByMobile($mobile);
+    public function getUserByMobile(\Api\User\Model\GetUserByMobileReq $getUserByMobileReq) : \Api\User\Model\GetUserByMobileRes
+    {   
+        $mobile = $getUserByMobileReq->getMobile();
+        $user = $this->getUserDao()->getUserByMobile($mobile);
+
+        return new \Api\User\Model\GetUserByMobileRes([
+            'user' => new User($user)
+        ]);
     }
 
-    public function updateUserPassword($userId, $password)
+    public function updateUserPassword(\Api\User\Model\UpdateUserPasswordReq $UpdateUserPasswordReq) : \Api\User\Model\UpdateUserPasswordRes
     {
-        return $this->getUserDao()->updateUserPassword($userId, $password);
+        $res = $this->getUserDao()->updateUserPassword($UpdateUserPasswordReq->getId(), $UpdateUserPasswordReq->getPassword());
+
+        return new \Api\User\Model\UpdateUserPasswordRes([
+            'res' => $res
+        ]);
     }
 
     //单进程慢速任务 通过异步的多task去做，速度会翻倍

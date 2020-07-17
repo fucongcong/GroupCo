@@ -9,18 +9,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>api.user.model.AddUserReq</code>
+ * Generated from protobuf message <code>api.user.model.GetUserByMobileReq</code>
  */
-class AddUserReq extends \Google\Protobuf\Internal\Message
+class GetUserByMobileReq extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>string mobile = 1;</code>
      */
     protected $mobile = '';
-    /**
-     * Generated from protobuf field <code>string password = 2;</code>
-     */
-    protected $password = '';
 
     /**
      * Constructor.
@@ -29,7 +25,6 @@ class AddUserReq extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type string $mobile
-     *     @type string $password
      * }
      */
     public function __construct($data = NULL) {
@@ -55,28 +50,6 @@ class AddUserReq extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->mobile = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>string password = 2;</code>
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Generated from protobuf field <code>string password = 2;</code>
-     * @param string $var
-     * @return $this
-     */
-    public function setPassword($var)
-    {
-        GPBUtil::checkString($var, True);
-        $this->password = $var;
 
         return $this;
     }

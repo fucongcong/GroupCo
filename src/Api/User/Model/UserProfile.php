@@ -33,7 +33,7 @@ class UserProfile extends \Google\Protobuf\Internal\Message
      * }
      */
     public function __construct($data = NULL) {
-        \GPBMetadata\User::initOnce();
+        \Api\User\GPBMetadata\User::initOnce();
         parent::__construct($data);
     }
 
