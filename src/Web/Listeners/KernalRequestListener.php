@@ -22,10 +22,14 @@ class KernalRequestListener extends Listener
         $userId = $this->getUserId($request);
         if ($userId) {
             $container->setContext('userId', $userId);
-            // $service = (yield service_center('User'));
-            // $user = (yield $service->call("User::getUser", ['id' => $userId]));
+         //    $service = (yield service_center('User'));
+         //    $res = (yield $service->call("User::getUser", ['id' => $userId]));
+
+         //    $ret = new \Api\User\Model\GetUserRes;
+         //    $ret->mergeFromString($res);
+         //    $user = $ret->getUser();
         	// if ($user) {
-         //        $container->singleton('twig')->addGlobal('app', ['userId' => $userId, 'user' => $user]);
+         //        $container->singleton('twig')->addGlobal('app', ['userId' => $user->getId(), 'user' => $user]);
          //    } else {
          //        $container->setContext('userId', 0);
          //    }

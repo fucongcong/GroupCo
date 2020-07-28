@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Service\User\Service;
+namespace Api\User;
 
 interface UserProfileService
 {

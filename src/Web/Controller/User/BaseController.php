@@ -9,12 +9,16 @@ class BaseController extends Controller
     protected function getUser()
     {
         $userId = $this->container->getContext('userId', 0);
-        //$user = (yield service("user")->call("User\User::getUser", ['id' => $userId]));
-        //$user = (yield $service->call("User::getUser", ['id' => 1]));
+
         $service = (yield service_center('User'));
-        $user = (yield $service->call("User::getUser", ['id' => $userId]));
+
+        $req = new \Api\User\Model\GetUserReq;
+        $req->setId($userId);
+        $res = (yield $service->call("User/getUser", $req));
+        //$res = (yield $service->call("User::getUser", ['id' => $userId]));
+        $user = $res->getUser();
         if ($user) {
-            $this->container->singleton('twig')->addGlobal('app', ['userId' => $userId, 'user' => $user]);
+            $this->container->singleton('twig')->addGlobal('app', ['userId' => $user->getId(), 'user' => $user]);
         } else {
             $this->container->setContext('userId', 0);
         }

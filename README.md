@@ -3,9 +3,13 @@
 [![Build Status](https://travis-ci.org/fucongcong/co-framework.svg?branch=master)](https://travis-ci.org/fucongcong/Group-Co) 
 [![Code Climate](https://codeclimate.com/github/fucongcong/co-framework/badges/gpa.svg)](https://github.com/fucongcong/Group-Co)
 
-### 2.0版本预告更新
-- 基础服务内部依赖与调用
-- 基于protobuf的协议的API，支持跨语言调用
+### V2.0的几个重要改动 
+- 不在支持php5.6以下版本。php>=7.0
+- 基础服务之间的依赖与通信松耦合(写业务时要考虑到事务的处理)
+- 数据传输通过protobuf编码，所以基础服务层编码规范要严格定义数据类型
+- 将基础服务拆分了，单独分离了接口(API interface)与ServiceImpl。
+
+### [V1.0](https://github.com/fucongcong/GroupCo/tree/master)
 
 ### 框架结构
 
@@ -14,7 +18,7 @@
 #### 客户端（BFF）
 * 利用协程特性以同步方式来编写异步代码，增强可读性。
 * 将swoole的异步特性与传统框架的MVC相结合。
-* 和nodejs类似，BFF端应该是胶水层(类似传统MVC的控制层)，主要与前端交互输出(需要抗住大量的并发连接)
+* 和nodejs类似，BFF端应该是胶水层(类似传统MVC的控制层)，API提供者
 
 #### 服务端 
 * 利用swoole的多进程模式创建，当前版本仅支持RPC调用。
@@ -34,7 +38,8 @@
 * 稳定性、已得到线上验证
 
 ### 生产环境使用
-* GroupCo框架目前已经全线用于我们团队，日均处理请求百万次，基础服务调用耗时平均约为0.1ms
+* GroupCo框架目前已经全线用于我们团队，日均处理请求百万次。响应时间平均在0.1ms-10ms左右(视业务而定)
+* 大型项目，服务发现不建议使用redis/mysql。也可以自己集成etcd/consul等其他服务发现工具（框架后面会更新支持）
 
 ### 特性
 
@@ -47,10 +52,9 @@
 * 异步Mysql
 * 异步Mysql事务处理
 * 异步Redis
-* 支持Tcp连接池,Mysql连接池,Redis连接池,WebSocket连接池
+* 支持Tcp、Mysql、Redis、WebSocket连接池
 * SOA服务化调用，内部封装完整的RPC通信，服务端采用异步Task处理后合并数据并返回。
 * 异步TCP客户端支持并行、串行调用
-* 支持EOF结束符协议、自定义网络通信协议，支持json化、php序列化包体，支持gzip。
 * Twig、Doctrine支持视图、服务数据层
 * 单元测试覆盖
 

@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package api.user.model;
+
+option php_metadata_namespace = "Api\\User\\GPBMetadata";
+
+service UserService {
+  rpc getUser(GetUserReq) returns (GetUserRes);
+
+  rpc addUser(AddUserReq) returns (AddUserRes);
+
+  rpc getUserByMobile(GetUserByMobileReq) returns (GetUserByMobileRes);
+
+  rpc updateUserPassword(UpdateUserPasswordReq) returns (UpdateUserPasswordRes);
+}
+
+message GetUserReq {
+  int32 id = 1;
+}
+
+message GetUserRes {
+  User user = 1;
+}
+
+message AddUserReq {
+  string mobile = 1;
+  string password = 2;
+}
+
+message AddUserRes {
+  int32 id = 1;
+}
+
+message GetUserByMobileReq {
+  string mobile = 1;
+}
+
+message GetUserByMobileRes {
+  User user = 1;
+}
+
+message UpdateUserPasswordReq {
+  int32 id = 1;
+  string password = 2;
+}
+
+message UpdateUserPasswordRes {
+  bool res = 1;
+}
+
+message User {
+  int32 id = 1;
+  string mobile = 2;
+  string password = 3;
+
+  UserProfile profile = 4;
+}
+
+message UserProfile {
+  string name = 1;
+  string sex = 2;
+}

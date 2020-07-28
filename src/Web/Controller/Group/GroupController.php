@@ -27,17 +27,17 @@ class GroupController extends Controller
         // $start = microtime(true);
         //设置2秒超时
         //$this->getUserService()->setTimeout(2);
-        // $users = (yield $this->getUserService()->call("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
+        // $users = (yield $this->getUserService()->call("User/User/getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]));
         // dump($users);
 
-        // $users = (yield $this->getUserService()->call("User\User::getUser", ['id' => 1]));
+        // $users = (yield $this->getUserService()->call("User/User/getUser", ['id' => 1]));
         // dump($users);
         // dump(microtime(true) - $start);
 
         // //并行
         // $start = microtime(true);
-        // $callId1 = $this->getUserService()->addCall("User\User::getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
-        // $callId2 = $this->getUserService()->addCall("User\User::getUser", ['id' => 1]);
+        // $callId1 = $this->getUserService()->addCall("User/User/getUsersCache", ['ids' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]);
+        // $callId2 = $this->getUserService()->addCall("User/User/getUser", ['id' => 1]);
         // $res = (yield $this->getUserService()->multiCall());
         // dump($res[$callId1]);
         // dump($res[$callId2]);
@@ -87,7 +87,7 @@ class GroupController extends Controller
         // yield AsyncLog::emergency('hello world');
 
         $service = (yield service_center('User'));
-        $user = (yield $service->call('User::getUser', ['id' => 1]));
+        $user = (yield $service->call('User/getUser', ['id' => 1]));
         
         yield $this->render('Web/Views/Group/index.html.twig', [
             'user' => $user

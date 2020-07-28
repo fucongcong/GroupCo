@@ -44,7 +44,7 @@ return [
     //'ip' => '192.168.1.103',//change it
 
     'host' => '0.0.0.0',
-    'port' => 9778,
+    'port' => 9777,
 
     'setting' => [
         //日志
@@ -72,10 +72,6 @@ return [
 
     //此参数可不填。通信协议 eof：结束符, buf：包头+包体。也可以填自定义的customProtocols
     'protocol' => 'buf',
-    //包体的打包方式json,serialize
-    'pack' => 'json',
-    //是否启用gzip压缩true,false
-    'gzip' => false,
     //服务调用失败次数，超出后进行故障切换
     'retries' => 3,
     //异步rpc方法调用超时时间

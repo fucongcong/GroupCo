@@ -1,9 +1,9 @@
 <?php
 
-namespace src\Service\User\Service\Impl;
+namespace src\Service\User\Service;
 
 use src\Service\User\Service\Rely\UserProfileBaseService;
-use src\Service\User\Service\UserProfileService;
+use Api\User\UserProfileService;
 
 class UserProfileServiceImpl extends UserProfileBaseService implements UserProfileService
 {
