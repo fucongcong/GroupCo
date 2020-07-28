@@ -9,6 +9,8 @@
 - 数据传输通过protobuf编码，所以基础服务层编码规范要严格定义数据类型
 - 将基础服务拆分了，单独分离了接口(API interface)与ServiceImpl。
 
+### [V1.0](https://github.com/fucongcong/GroupCo/tree/master)
+
 ### 框架结构
 
 框架其实分为两大板块, 协程客户端(BFF —— Backend For Frontend)与提供基础服务的服务端。
