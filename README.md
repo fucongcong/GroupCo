@@ -9,7 +9,7 @@
 - 数据传输通过protobuf编码，所以基础服务层编码规范要严格定义数据类型
 - 将基础服务拆分了，单独分离了接口(API interface)与ServiceImpl。
 
-### [V1.0](https://github.com/fucongcong/GroupCo/tree/master)
+### [V1.X版本](https://github.com/fucongcong/GroupCo/tree/v1.1.1)
 
 ### 框架结构
 
